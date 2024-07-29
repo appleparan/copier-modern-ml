@@ -39,10 +39,8 @@ build-backend = "hatchling.build"
 managed = true
 virtual = false
 dev-dependencies = [
+    "pytest",
 ]
 
 [tool.hatch.metadata]
 allow-direct-references = true
-
-# [tool.hatch.build.targets.wheel]
-# packages = ["src/template.py"]

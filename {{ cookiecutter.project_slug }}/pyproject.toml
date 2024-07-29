@@ -99,7 +99,7 @@ dev-dependencies = [
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/{{cookiecutter.project_name}}"]
+packages = ["src/{{cookiecutter.project_slug}}"]
 
 [tool.uv.pip]
 index-url = "https://pypi.org/simple"
