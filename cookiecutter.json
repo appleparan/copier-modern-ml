@@ -1,0 +1,17 @@
+{
+  "project_name": "Python Machine Learning Project Boilerplate",
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+  "description": "A short description of the project.",
+  "version": "0.0.1",
+  "full_name": "Your full name (or your organization/company/team)",
+  "email": "your_email_address@example.com",
+  "license": ["MIT license", "BSD license", "Apache Software License 2.0"],
+  "virtual": false,
+  "configs_folder": "configs",
+  "data_folder": "data",
+  "example_folder": "examples",
+  "models_folder": "models",
+  "notebooks_folder": "notebooks",
+  "references_folder": "references",
+  "reports_folder": "reports"
+}

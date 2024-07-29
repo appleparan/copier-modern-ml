@@ -1,0 +1,330 @@
+[project]
+name = "{{cookiecutter.project_slug}}"   # Change this
+version = "{{cookiecutter.version}}"   # Change this
+description = "{{cookiecutter.description}}" # Change this
+authors = ["{{cookiecutter.full_name}} <{{cookiecutter.email}}>"]
+readme = "README.md"
+dependencies = [
+    "numpy",
+    "matplotlib",
+    "pandas[parquet,performance]",
+    "plotly",
+    "scikit-learn",
+    "tqdm",
+    "torch",
+    "typer",
+]
+requires-python = ">=3.11, <4.0"
+keywords = [
+    "artificial intelligence",
+    "python",
+    "project",
+] # Change this
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Environment :: GPU :: NVIDIA CUDA :: 12",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: POSIX",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
+
+[project.optional-dependencies]
+dev = [
+    "coverage",
+    "coverage-badge",
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocstrings[python]",
+    "mkdocs-gen-files",
+    "mkdocs-section-index",
+    "mkdocs-literate-nav",
+    "mypy",
+    "mypy-extensions",
+    "myst-parser",
+    "ruff",
+    "pytest",
+    "pytest-cov",
+    "pytest-html",
+    "pre-commit",
+    "safety",
+]
+doc = [
+    "mkdocs",
+    "mkdocs-material",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+# [project.scripts]
+# {{cookiecutter.project_slug}}-cli = "{{cookiecutter.project_slug}}.cli" # Change this
+
+[tool.setuptools]
+packages = ["{{cookiecutter.project_slug}}"] # Change this
+
+[tool.rye]
+managed = true
+{%- if cookiecutter.virtual -%}
+virtual = true
+{%- else -%}
+virtual = false
+{% endif %}
+dev-dependencies = [
+    "coverage",
+    "coverage-badge",
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocstrings[python]",
+    "mkdocs-gen-files",
+    "mkdocs-section-index",
+    "mkdocs-literate-nav",
+    "mypy",
+    "mypy-extensions",
+    "myst-parser",
+    "ruff",
+    "pytest",
+    "pytest-cov",
+    "pytest-html",
+    "pre-commit",
+    "safety",
+]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/{{cookiecutter.project_name}}"]
+
+[tool.uv.pip]
+index-url = "https://pypi.org/simple"
+
+# pyproject.toml
+[tool.pytest.ini_options]
+minversion = "6.0"
+testpaths = [
+    "tests",
+]
+# https://docs.pytest.org/en/6.2.x/customize.html#pyproject-toml
+# Directories that are not visited by pytest collector:
+norecursedirs = [
+    "hooks",
+    "*.egg",
+    ".eggs",
+    "dist",
+    "build",
+    "docs",
+    ".tox",
+    ".git",
+    "__pycache__"
+]
+python_files = "tests/*"
+log_cli = "true"
+markers = [
+    "slow"
+]
+doctest_optionflags = ["NUMBER", "NORMALIZE_WHITESPACE", "IGNORE_EXCEPTION_DETAIL"]
+
+addopts = [
+    "--strict-markers",
+    "--tb=short",
+    "--doctest-modules",
+    "--doctest-continue-on-failure",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::UserWarning",
+]
+
+[tool.mypy]
+# https://mypy.readthedocs.io/en/latest/config_file.html#using-a-pyproject-toml-file
+python_version = "3.11"
+plugins = "numpy.typing.mypy_plugin"
+pretty = true
+show_traceback = true
+color_output = true
+
+allow_redefinition = false
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_incomplete_defs = true
+ignore_missing_imports = true
+implicit_reexport = false
+no_implicit_optional = true
+show_column_numbers = true
+show_error_codes = true
+show_error_context = true
+strict_equality = true
+strict_optional = true
+warn_no_return = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unreachable = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
+[tool.coverage.run]
+source = ["tests"]
+branch = true
+
+[tool.coverage.report]
+fail_under = 50
+show_missing = true
+
+[tool.ruff]
+include = ["*.py", "*.pyi", "**/pyproject.toml", "*.ipynb"]
+exclude = [
+    "git",
+    "__pycache__",
+    "data/*",
+    "notebooks/*",
+    "logs/*",
+    "**/__pycache__",
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+    "docs",
+    "data",
+    "tests/data",
+]
+# Same as Black.
+line-length = 88
+# Assume Python 3.11
+target-version = "py312"
+
+[tool.ruff.lint]
+ignore = [
+    "B017",
+    "C408",
+    "C901",
+    "D100", # undocumented-public-module
+    "D101", # undocumented-public-class
+    "E501",
+    "E741",
+    "F401",
+    "F403",
+    "F811",
+    "F841",
+]
+select = [
+    "AIR",  # Airflow
+    "ANN",  # flake8-annotations: https://stackoverflow.com/a/63550734/743078
+    "ARG",  # flake8-unused-arguments
+    "B",    # flake8-bugbear
+    "B9",   # flake8-broken-line
+    "D",    # pydocstyle
+    "DTZ",  # flake8-datetimez
+    "E",    # pycodestyle
+    "EM",   # flake8-errmsg
+    "F",    # pyflakes
+    "FBT",  # flake8-boolean-trap
+    "G",    # flake8-logging-format
+    "N",    # pep8-naming
+    "NPY",  # NumPy-specific rules
+    "PD",   # pandas-vet
+    "PERF", # Perflint
+    "PT",   # flake8-pytest-style
+    "PTH",  # flake8-use-pathlib
+    "RUF",  # Ruff-specific rules
+    "SIM",  # flake8-simplify
+    "TID",  # flake8-tidy-imports
+    "YTT",  # flake8-2020
+    "UP",   # pyupgrade
+    "W",    # pycodestyle
+]
+
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.format]
+# Like Black, use double quotes for strings.
+quote-style = "double"
+
+# Like Black, indent with spaces, rather than tabs.
+indent-style = "space"
+
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
+
+# Enable auto-formatting of code examples in docstrings. Markdown,
+# reStructuredText code/literal blocks and doctests are all supported.
+#
+# This is currently disabled by default, but it is planned for this
+# to be opt-out in the future.
+docstring-code-format = false
+
+# Set the line length limit used when formatting code snippets in
+# docstrings.
+#
+# This only has an effect when the `docstring-code-format` setting is
+# enabled.
+docstring-code-line-length = "dynamic"
+
+[tool.ruff.lint.mccabe]
+max-complexity = 18
+
+[tool.ruff.lint.per-file-ignores]
+"**/configs/**.py" = [
+    "F401",
+    "E402",
+]
+"**/__init__.py" = [
+    "F401",
+    "F403",
+    "E402",
+]
+"**/tests/config/**.py" = [
+    "F401",
+    "E402",
+]
+"**/tests/**.py" = [
+    "D100",
+    "D103",
+    "D104",
+    "S101",
+]
+"configs/**.py" = [
+    "F401",
+    "E402",
+]
+"tests/config/**.py" = [
+    "F401",
+    "E402",
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.isort]
+known-third-party = ["numpy", "scipy", "pandas", "matplotlib", "sklearn", "torch", "tqdm"]
+# sections = ["FUTURE", "TYPING", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]

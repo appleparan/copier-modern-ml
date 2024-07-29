@@ -1,0 +1,266 @@
+site_name: {{ cookiecutter.project_name }}
+site_description: {{ cookiecutter.description }}
+site_author: {{ cookiecutter.full_name }}
+#site_url: 'SOME_URL' # Uncomment to set a canonical URL
+
+copyright: |
+  &copy; {{ cookiecutter.full_name }}
+
+site_dir: site/
+docs_dir: docs/
+
+theme:
+  name: 'material'
+
+  # +------------------------------------------------------------------------------------------------------+
+  # |                                                                                                      |
+  # | The "favicon" option allows you to set your own image/icon to use in the browser-tab.                |
+  # |                                                                                                      |
+  # | Pretty much all image types are supported, but it's recommended to use a PNG, SVG or ICO image for   |
+  # | the favicon.                                                                                         |
+  # |                                                                                                      |
+  # | The directory is relative to the "docs_dir".                                                         |
+  # |                                                                                                      |
+  # | Example: Having a favicon.png in docs/assets/images will result in the "favicon" setting showing     |
+  # |          'assets/images/favicon.png'                                                                 |
+  # |                                                                                                      |
+  # | Read More:                                                                                           |
+  # | - https://squidfunk.github.io/mkdocs-material/setup/changing-the-logo-and-icons/#favicon             |
+  # |                                                                                                      |
+  # +------------------------------------------------------------------------------------------------------+
+  #favicon: 'assets/images/favicon.png'
+
+  # +------------------------------------------------------------------------------------------------------+
+  # |                                                                                                      |
+  # | The "palette" section is a Material option and allows you to define specific style options such as   |
+  # | Color-Scheme, and primary and secondary Color.                                                       |
+  # |                                                                                                      |
+  # | You can also define multiple palettes that can have different Color Schemses and primary and/or      |
+  # | secondary Colors.                                                                                    |
+  # |                                                                                                      |
+  # | Read More:                                                                                           |
+  # | - https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/                             |
+  # | - https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/#color-palette-toggle        |
+  # |                                                                                                      |
+  # +------------------------------------------------------------------------------------------------------+
+  palette:
+
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+
+
+
+  font:
+   text: 'Noto Sans Korean'
+   code: 'Fira Code'
+
+  #language: 'en'
+  #direction: 'ltr'
+
+  features:
+  # Announce
+  #
+  #- announce.dismiss # Adds a "X" button to dismiss a news banner/mark it as read.*
+
+  # Header
+  #
+  - header.autohide # Hide header when user scrolls past a specific point.
+
+  # Navigation:
+  #
+  #- navigation.expand      # Expand all collapsable sections.
+  #- navigation.instant     # Instant loading pages.
+  #- navigation.indexes     # Attach pages directly to Sections. Incompatible with "toc.integrate"
+  #- navigation.sections    # Render top sections as groups.
+  - navigation.tabs         # Render top sections as tabs at the top.
+  - navigation.tabs.sticky # Tabs won't disappear when scrolling down. Requires "navigation.tabs".
+  #- navigation.top         # Adds a "Back to top" that is shown when scrolling up.
+  #- navigation.tracking    # Updates the url with highlighted section anchor.
+
+  # Search
+  #
+  #- search.highlight # Search will highlight the searched word(s) on the page.*
+  #- search.share     # Adds an option to share a search query link.*
+  #- search.suggest   # Search will suggest the likeliest completion for a word.*
+
+  # Table of Contents
+  #
+  #- toc.integrate          # Include the TOC sections in the left navugation.
+
+  icon:
+    logo: 'material/library'
+    repo: 'material/library'
+
+  #admonition:
+  #    note: 'octicons/tag-16'
+  #    abstract: 'octicons/checklist-16'
+  #    info: 'octicons/info-16'
+  #    tip: 'octicons/squirrel-16'
+  #    success: 'octicons/check-16'
+  #    question: 'octicons/question-16'
+  #    warning: 'octicons/alert-16'
+  #    failure: 'octicons/x-circle-16'
+  #    danger: 'octicons/zap-16'
+  #    bug: 'octicons/bug-16'
+  #    example: 'octicons/beaker-16'
+  #    quote: 'octicons/quote-16'
+
+#extra_css:
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+# +--------------------------------------------------------------------------------------------------------+
+# |                                                                                                        |
+# | The "extra" section contains pretty much anything you want, as long as it is a valid key-value pair.   |
+# |                                                                                                        |
+# | Material uses this section for different custom settings that wouldn't fit in the theme section.       |
+# |                                                                                                        |
+# | Read More:                                                                                             |
+# | - https://www.mkdocs.org/user-guide/configuration/#extra                                               |
+# |                                                                                                        |
+# +--------------------------------------------------------------------------------------------------------+
+# extra:
+  # +------------------------------------------------------------------------------------------------------+
+  # |                                                                                                      |
+  # | The social section allows you to set a list of entries which would be displayed in the footer of the |
+  # | page.                                                                                                |
+  # |                                                                                                      |
+  # | Each entry has the exact same options:                                                               |
+  # | - icon: Path to the SVG icon to use. See "icon" section for available icon sets.                     |
+  # | - link: URL to which the icon should link.                                                           |
+  # | - name: Optional Name that would be displayed as title on hover.                                     |
+  # |                                                                                                      |
+  # | Read More:                                                                                           |
+  # | - https://squidfunk.github.io/mkdocs-material/setup/setting-up-the-footer/#social-links              |
+  # |                                                                                                      |
+  # +------------------------------------------------------------------------------------------------------+
+  # social:
+  #   - icon: 'fontawesome/brands/github'
+  #     link: 'SOME_URL'
+
+  #generator: true
+
+  #manifest: manifest.webmanifest
+
+  #alternate:
+
+# +--------------------------------------------------------------------------------------------------------+
+# |                                                                                                        |
+# | MkDocs allows the usage of Markdown extensions which can do various things.                            |
+# |                                                                                                        |
+# | Material includes the pymdownx extension which provides a lot of useful features to use.               |
+# |                                                                                                        |
+# | Note that some extensions may use specific settings that you need to set.                              |
+# | Please check out the official documentation of PyMdownx for more information:                          |
+# | https://facelessuser.github.io/pymdown-extensions/                                                     |
+# |                                                                                                        |
+# | Material already provides required CSS and JS values for the PyMdownX Extensions, which means you do   |
+# | not need to set them up yourself.                                                                      |
+# |                                                                                                        |
+# | Read More:                                                                                             |
+# | - https://www.mkdocs.org/user-guide/configuration/#markdown_extensions                                 |
+# |                                                                                                        |
+# +--------------------------------------------------------------------------------------------------------+
+markdown_extensions:
+  # Python Markdown
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+
+  # Python Markdown Extensions
+  ## MathJax
+  - pymdownx.arithmatex:
+      generic: true
+  ## Improve detection of Markup to emphasize text
+  - pymdownx.betterem:
+      smart_enable: all
+  ## Add support for caret notation for subscript and superscript
+  - pymdownx.caret
+  ## Add support for definition lists
+  - pymdownx.details
+  ## Add support for emoji
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  ## Add support for extra emphasis for code blocks
+  - pymdownx.highlight:
+      use_pygments: true
+      pygments_lang_class: true
+      anchor_linenums: true
+      line_spans: __span
+  ## Add support for inline highlight
+  - pymdownx.inlinehilite
+  ## Add support for redering keys
+  - pymdownx.keys
+  ## Add support for markdown extra <mark> tag
+  - pymdownx.mark
+  ## Add support for converting some sequences of characters into their corresponding symbols
+  - pymdownx.smartsymbols
+  ## Add support for highlighting code blocks
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  ## Add support for tilde strikethrough <del></del>
+  - pymdownx.tilde
+
+
+nav:
+  - Home: index.md
+  - API Reference: api/
+  # - Guide:
+  #     - Introduction: guide/introduction.md
+  #     - Installation: guide/installation.md
+
+plugins:
+  - search
+  - gen-files:
+      scripts:
+        - scripts/gen_ref_pages.py
+  - literate-nav:
+      nav_file: SUMMARY.md
+  - section-index
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]  # search packages in the src folder
+          rendering:
+            show_source: true
+          options:
+            show_symbol_type_toc: true
+            docstring_options:
+              ignore_init_summary: true
+            docstring_section_style: list
+            filters: ["!^_", "!^test_"]
+          import:
+          - https://docs.python.org/3/objects.inv
