@@ -1,6 +1,11 @@
-# Cookiecutter Modern ML
+# Cookiecutter Modern ML (WIP)
 
-Personal cookiecutter template with modern Python workflows
+[![Copier](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/copier-org/copier/master/img/badge/badge-grayscale-inverted-border-orange.json)](https://github.com/copier-org/copier)
+
+Personal [copier](https://copier.readthedocs.io/en/stable/) template with modern Python workflows
+
+Inspired by [copier-uv](https://github.com/pawamoy/copier-uv) and [cookiecutter-data-science](drivendataorg
+/cookiecutter-data-science).
 
 ## Packaging Guide
 
@@ -14,16 +19,16 @@ Trying to follow [pyOpenSci Python Package Guide](https://www.pyopensci.org/pyth
 # How to use it
 ## Install dependencies
 * Python 3.11+
-* Cookiecutter >= 2.6.0
+* copier >= 9.3.1
 
-## Install cookiecutter
+## Install copier
 ```bash
-rye add cookiecutter
+rye add copier
 ```
 
 ## To start a new project, run:
 ```bash
-cookiecutter https://github.com/appleparan/cookiecutter-modern-ml.git
+copier copy gh:appleparan/copier-modern-ml ~/path/to/your/subproject
 ```
 
 ### The resulting directory structure
@@ -33,6 +38,13 @@ The directory structure of your new project will look something like this (depen
 ```
 ├── LICENSE            <- Open-source license if one is chosen
 ├── README.md          <- The top-level README for developers using this project.
+├── mkdocs.yml         <- mkdocs-material configuration file.
+├── pyproject.toml     <- Project configuration file with package metadata for
+│                         {{ project_slug }} and configuration for tools like ruff
+├── requirements.lock       <- The requirements lock file for reproducing the production environment, e.g.
+│                              generated with `rye sync`
+├── requirements-dev.lock   <- The requirements lock file for reproducing the development environment, e.g.
+│                              generated with `rye sync`
 ├── data
 │   ├── external       <- Data from third party sources.
 │   ├── interim        <- Intermediate data that has been transformed.
@@ -52,12 +64,6 @@ The directory structure of your new project will look something like this (depen
 ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
 │   └── figures        <- Generated graphics and figures to be used in reporting
 │
-├── requirements.lock       <- The requirements lock file for reproducing the production environment, e.g.
-│                              generated with `rye sync`
-├── requirements-dev.lock   <- The requirements lock file for reproducing the development environment, e.g.
-│                              generated with `rye sync`
-├── pyproject.toml     <- Project configuration file with package metadata for
-│                         {{ cookiecutter.project_slug }} and configuration for tools like black
 │
 ├── src/tests          <- Unit test files.
 │

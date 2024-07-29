@@ -1,0 +1,120 @@
+# CONFIGURATION -------------------------
+_min_copier_version: "9"
+_envops:
+  autoescape: false
+  keep_trailing_newline: true
+_subdirectory: project
+_templates_suffix: .jinja
+_jinja_extensions:
+- copier_templates_extensions.TemplateExtensionLoader
+- extensions.py:CurrentYearExtension
+- extensions.py:GitExtension
+- extensions.py:SlugifyExtension
+- extensions.py:GitHubIDsforGiscusExtension
+_skip_if_exists:
+- CHANGELOG.md
+- docs/insiders/changelog.md
+
+
+# PROMPT --------------------------------
+project_name:
+  type: str
+  help: Your project name
+
+project_slug:
+  type: str
+  help: Your repository name served as a slug
+  default: "{{ project_name|lower|replace('_', '-')|replace(' ', '-') }}"
+
+project_description:
+  type: str
+  help: Your project description
+
+version:
+  type: str
+  help: Your project version
+  default: 0.1.0
+
+author_fullname:
+  type: str
+  help: Your full name
+
+author_email:
+  type: str
+  help: Your email
+
+copyright_holder:
+  type: str
+  help: The name of the person/entity holding the copyright
+  default: '{{ author_fullname }}'
+
+copyright_holder_email:
+  type: str
+  help: The email of the person/entity holding the copyright
+  default: '{{ author_email }}'
+
+copyright_date:
+  type: str
+  help: The copyright date
+  default: '2024'
+
+copyright_license:
+  type: str
+  help: Your project's license
+  default: Apache License 2.0
+  choices:
+    - Apache License 2.0
+    - BSD 3-Clause "New" or "Revised" License
+    - MIT License
+
+virtual:
+  type: bool
+  help: Do you want to create a virtual project(not installable Python packages)?
+  default: false
+  choices:
+    - "Yes": true
+    - "No": false
+
+ci:
+  type: str
+  help: What Continuous Integration service do you want to use?
+  choices:
+      GitHub CI: github
+      GitLab CI: gitlab
+  default: github
+
+# FILES --------------------------------
+configs_dir:
+  type: str
+  help: The directory where configuration files are stored
+  default: configs
+
+data_dir:
+  type: str
+  help: The directory where data files are stored
+  default: data
+
+examples_dir:
+  type: str
+  help: The directory where example files are stored
+  default: examples
+
+notebooks_dir:
+  type: str
+  help: The directory where Jupyter notebooks are stored
+  default: notebooks
+
+models_dir:
+  type: str
+  help: The directory where model files are stored
+  default: models
+
+references_dir:
+  type: str
+  help: The directory where reference files are stored
+  default: references
+
+reports_dir:
+  type: str
+  help: The directory where report files are stored
+  default: reports

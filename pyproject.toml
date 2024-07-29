@@ -1,20 +1,21 @@
 [project]
 name = "cookiecutter-modern-ml"   # Change this
 version = "0.1.0"   # Change this
-description = "Modern Machine Learning Template" # Change this
+description = "Copier tempalte for modern machine learning project" # Change this
 readme = "README.md"
 authors = [
     {name="Jongsu Liam Kim", email="jongsukim8@gmail.com"}
 ]
 dependencies = [
+    "copier",
+    "copier-templates-extensions",
+    "jinja2",
     "typer",
-    "cookiecutter",
 ]
 requires-python = ">=3.11, <4.0"
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Environment :: Console",
-    "Environment :: GPU :: NVIDIA CUDA :: 12",
     "Intended Audience :: Developers",
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: Apache Software License",
@@ -25,19 +26,13 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules"
 ]
 
-[project.optional-dependencies]
-dev = [
-]
-doc = [
-]
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.rye]
 managed = true
-virtual = false
+virtual = true
 dev-dependencies = [
     "pytest",
 ]
