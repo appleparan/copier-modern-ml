@@ -23,7 +23,7 @@ rye add cookiecutter
 
 ## To start a new project, run:
 ```bash
-cookiecutter
+cookiecutter https://github.com/appleparan/cookiecutter-modern-ml.git
 ```
 
 ### The resulting directory structure
