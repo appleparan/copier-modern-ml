@@ -10,10 +10,8 @@ _jinja_extensions:
 - extensions.py:CurrentYearExtension
 - extensions.py:GitExtension
 - extensions.py:SlugifyExtension
-- extensions.py:GitHubIDsforGiscusExtension
 _skip_if_exists:
 - CHANGELOG.md
-- docs/insiders/changelog.md
 
 
 # PROMPT --------------------------------
@@ -72,8 +70,8 @@ virtual:
   help: Do you want to create a virtual project(not installable Python packages)?
   default: false
   choices:
-    - "Yes": true
-    - "No": false
+    - true
+    - false
 
 ci:
   type: str

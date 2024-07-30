@@ -22,12 +22,12 @@ repos:
     hooks:
       - id: ruff
         args: [ --fix, --exit-non-zero-on-fix ]
-        exclude: ^{{ cookiecutter.project_name }}/
+        exclude: ^{{ project_name }}/
         types: [python, pyi, jupyter]
         language: system
 
       - id: ruff-format
-        exclude: ^{{ cookiecutter.project_name }}/
+        exclude: ^{{ project_name }}/
         types: [python, pyi, jupyter]
         language: system
 

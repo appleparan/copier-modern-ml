@@ -1,5 +1,5 @@
 [project]
-name = "cookiecutter-modern-ml"   # Change this
+name = "copier-modern-ml"   # Change this
 version = "0.1.0"   # Change this
 description = "Copier tempalte for modern machine learning project" # Change this
 readme = "README.md"

@@ -1,11 +1,10 @@
-# Cookiecutter Modern ML (WIP)
+# Copier Modern Machine Learning Template (WIP)
 
 [![Copier](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/copier-org/copier/master/img/badge/badge-grayscale-inverted-border-orange.json)](https://github.com/copier-org/copier)
 
 Personal [copier](https://copier.readthedocs.io/en/stable/) template with modern Python workflows
 
-Inspired by [copier-uv](https://github.com/pawamoy/copier-uv) and [cookiecutter-data-science](drivendataorg
-/cookiecutter-data-science).
+Inspired by [copier-uv](https://github.com/pawamoy/copier-uv) and [cookiecutter-data-science](https://github.com/drivendataorg/cookiecutter-data-science).
 
 ## Packaging Guide
 
@@ -67,9 +66,9 @@ The directory structure of your new project will look something like this (depen
 │
 ├── src/tests          <- Unit test files.
 │
-└── src/{{ cookiecutter.project_slug }}   <- Source code for use in this project.
+└── src/{{ project_slug }}   <- Source code for use in this project.
     │
-    ├── __init__.py             <- Makes {{ cookiecutter.project_slug }} a Python module
+    ├── __init__.py             <- Makes {{ project_slug }} a Python module
     │
     └── cli.py                  <- Default CLI program
 ```

@@ -75,7 +75,7 @@ packages = ["src/{{ project_slug }}"]
 
 [tool.rye]
 managed = true
-{%- if cookiecutter.virtual -%}
+{%- if virtual -%}
 virtual = true
 {%- else -%}
 virtual = false

@@ -7,6 +7,6 @@ generate() {
     -d author_fullname="Author123" \
     -d author_email="username123@user.emailaddress" \
     -d copyright_license="MIT License" \
-    -d virtual="No" \
+    -d virtual=no \
     -d ci="github"
 }

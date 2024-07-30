@@ -128,7 +128,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# ruff cache
+# ruff
 .ruff_cache/
 
 # pyenv
