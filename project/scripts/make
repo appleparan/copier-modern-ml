@@ -48,13 +48,10 @@ def rye_install() -> None:
 
 def setup() -> None:
     """Setup the project."""
-    if not shutil.which("uv"):
-        raise ValueError("make: setup: uv must be installed, see https://github.com/astral-sh/uv")
+    if not shutil.which("rye"):
+        raise ValueError("make: setup: rye must be installed, see https://github.com/astral-sh/rye")
 
     print("Installing dependencies (default environment)")  # noqa: T201
-    default_venv = Path(".venv")
-    if not default_venv.exists():
-        shell("rye init")
     rye_install()
 
     if PYTHON_VERSIONS:

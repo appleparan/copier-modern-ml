@@ -21,8 +21,8 @@ project_name:
 
 project_slug:
   type: str
-  help: Your repository name served as a slug
-  default: "{{ project_name|lower|replace('_', '-')|replace(' ', '-') }}"
+  help: Your project name served as a slug
+  default: "{{ project_name | slugify('_') }}"
 
 project_description:
   type: str
@@ -54,7 +54,7 @@ copyright_holder_email:
 copyright_date:
   type: str
   help: The copyright date
-  default: '2024'
+  default: "{{ current_year }}"
 
 copyright_license:
   type: str

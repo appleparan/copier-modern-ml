@@ -135,7 +135,7 @@ dmypy.json
 .python-version
 
 # vscode
-.vscode/
+# .vscode/
 
 # output
 outputs/
@@ -145,3 +145,6 @@ outputs/
 
 # data directory
 # data
+
+# test directory
+tests/tmp

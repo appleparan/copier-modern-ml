@@ -7,7 +7,7 @@ output=tests/tmp
 make() {
     ./scripts/make "$@"
 }
-
+rm -rf "${output}"
 
 echo
 echo "///////////////////////////////////////////"
