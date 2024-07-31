@@ -1,7 +1,7 @@
 [project]
-name = "copier-modern-ml"   # Change this
-version = "0.1.0"   # Change this
-description = "Copier tempalte for modern machine learning project" # Change this
+name = "copier-modern-ml"
+version = "0.1.0"
+description = "Personal Python machine learning project template with modern workflows made by copier"
 readme = "README.md"
 authors = [
     {name="Jongsu Liam Kim", email="jongsukim8@gmail.com"}
