@@ -1,8 +1,10 @@
 [project]
 name = "{{ project_slug }}"
 version = "{{ version }}"
-description = "{{ description }}"
-authors = ["{{ author_fullname }} <{{ author_email }}>"]
+description = "{{ project_description }}"
+authors = [
+    {name="{{ author_fullname }}", email="<{{ author_email }}>"}
+]
 readme = "README.md"
 dependencies = [
     "numpy",
@@ -75,11 +77,8 @@ packages = ["src/{{ project_slug }}"]
 
 [tool.rye]
 managed = true
-{%- if virtual -%}
-virtual = true
-{%- else -%}
-virtual = false
-{% endif %}
+virtual = {%- if virtual -%}true{%- else -%} false{%- endif %}
+
 dev-dependencies = [
     "coverage",
     "coverage-badge",
