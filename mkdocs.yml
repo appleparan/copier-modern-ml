@@ -184,35 +184,35 @@ markdown_extensions:
 nav:
   - Home:
     - Overview: index.md
-  - Guide:
-    - Requirements: requirements.md
+  # - Guide:
+  #   - Requirements: requirements.md
     # - Generating a project: generate.md
     # - Working on a project: work.md
     # - Updating a project: update.md
-  - API Reference: api/
+  # - API Reference: api/
   # - Guide:
   #     - Introduction: guide/introduction.md
   #     - Installation: guide/installation.md
 
 plugins:
   - search
-  - gen-files:
-      scripts:
-        - scripts/gen_ref_pages.py
-  - literate-nav:
-      nav_file: SUMMARY.md
+  # - gen-files:
+  #     scripts:
+  #       - scripts/gen_ref_pages.py
+  # - literate-nav:
+  #     nav_file: SUMMARY.md
   - section-index
-  - mkdocstrings:
-      handlers:
-        python:
-          paths: [src]  # search packages in the src folder
-          rendering:
-            show_source: true
-          options:
-            show_symbol_type_toc: true
-            docstring_options:
-              ignore_init_summary: true
-            docstring_section_style: list
-            filters: ["!^_", "!^test_"]
-          import:
-          - https://docs.python.org/3/objects.inv
+  # - mkdocstrings:
+  #     handlers:
+  #       python:
+  #         paths: [src]  # search packages in the src folder
+  #         rendering:
+  #           show_source: true
+  #         options:
+  #           show_symbol_type_toc: true
+  #           docstring_options:
+  #             ignore_init_summary: true
+  #           docstring_section_style: list
+  #           filters: ["!^_", "!^test_"]
+  #         import:
+  #         - https://docs.python.org/3/objects.inv

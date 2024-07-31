@@ -1,4 +1,4 @@
-# Copier Modern Machine Learning Template (WIP)
+# Copier Modern Machine Learning Template
 
 [![Copier](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/copier-org/copier/master/img/badge/badge-grayscale-inverted-border-orange.json)](https://github.com/copier-org/copier)
 
@@ -10,10 +10,19 @@ Inspired by [copier-uv](https://github.com/pawamoy/copier-uv) and [cookiecutter-
 
 Trying to follow [pyOpenSci Python Package Guide](https://www.pyopensci.org/python-package-guide/index.html)
 
-## Tools
-* Use [rye](https://github.com/astral-sh/rye) with [ruff](https://docs.astral.sh/ruff/), [uv](https://docs.astral.sh/ruff/) for project management.
-* Use [pytest](https://github.com/pytest-dev/pytest) for testing
-* Use [mkdocs](https://www.mkdocs.org/) and [mkdocs-material](https://squidfunk.github.io/mkdocs-material/) for documentation.
+## Features
+
+- [rye](https://github.com/astral-sh/rye) for project and package management. Included following tools.
+    - [uv](https://github.com/astral-sh/uv) setup, with pre-defined `pyproject.toml`
+    - Pre-configured tools for code formatting, quality analysis and testing: [ruff](https://github.com/charliermarsh/ruff),
+  [mypy](https://github.com/python/mypy),
+- Tests run with [pytest](https://github.com/pytest-dev/pytest) and plugins, with [coverage](https://github.com/nedbat/coveragepy) support
+- Documentation built with [MkDocs](https://github.com/mkdocs/mkdocs)
+  ([Material theme](https://github.com/squidfunk/mkdocs-material)
+  and "autodoc" [mkdocstrings plugin](https://github.com/mkdocstrings/mkdocstrings))
+- Support for GitHub workflows
+- Auto-generated `CHANGELOG.md` from Git (conventional) commits
+
 
 # How to use it
 ## Install dependencies
