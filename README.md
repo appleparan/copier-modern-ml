@@ -33,12 +33,12 @@ Trying to follow [pyOpenSci Python Package Guide](https://www.pyopensci.org/pyth
 
 ## Install copier
 ```bash
-rye add copier
+python -m pip instal copier copier_templates_extension
 ```
 
 ## To start a new project, run:
 ```bash
-copier copy gh:appleparan/copier-modern-ml ~/path/to/your/subproject
+python -m copier copy --trust gh:appleparan/copier-modern-ml ~/path/to/your/subproject
 ```
 
 ### The resulting directory structure
