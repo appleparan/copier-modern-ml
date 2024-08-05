@@ -33,7 +33,7 @@ Trying to follow [pyOpenSci Python Package Guide](https://www.pyopensci.org/pyth
 
 ## Install copier
 ```bash
-python -m pip instal copier copier_templates_extension
+python -m pip install copier copier_templates_extensions
 ```
 
 ## To start a new project, run:

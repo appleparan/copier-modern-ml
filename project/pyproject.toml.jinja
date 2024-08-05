@@ -7,11 +7,15 @@ authors = [
 ]
 readme = "README.md"
 dependencies = [
+    "hydra",
+    "ipykernel",
     "numpy",
     "matplotlib",
+    "omegaconf",
     "pandas[parquet,performance]",
     "plotly",
     "scikit-learn",
+    "seaborn",
     "tqdm",
     "torch",
     "typer",
@@ -59,6 +63,10 @@ dev = [
 doc = [
     "mkdocs",
     "mkdocs-material",
+    "mkdocstrings[python]",
+    "mkdocs-gen-files",
+    "mkdocs-section-index",
+    "mkdocs-literate-nav",
 ]
 
 [build-system]
@@ -71,13 +79,13 @@ build-backend = "hatchling.build"
 [tool.hatch.metadata]
 allow-direct-references = true
 
-# Only need when `rye.virtual = true`
+# Only need when `rye.virtual = false`
 [tool.hatch.build.targets.wheel]
 packages = ["src/{{ project_slug }}"]
 
 [tool.rye]
 managed = true
-virtual = {%- if virtual -%}true{%- else -%} false{%- endif %}
+virtual = {%- if virtual -%} true{%- else -%} false{%- endif %}
 
 dev-dependencies = [
     "coverage",
