@@ -31,9 +31,12 @@ jobs:
         ##########################
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
         ##########################
         # Release from tags      #
         ##########################
+
       - name: Publish Release
         id: publish_release
         uses: ghalactic/github-release-from-tag@v5

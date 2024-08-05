@@ -85,7 +85,7 @@ packages = ["src/{{ project_slug }}"]
 
 [tool.rye]
 managed = true
-virtual = {%- if virtual -%} true{%- else -%} false{%- endif %}
+virtual = {% if virtual %}true{% else %}false{% endif %}
 
 dev-dependencies = [
     "coverage",
@@ -335,3 +335,24 @@ branch = true
 [tool.coverage.report]
 fail_under = 50
 show_missing = true
+
+[tool.git-changelog]
+bump = "minor"
+convention = "conventional"
+in-place = false
+filter-commits = "0.1.0.."
+marker-line = "<!-- insertion marker -->"
+output = "output.log"
+parse-refs = false
+parse-trailers = false
+{% if ci == 'gitlab' %}
+provider = "gitlab"
+{% else %}
+provider = "github"
+{% endif %}
+repository = "."
+sections = "fix,maint"
+template = "keepachangelog"
+version-regex = "^## \\\\[(?P<version>v?[^\\\\]]+)"
+versioning = "semver"
+zerover = true

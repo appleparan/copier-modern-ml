@@ -35,7 +35,25 @@ managed = true
 virtual = true
 dev-dependencies = [
     "pytest",
+    "git-changelog",
 ]
 
 [tool.hatch.metadata]
 allow-direct-references = true
+
+[tool.git-changelog]
+bump = "minor"
+convention = "conventional"
+in-place = false
+filter-commits = "0.1.0.."
+marker-line = "<!-- insertion marker -->"
+output = "output.log"
+parse-refs = false
+parse-trailers = false
+provider = "github"
+repository = "."
+sections = "fix,maint"
+template = "keepachangelog"
+version-regex = "^## \\\\[(?P<version>v?[^\\\\]]+)"
+versioning = "semver"
+zerover = true
