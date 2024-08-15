@@ -9,6 +9,7 @@ authors = [
 dependencies = [
     "copier",
     "copier-templates-extensions",
+    "duty",
     "jinja2",
     "typer",
 ]
