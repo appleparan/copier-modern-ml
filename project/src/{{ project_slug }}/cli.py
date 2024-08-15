@@ -7,8 +7,8 @@ app = typer.Typer()
 
 def main() -> None:
     """Main function."""
-    print("Hello, world!")
+    print('Hello, world!')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app()
