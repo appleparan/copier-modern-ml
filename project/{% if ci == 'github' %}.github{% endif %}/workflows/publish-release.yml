@@ -1,0 +1,65 @@
+# .github/workflows/publish-release.yml
+name: Publish release
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  check-permission:
+    name: check permission
+    runs-on: ubuntu-latest
+    outputs:
+      permission: ${{ steps.check.outputs.permission }}
+    steps:
+      - id: check
+        uses: shogo82148/actions-check-permissions@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish:
+    name: Publish release
+    runs-on: ubuntu-latest
+    outputs:
+      release_body: ${{ steps.git-cliff.outputs.content }}
+    permissions:
+      contents: write
+      pull-requests: read
+    needs:
+      - check-permission
+    steps:
+        ##########################
+        # Checkout the code base #
+        ##########################
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate a changelog
+        uses: orhun/git-cliff-action@v3
+        id: git-cliff
+        with:
+          config: cliff.toml
+          args: -vv --latest --strip header
+        env:
+          OUTPUT: CHANGELOG.md
+          GITHUB_REPO: ${{ github.repository }}
+      
+      - name: Commit CHANGELOG.md
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          set +e
+          git add CHANGELOG.md
+          git commit -m "Update changelog"
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git <branch>
+
+      - name: Publish Release
+        id: publish_release
+        uses: ghalactic/github-release-from-tag@v5
+        if: github.ref_type == 'tag'
+        with:
+          prerelease: "false"
+          reactions: rocket
+          token: ${{ secrets.GITHUB_TOKEN }}
