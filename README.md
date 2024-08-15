@@ -23,7 +23,7 @@ Trying to follow [pyOpenSci Python Package Guide](https://www.pyopensci.org/pyth
   ([Material theme](https://github.com/squidfunk/mkdocs-material)
   and "autodoc" [mkdocstrings plugin](https://github.com/mkdocstrings/mkdocstrings))
 - Support for GitHub workflows
-- Auto-generated `CHANGELOG.md` from Git (conventional) commits
+- Auto-generated `CHANGELOG.md` from Git (conventional) commits. [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0-beta.2/)
 
 
 # How to use it
@@ -56,7 +56,7 @@ rye run pre-commit install
 git commit -m "First commit"
 ```
 
-### The resulting directory structure
+## The resulting directory structure
 
 The directory structure of your new project will look something like this (depending on the settings that you choose):
 
