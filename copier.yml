@@ -62,8 +62,8 @@ copyright_license:
   default: Apache License 2.0
   choices:
     - Apache License 2.0
-    - BSD 3-Clause "New" or "Revised" License
     - MIT License
+    - BSD 3-Clause "New" or "Revised" License
 
 virtual:
   type: bool
