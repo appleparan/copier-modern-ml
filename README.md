@@ -30,15 +30,30 @@ Trying to follow [pyOpenSci Python Package Guide](https://www.pyopensci.org/pyth
 ## Install dependencies
 * Python 3.11+
 * copier >= 9.3.1
+* rye >= 0.38.0 (optional)
 
 ## Install copier
 ```bash
-python -m pip install copier copier_templates_extensions
+python -m pipx install copier copier_templates_extensions
 ```
 
 ## To start a new project, run:
 ```bash
-python -m copier copy --trust gh:appleparan/copier-modern-ml ~/path/to/your/subproject
+python -m copier copy --trust gh:appleparan/copier-modern-ml ~/path/to/your/project
+```
+
+then, install packages.
+
+```
+cd ~/path/to/your/project
+rye sync
+```
+
+Finally, initialize git, then install `pre-commit` hooks. (it takes some time at the first installation)
+```
+git init
+rye run pre-commit install
+git commit -m "First commit"
 ```
 
 ### The resulting directory structure
