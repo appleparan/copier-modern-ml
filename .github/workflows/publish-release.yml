@@ -20,6 +20,8 @@ jobs:
   publish:
     name: Publish release
     runs-on: ubuntu-latest
+    outputs:
+      release_body: ${{ steps.git-cliff.outputs.content }}
     permissions:
       contents: write
       pull-requests: read
@@ -33,9 +35,25 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-        ##########################
-        # Release from tags      #
-        ##########################
+
+      - name: Generate a changelog
+        uses: orhun/git-cliff-action@v3
+        id: git-cliff
+        with:
+          config: cliff.toml
+          args: -vv --latest --strip header
+        env:
+          OUTPUT: CHANGELOG.md
+          GITHUB_REPO: ${{ github.repository }}
+      
+      - name: Commit CHANGELOG.md
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          set +e
+          git add CHANGELOG.md
+          git commit -m "Update changelog"
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git <branch>
 
       - name: Publish Release
         id: publish_release
