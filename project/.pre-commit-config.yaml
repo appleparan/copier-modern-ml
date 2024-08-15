@@ -7,37 +7,47 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.6.0  # Use the ref you want to point at
     hooks:
+      - id: https://github.com/pre-commit/pre-commit-hooks
       - id: check-merge-conflict
       - id: check-yaml
         exclude: .github/
       - id: check-toml
         exclude: .github/
+      - id: detect-private-key
+      - id: double-quote-string-fixer
       - id: end-of-file-fixer
         exclude: LICENSE
       - id: trailing-whitespace
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
-    rev: v0.4.6
+    rev: v0.5.7
     hooks:
       - id: ruff
         args: [ --fix, --exit-non-zero-on-fix ]
-        exclude: ^{{ project_name }}/
         types: [python, pyi, jupyter]
-        language: system
 
       - id: ruff-format
-        exclude: ^{{ project_name }}/
         types: [python, pyi, jupyter]
         language: system
 
-  - repo: local
+  # - repo: local
+  #   hooks:
+  #     - id: mypy
+  #       name: mypy
+  #       entry: python -m mypy
+  #       exclude: |
+  #         ^tests/|
+  #       types: [python]
+  #       args: [--strict]
+  #       language: system
+
+  - repo: https://github.com/hadolint/hadolint
+    rev: v2.12.0
     hooks:
-      - id: mypy
-        name: mypy
-        entry: python -m mypy
-        exclude: |
-          ^tests/|
-        types: [python]
-        args: [--strict]
+      - id: hadolint
+        name: Lint Dockerfiles
+        description: Runs hadolint to lint Dockerfiles
         language: system
+        types: ["dockerfile"]
+        entry: hadolint
