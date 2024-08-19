@@ -10,7 +10,7 @@ Inspired by [copier-uv](https://github.com/pawamoy/copier-uv) and [cookiecutter-
 
 ## Packaging Guide
 
-Trying to follow [pyOpenSci Python Package Guide](https://www.pyopensci.org/python-package-guide/index.html)
+* Check out [pyOpenSci Python Package Guide](https://www.pyopensci.org/python-package-guide/index.html)
 
 ## Features
 
@@ -19,9 +19,8 @@ Trying to follow [pyOpenSci Python Package Guide](https://www.pyopensci.org/pyth
     - Pre-configured tools for code formatting, quality analysis and testing: [ruff](https://github.com/charliermarsh/ruff),
   [mypy](https://github.com/python/mypy),
 - Tests run with [pytest](https://github.com/pytest-dev/pytest) and plugins, with [coverage](https://github.com/nedbat/coveragepy) support
-- Documentation built with [MkDocs](https://github.com/mkdocs/mkdocs)
-  ([Material theme](https://github.com/squidfunk/mkdocs-material)
-  and "autodoc" [mkdocstrings plugin](https://github.com/mkdocstrings/mkdocstrings))
+- Documentation built with [mkdocs-material](https://github.com/squidfunk/mkdocs-material)
+  and [mkdocstrings plugin](https://github.com/mkdocstrings/mkdocstrings))
 - Support for GitHub workflows
 - Auto-generated `CHANGELOG.md` from Git (conventional) commits. [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0-beta.2/)
 
