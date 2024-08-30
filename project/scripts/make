@@ -11,7 +11,8 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Iterator
 
-PYTHON_VERSIONS = os.getenv('PYTHON_VERSIONS', '3.8 3.9 3.10 3.11 3.12 3.13').split()
+PYTHON_VERSIONS = os.getenv('PYTHON_VERSIONS', '3.11 3.12').split()
+PYTHON_VERSION = os.getenv('PYTHON_VERSION', '3.12')
 
 exe = ''
 prefix = ''
@@ -39,11 +40,18 @@ def environ(**kwargs: str) -> Iterator[None]:
 
 def rye_install() -> None:
     """Install dependencies using rye(uv)."""
-    shell('rye sync')
-    if 'CI' not in os.environ:
+    shell('rye lock')
+    if 'CI' in os.environ:
+        # Install pytorch CPU version first
+        # shell('rye run pip install torch torchvision torchaudio')
+        shell('rye config --set [tool.rye.sources].name=pytorch-cpu')
+        shell('rye config --set [tool.rye.sources].url="https://download.pytorch.org/whl/cpu"')
+        # shell('sed -i \'s/\["\[tool.rye.sources\]"\]/\[\[tool.rye.sources\]\]/g\' ~/.rye/config.toml')
         shell('rye sync')
     else:
-        shell('rye sync --no-lock')
+        # Install pytorch CPU version first
+        shell('rye run pip install torch torchvision torchaudio')
+        shell('rye sync')
 
 
 def setup() -> None:
@@ -57,40 +65,26 @@ def setup() -> None:
     if PYTHON_VERSIONS:
         for version in PYTHON_VERSIONS:
             print(f"\nInstalling dependencies (python{version})")  # noqa: T201
-            venv_path = Path(f".venvs/{version}")
-            if not venv_path.exists():
-                shell(f"uv venv --python {version} {venv_path}")
-            with environ(VIRTUAL_ENV=str(venv_path.resolve())):
-                rye_install()
+            rye_activate(version)
+            rye_install()
 
 
-def activate(path: str) -> None:
+def rye_activate(python_ver: str = "3.12") -> None:
     """Activate a virtual environment."""
-    global exe, prefix  # noqa: PLW0603
-
-    if (bin := Path(path, 'bin')).exists():
-        activate_script = bin / 'activate_this.py'
-    elif (scripts := Path(path, 'Scripts')).exists():
-        activate_script = scripts / 'activate_this.py'
-        exe = '.exe'
-        prefix = f"{path}/Scripts/"
-    else:
-        raise ValueError(f"make: activate: Cannot find activation script in {path}")
-
-    if not activate_script.exists():
-        raise ValueError(f"make: activate: Cannot find activation script in {path}")
-
-    exec(activate_script.read_text(), {'__file__': str(activate_script)})  # noqa: S102
+    global exe, prefix  # noqa: PLW060
+    shell(f"rye pin {python_ver}")
+    shell(f"rye sync")
+    # shell(f"rye sync --no-lock")
 
 
 def run(version: str, cmd: str, *args: str, **kwargs: Any) -> None:
     """Run a command in a virtual environment."""
     kwargs = {'check': True, **kwargs}
     if version == 'default':
-        activate('.venv')
+        rye_activate(PYTHON_VERSION)
         subprocess.run([f"{prefix}{cmd}{exe}", *args], **kwargs)  # noqa: S603, PLW1510
     else:
-        activate(f".venvs/{version}")
+        rye_activate(version)
         os.environ['MULTIRUN'] = '1'
         subprocess.run([f"{prefix}{cmd}{exe}", *args], **kwargs)  # noqa: S603, PLW1510
 
@@ -101,7 +95,7 @@ def multirun(cmd: str, *args: str, **kwargs: Any) -> None:
         for version in PYTHON_VERSIONS:
             run(version, cmd, *args, **kwargs)
     else:
-        run('default', cmd, *args, **kwargs)
+        run(PYTHON_VERSION, cmd, *args, **kwargs)
 
 
 def allrun(cmd: str, *args: str, **kwargs: Any) -> None:
@@ -123,11 +117,6 @@ def clean() -> None:
             shutil.rmtree(path, ignore_errors=True)
 
 
-def vscode() -> None:
-    """Configure VSCode to work on this project."""
-    Path('.vscode').mkdir(parents=True, exist_ok=True)
-    shell('cp -v config/vscode/* .vscode')
-
 
 def main() -> int:
     """Main entry point."""
@@ -139,11 +128,9 @@ def main() -> int:
         print('  run                   Run a command in the default virtual environment.')  # noqa: T201
         print('  multirun              Run a command for all configured Python versions.')  # noqa: T201
         print('  allrun                Run a command in all virtual environments.')  # noqa: T201
-        print('  3.x                   Run a command in the virtual environment for Python 3.x.')  # noqa: T201
         print('  clean                 Delete build artifacts and cache files.')  # noqa: T201
-        print('  vscode                Configure VSCode to work on this project.')  # noqa: T201
         try:
-            run('default', 'python', '-V', capture_output=True)
+            run(PYTHON_VERSION, 'python', '-V', capture_output=True)
         except (subprocess.CalledProcessError, ValueError):
             pass
         else:
@@ -153,7 +140,7 @@ def main() -> int:
         cmd = args.pop(0)
 
         if cmd == 'run':
-            run('default', *args)
+            run(PYTHON_VERSION, *args)
             return 0
 
         if cmd == 'multirun':
@@ -164,10 +151,6 @@ def main() -> int:
             allrun(*args)
             return 0
 
-        if cmd.startswith('3.'):
-            run(cmd, *args)
-            return 0
-
         opts = []
         while args and (args[0].startswith('-') or '=' in args[0]):
             opts.append(args.pop(0))
@@ -176,10 +159,6 @@ def main() -> int:
             clean()
         elif cmd == 'setup':
             setup()
-        elif cmd == 'vscode':
-            vscode()
-        else:
-            run('default', 'duty', cmd, *opts)
 
     return 0
 

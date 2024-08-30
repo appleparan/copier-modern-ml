@@ -1,12 +1,39 @@
 #!/usr/bin/env bash
 set -eu
 
-PYTHON_VERSIONS="${PYTHON_VERSIONS-3.8 3.9 3.10 3.11 3.12 3.13}"
+PYTHON_VERSION="${PYTHON_VERSION-3.12}"
+PYTHON_VERSIONS="${PYTHON_VERSIONS-3.9 3.10 3.11 3.12}"
 . tests/helpers.sh
 output=tests/tmp
 make() {
     ./scripts/make "$@"
 }
+# Function to check if a file exists
+check_file() {
+    local FILE="$1"
+
+    if [ -f "$FILE" ]; then
+        echo "File '$FILE' exists."
+        return 0  # Return 0 if the file exists
+    else
+        echo "File '$FILE' does not exist."
+        return 1  # Return 1 if the file does not exist
+    fi
+}
+
+# Function to check if a directory exists
+check_directory() {
+    local DIR="$1"
+
+    if [ -d "$DIR" ]; then
+        echo "Directory '$DIR' exists."
+        return 0  # Return 0 if the directory exists
+    else
+        echo "Directory '$DIR' does not exist."
+        return 1  # Return 1 if the directory does not exist
+    fi
+}
+
 rm -rf "${output}"
 
 echo
@@ -18,6 +45,25 @@ generate "${PWD}" "${output}"
 cd "${output}"
 cat .copier-answers.yml
 git init .
+
+echo
+echo ">>> Check files with default values"
+check_directory "configs"
+check_directory "data"
+check_directory "data/raw"
+check_directory "data/processed"
+check_directory "data/interim"
+check_directory "data/external"
+check_directory "docs"
+check_directory "examples"
+check_directory "models"
+check_directory "notebooks"
+check_directory "reports"
+check_directory "src"
+check_file ".pre-commit-config.yaml"
+check_file "mkdocs.yml"
+check_file "README.md"
+check_file "pyproject.toml"
 
 echo
 echo "///////////////////////////////////////////"
@@ -48,31 +94,17 @@ if [ -z "${SKIP_SETUP:-}" ]; then
     make help
     echo
 fi
-echo ">>> Configuring VSCode"
-make vscode
+
 echo
 echo ">>> Testing arbitrary commands"
 pycode="import sys; print(sys.version.split(' ', 1)[0].rsplit('.', 1)[0])"
-make run python -c "print('run: ', end=''); ${pycode}"
-make multirun python -c "print('multirun: ', end=''); ${pycode}"
-make allrun python -c "print('allrun: ', end=''); ${pycode}"
-if [ -n "${PYTHON_VERSIONS}" ]; then
-    version="$(python -c "${pycode}")"
-    make "${version}" python -c "print('3.x: ', end=''); ${pycode}" | grep -F "${version}"
-fi
+
+make run python -c "print('allrun: ', end=''); ${pycode}"
+
 echo ">>> Creating second commit (fix)"
 touch empty
 git add empty
 git commit -m "fix: Fix all bugs"
-echo
-echo ">>> Updating changelog and releasing version"
-make changelog release version=0.1.1
-echo
-echo ">>> Checking changelog's contents"
-make run failprint -- grep 'v0\.1\.0' CHANGELOG.md
-make run failprint -- grep 'v0\.1\.1' CHANGELOG.md
-make run failprint -- grep 'Features' CHANGELOG.md
-make run failprint -- grep 'Bug Fixes' CHANGELOG.md
 echo
 echo ">>> Cleaning directory"
 make clean

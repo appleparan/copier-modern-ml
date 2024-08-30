@@ -4,26 +4,11 @@
 
 actions = \
 	allrun \
-	changelog \
-	check \
-	check-api \
-	check-docs \
-	check-quality \
-	check-types \
 	clean \
-	coverage \
-	docs \
-	{%- if repository_provider == "github.com" %}
-	docs-deploy \
-	{%- endif %}
-	format \
 	help \
 	multirun \
-	release \
 	run \
-	setup \
-	test \
-	vscode
+	setup
 
 .PHONY: $(actions)
 $(actions):

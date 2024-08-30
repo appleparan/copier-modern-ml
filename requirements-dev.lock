@@ -7,14 +7,16 @@
 #   all-features: false
 #   with-sources: false
 #   generate-hashes: false
-#   universal: false
+#   universal: true
 
 annotated-types==0.7.0
     # via pydantic
 click==8.1.7
     # via typer
 colorama==0.4.6
+    # via click
     # via copier
+    # via pytest
 copier==9.3.1
     # via copier-templates-extensions
 copier-templates-extensions==0.3.0
@@ -56,6 +58,8 @@ pygments==2.18.0
     # via copier
     # via rich
 pytest==8.3.2
+pywin32==306 ; platform_python_implementation != 'PyPy' and platform_system == 'Windows'
+    # via plumbum
 pyyaml==6.0.1
     # via copier
     # via jinja2-ansible-filters
