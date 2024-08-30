@@ -33,6 +33,7 @@ build-backend = "hatchling.build"
 [tool.rye]
 managed = true
 virtual = true
+universal = true
 dev-dependencies = [
     "pytest",
     "git-cliff",

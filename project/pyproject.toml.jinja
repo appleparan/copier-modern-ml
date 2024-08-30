@@ -90,6 +90,7 @@ packages = ["src/{{ project_slug }}"]
 
 [tool.rye]
 managed = true
+universal = true
 virtual = {% if virtual %}true{% else %}false{% endif %}
 
 dev-dependencies = [
