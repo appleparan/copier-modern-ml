@@ -36,6 +36,10 @@ footer = """
 postprocessors = [
   { pattern = '<REPO>', replace = "https://github.com/vince-test-org/changelog-generator-example" }, # replace repository URL
 ]
+
+[tool.bumpversion]
+current_version = "0.2.1"
+
 [git]
 # parse the commits based on https://www.conventionalcommits.org
 conventional_commits = true
