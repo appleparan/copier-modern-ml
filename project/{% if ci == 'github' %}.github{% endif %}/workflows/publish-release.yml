@@ -28,13 +28,11 @@ jobs:
     needs:
       - check-permission
     steps:
-        ##########################
-        # Checkout the code base #
-        ##########################
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: main
 
       - name: Generate a changelog
         uses: orhun/git-cliff-action@v3
@@ -53,13 +51,12 @@ jobs:
           set +e
           git add CHANGELOG.md
           git commit -m "Update changelog"
-          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git <branch>
+          git branch -m main
+          git push origin main
 
-      - name: Publish Release
-        id: publish_release
-        uses: ghalactic/github-release-from-tag@v5
-        if: github.ref_type == 'tag'
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
         with:
-          prerelease: "false"
-          reactions: rocket
-          token: ${{ secrets.GITHUB_TOKEN }}
+          files: CHANGELOG.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
