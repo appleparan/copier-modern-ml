@@ -70,7 +70,7 @@ git add .
 rye run pre-commit run -a # Try to fix possible pre-commit issues (failures are expected)
 git add .
 git commit -m "First commit"
-rye run pre-commit install # Future commits can't be directly to main unless you use -n <!-- markdownlint-disable-line MD013 -->
+rye run pre-commit install # Future commits can't be directly to main unless you use -n
 ```
 
 ### The resulting directory structure
@@ -84,9 +84,9 @@ The directory structure of your new project will look something like this
 ├── mkdocs.yml         <- mkdocs-material configuration file.
 ├── pyproject.toml     <- Project configuration file with package metadata for
 │                         {{ project_slug }} and configuration for tools like ruff
-├── requirements.lock       <- The requirements lock file for reproducing the production environment, e.g. <!-- markdownlint-disable-line MD013 -->
+├── requirements.lock       <- The requirements lock file for reproducing the production environment, e.g.
 │                              generated with `rye sync`
-├── requirements-dev.lock   <- The requirements lock file for reproducing the development environment, e.g.<!-- markdownlint-disable-line MD013 -->
+├── requirements-dev.lock   <- The requirements lock file for reproducing the development environment, e.g.
 │                              generated with `rye sync`
 ├── data
 │   ├── external       <- Data from third party sources.
@@ -96,10 +96,10 @@ The directory structure of your new project will look something like this
 │
 ├── docs               <- A default mkdocs project; see www.mkdocs.org for details
 │
-├── models             <- Trained and serialized models, model predictions, or model summaries <!-- markdownlint-disable-line MD013 -->
+├── models             <- Trained and serialized models, model predictions, or model summaries
 │
 ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-│                         the creator's initials, and a short `-` delimited description, e.g. <!-- markdownlint-disable-line MD013 -->
+│                         the creator's initials, and a short `-` delimited description, e.g.
 │                         `1.0-jqp-initial-data-exploration`.
 │
 ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
