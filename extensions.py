@@ -18,7 +18,11 @@ def git_user_email(default: str) -> str:
 
 
 def slugify(value, separator='-'):
-    value = unicodedata.normalize('NFKD', str(value)).encode('ascii', 'ignore').decode('ascii')
+    value = (
+        unicodedata.normalize('NFKD', str(value))
+        .encode('ascii', 'ignore')
+        .decode('ascii')
+    )
     value = re.sub(r'[^\w\s-]', '', value.lower())
     return re.sub(r'[-_\s]+', separator, value).strip('-_')
 

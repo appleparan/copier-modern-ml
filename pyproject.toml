@@ -41,6 +41,9 @@ dev-dependencies = [
     "git-cliff",
 ]
 
+[tool.ruff.format]
+quote-style = "single"
+
 [tool.hatch.metadata]
 allow-direct-references = true
 
