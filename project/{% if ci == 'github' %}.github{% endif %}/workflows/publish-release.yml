@@ -53,26 +53,29 @@ jobs:
         with:
           config: cliff.toml
           args: --strip header
-          output: CHANGELOG.md
         env:
+          OUTPUT: CHANGELOG.md
           GITHUB_REPO: ${{ github.repository }}
 
-      - name: Generate a changelog
+
+      - name: Commit CHANGELOG.md update
+        run: |
+          set +e
+          git add CHANGELOG.md
+          git commit -m "docs: Update CHANGELOG for version $version"
+          git branch -m main
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git main
+
+
+      - name: Generate a release note
         uses: orhun/git-cliff-action@v3
         id: git-cliff-release
         with:
           config: cliff.toml
           args: --latest --strip header
-          output: RELEASE.md
         env:
+          OUTPUT: RELEASE.md
           GITHUB_REPO: ${{ github.repository }}
-
-      - name: Commit CHANGELOG.md update
-        run: |
-          git add CHANGELOG.md
-          git commit -m "docs: Update CHANGELOG for version $version"
-          git branch -m main
-          git push origin main
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
