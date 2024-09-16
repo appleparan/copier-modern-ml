@@ -69,7 +69,7 @@ def setup() -> None:
             rye_install()
 
 
-def rye_activate(python_ver: str = "3.12") -> None:
+def rye_activate(python_ver: str = '3.12') -> None:
     """Activate a virtual environment."""
     global exe, prefix  # noqa: PLW060
     shell(f"rye pin {python_ver}")

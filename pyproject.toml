@@ -36,6 +36,7 @@ managed = true
 virtual = true
 universal = true
 dev-dependencies = [
+    "pre-commit",
     "pytest",
     "git-cliff",
 ]

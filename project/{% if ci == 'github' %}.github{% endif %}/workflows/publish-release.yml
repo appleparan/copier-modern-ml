@@ -45,7 +45,7 @@ jobs:
         env:
           OUTPUT: CHANGELOG.md
           GITHUB_REPO: ${{ github.repository }}
-      
+
       - name: Commit CHANGELOG.md
         run: |
           git config user.name 'github-actions[bot]'
