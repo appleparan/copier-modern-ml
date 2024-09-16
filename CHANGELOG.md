@@ -1,10 +1,65 @@
-## [0.4.3] - 2024-09-16
+## [unreleased]
 
 ### Miscellaneous Tasks
 
-- Push CHANGELOG.md origin and main branch ([10e66e7](https://github.com/vince-test-org/changelog-generator-example/commit/10e66e72fe994b5f9e2b35bb7a503a699dfd7978))
-- Checkout branch as main in GitHub Actions ([9888e0b](https://github.com/vince-test-org/changelog-generator-example/commit/9888e0b46813a52b06c10d491b52a21a802d32b2))
-- Generate release note automatically ([974b539](https://github.com/vince-test-org/changelog-generator-example/commit/974b53941a4b1ffd8b0507ea9bbf6d9b9be5d6a7))
-- Generate CHANGELOG.md from v0.3.0 ([281e871](https://github.com/vince-test-org/changelog-generator-example/commit/281e871a1af15f33205c9f1b63d904d5a99e21c0))
+- Bump version to 0.4.6 ([a75ed96](https://github.com/vince-test-org/changelog-generator-example/commit/a75ed963937621c6ce1fa010f3d5476f54796b75))
+
+## [0.4.6] - 2024-09-16
+
+### Documentation
+
+- Update CHANGELOG for version ([bb1ea0d](https://github.com/vince-test-org/changelog-generator-example/commit/bb1ea0d8eae250eaa9345493d53679dae9f983c2))
+
+### Miscellaneous Tasks
+
+- Bump version to 0.4.3 ([193c9e3](https://github.com/vince-test-org/changelog-generator-example/commit/193c9e3eff96d28a55b66ff0b98f8fad561587fb))
+- Bump version to 0.4.4 ([e4edba5](https://github.com/vince-test-org/changelog-generator-example/commit/e4edba596cfdd8e97dd8f2eed4602692d61dd4cb))
+- Push CHANGELOG.md origin and main branch ([d811440](https://github.com/vince-test-org/changelog-generator-example/commit/d811440c1efe93a21f5e31732b499b1e0d98c7e6))
+- Checkout branch as main in GitHub Actions ([36cdced](https://github.com/vince-test-org/changelog-generator-example/commit/36cdced9292c21f75de1ffda6c3e45b966bbcddb))
+- Generate release note automatically ([499f622](https://github.com/vince-test-org/changelog-generator-example/commit/499f622254324c7d3acce6c8c38960a2c18cb84b))
+- Generate CHANGELOG.md from v0.3.0 ([b63fa47](https://github.com/vince-test-org/changelog-generator-example/commit/b63fa47457673f085c6b4db35720fab1c695a3fd))
+- Separate CHANGELOG.md and RELEASE.md ([48267c6](https://github.com/vince-test-org/changelog-generator-example/commit/48267c623d019fbd17df6b5148d78214bb26656c))
+- Add set +e due to nothing to commit error ([820f1d8](https://github.com/vince-test-org/changelog-generator-example/commit/820f1d8b6de15d8d75fa2e8af062a0b19650b4b5))
+
+## [0.4.0] - 2024-09-16
+
+### Bug Fixes
+
+- Fix missing package error (duty) ([8eab7ca](https://github.com/vince-test-org/changelog-generator-example/commit/8eab7caaa6739dab01aa22aad1f57e147ea18ad7))
+- Use single-quote format ([081dd00](https://github.com/vince-test-org/changelog-generator-example/commit/081dd0081e942da45ace0cb4c93ef1ed0b9147ff))
+- Update README ([0e5e977](https://github.com/vince-test-org/changelog-generator-example/commit/0e5e9775125b10daf27fffe829099edde1e9a0b2))
+- Disable MD013 in markdownlint ([2fcd2c9](https://github.com/vince-test-org/changelog-generator-example/commit/2fcd2c9c50d497affe95c995062a97a14ac141d3))
+
+### Documentation
+
+- Update README ([e88c93a](https://github.com/vince-test-org/changelog-generator-example/commit/e88c93a59ef208f5f6af5d3778ad11541e8d7517))
+
+### Features
+
+- Make project universal (cross-platform) ([994897c](https://github.com/vince-test-org/changelog-generator-example/commit/994897ce2d8e99c486318133103ac69ee6e5568f))
+- Make template for CONTRIBUTING.md ([11c4598](https://github.com/vince-test-org/changelog-generator-example/commit/11c4598e76eb36b8a16ad3c7f01e513e99db1958))
+- Add pre-commit hooks ([0e5d847](https://github.com/vince-test-org/changelog-generator-example/commit/0e5d8471ba7fce645f7d72f05b9d8482317b10cb))
+
+### Miscellaneous Tasks
+
+- Remove duty ([ee382a3](https://github.com/vince-test-org/changelog-generator-example/commit/ee382a31540fdace71ec0fbe977e528aa1ae514d))
+- Update test codes to run CI correctly ([6727c16](https://github.com/vince-test-org/changelog-generator-example/commit/6727c16794f6df5cd563bbb86de4499d3826a4a3))
+- Add bumpversion setup ([285d883](https://github.com/vince-test-org/changelog-generator-example/commit/285d883ab1fc835b3c7d7a916fddd56b460eb62f))
+- Set git-cliff bump option correctly ([f500eb0](https://github.com/vince-test-org/changelog-generator-example/commit/f500eb0ca0e4b021740a44fb6ac4af1ff7cbfbff))
+- Change GitHub Aciton for Release ([4097e5a](https://github.com/vince-test-org/changelog-generator-example/commit/4097e5af2a6d8dd1bd72150d83e2db841107fb02))
+
+### Build
+
+- Update git-cliff ([9d4dcba](https://github.com/vince-test-org/changelog-generator-example/commit/9d4dcbab0c4e92867a319097170b2397fe8ac798))
+
+## [0.3.0] - 2024-08-15
+
+### Documentation
+
+- Update README ([bc4b8c6](https://github.com/vince-test-org/changelog-generator-example/commit/bc4b8c671809d2a43753b885c36599a305aab135))
+
+### Features
+
+- Setup project-wise git cliff ([6861205](https://github.com/vince-test-org/changelog-generator-example/commit/6861205881afd901062ae5ccc14481e82b3576d9))
 
 <!-- generated by git-cliff -->
