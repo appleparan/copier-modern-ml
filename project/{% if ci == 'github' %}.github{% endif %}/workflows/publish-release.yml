@@ -3,7 +3,7 @@ name: Publish release
 on:
   push:
     tags:
-      - 'v*'
+      - 'v*.*.*'
 
 jobs:
   check-permission:
@@ -34,6 +34,23 @@ jobs:
           fetch-depth: 0
           ref: main
 
+      - name: Set up Git for GitHub Actions
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Bump version and create tag using git-cliff
+        id: bump_version
+        run: |
+          # Extract the version from the tag name (e.g., refs/tags/v1.2.3 -> 1.2.3)
+          version="${GITHUB_REF#refs/tags/v}"
+          echo "Current version is $version"
+          # Create a VERSION file to track the version
+          echo $version > VERSION
+          git add VERSION
+          git commit -m "chore: bump version to $version"
+          git push origin main
+
       - name: Generate a changelog
         uses: orhun/git-cliff-action@v3
         id: git-cliff
@@ -44,19 +61,20 @@ jobs:
           OUTPUT: CHANGELOG.md
           GITHUB_REPO: ${{ github.repository }}
 
-      - name: Commit CHANGELOG.md
+      - name: Commit CHANGELOG.md update
         run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email 'github-actions[bot]@users.noreply.github.com'
           set +e
           git add CHANGELOG.md
-          git commit -m "Update changelog"
+          git commit -m "docs: Update CHANGELOG for version $version"
           git branch -m main
           git push origin main
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
         with:
+          body_path: CHANGELOG.md
+          tag_name: ${{ github.ref_name }}
           files: CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
