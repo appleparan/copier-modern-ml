@@ -7,7 +7,9 @@
 Personal [Copier](https://copier.readthedocs.io/en/stable/)
 template with modern Python workflows
 
-Inspired by [copier-uv](https://github.com/pawamoy/copier-uv) and [cookiecutter-data-science](https://github.com/drivendataorg/cookiecutter-data-science).
+Inspired by [copier-uv](https://github.com/pawamoy/copier-uv),
+[cookiecutter-data-science](https://github.com/drivendataorg/cookiecutter-data-science),
+and [BestieTemplates.jl](https://github.com/abelsiqueira/BestieTemplate.jl).
 
 ## Packaging Guide
 
@@ -35,34 +37,40 @@ with [coverage](https://github.com/nedbat/coveragepy) support
 
 * Python 3.11+
 * copier >= 9.3.1
-* rye >= 0.38.0 (optional)
+* rye >= 0.38.0
 
-### Install copier
+### Install copier (global)
 
 ```bash
 python -m pipx install copier copier_templates_extensions
 ```
 
-### To start a new project, run
+### Start new project
 
 ```bash
 python -m copier copy --trust gh:appleparan/copier-modern-ml ~/path/to/your/project
 ```
 
-then, install packages.
+### Install Python and packages
 
 ```bash
 cd ~/path/to/your/project
+rye pin 3.12
 rye sync
 ```
+
+### Intialize git
 
 Finally, initialize git, then install `pre-commit` hooks.
 (it takes some time at the first installation)
 
 ```bash
 git init
-rye run pre-commit install
+git add .
+rye run pre-commit run -a # Try to fix possible pre-commit issues (failures are expected)
+git add .
 git commit -m "First commit"
+rye run pre-commit install # Future commits can't be directly to main unless you use -n <!-- markdownlint-disable-line MD013 -->
 ```
 
 ### The resulting directory structure
