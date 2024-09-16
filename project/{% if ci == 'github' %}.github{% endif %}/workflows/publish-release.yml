@@ -9,8 +9,6 @@ jobs:
   check-permission:
     name: check permission
     runs-on: ubuntu-latest
-    outputs:
-      permission: ${{ steps.check.outputs.permission }}
     steps:
       - id: check
         uses: shogo82148/actions-check-permissions@v1
@@ -20,8 +18,6 @@ jobs:
   publish:
     name: Publish release
     runs-on: ubuntu-latest
-    outputs:
-      release_body: ${{ steps.git-cliff.outputs.content }}
     permissions:
       contents: write
       pull-requests: read
@@ -53,17 +49,26 @@ jobs:
 
       - name: Generate a changelog
         uses: orhun/git-cliff-action@v3
-        id: git-cliff
+        id: git-cliff-changelog
         with:
           config: cliff.toml
-          args: -vv --latest --strip header
+          args: --strip header
+          output: CHANGELOG.md
         env:
-          OUTPUT: CHANGELOG.md
+          GITHUB_REPO: ${{ github.repository }}
+
+      - name: Generate a changelog
+        uses: orhun/git-cliff-action@v3
+        id: git-cliff-release
+        with:
+          config: cliff.toml
+          args: --latest --strip header
+          output: RELEASE.md
+        env:
           GITHUB_REPO: ${{ github.repository }}
 
       - name: Commit CHANGELOG.md update
         run: |
-          set +e
           git add CHANGELOG.md
           git commit -m "docs: Update CHANGELOG for version $version"
           git branch -m main
@@ -73,8 +78,11 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          body_path: CHANGELOG.md
+          body_path: RELEASE.md
           tag_name: ${{ github.ref_name }}
-          files: CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Clean up RELEASE.md
+        run: |
+          rm RELEASE.md
