@@ -1,3 +1,13 @@
+## [0.5.1] - 2024-09-19
+
+### Documentation
+
+- Update CHANGELOG for version 0.5.0 ([4975931](https://github.com/vince-test-org/changelog-generator-example/commit/49759319b5ba24b442d3f478d3d41357ff8561f4))
+
+### Miscellaneous Tasks
+
+- Fix failed push error ([0588bda](https://github.com/vince-test-org/changelog-generator-example/commit/0588bda808674f2cc105fe9ffad6776daa6d19ba))
+
 ## [0.5.0] - 2024-09-19
 
 ### Documentation
@@ -13,6 +23,10 @@
 - Bump version to 0.4.6 ([a75ed96](https://github.com/vince-test-org/changelog-generator-example/commit/a75ed963937621c6ce1fa010f3d5476f54796b75))
 - Include "Bump to vX.X.X" into vX.X.X ([d87fa33](https://github.com/vince-test-org/changelog-generator-example/commit/d87fa33e0f96519bc5fedfe2e57c04fb5964bf8c))
 - Trigger release by branches ([44f2def](https://github.com/vince-test-org/changelog-generator-example/commit/44f2def1fc678522d2a49f9a09fbf9a973e2310b))
+- Fix GitHub release not generated ([5a02b7e](https://github.com/vince-test-org/changelog-generator-example/commit/5a02b7e73b00e6ef6dffe7b3178f72d23df3c2f6))
+- Bump version to 0.5.1 ([ea4c0a2](https://github.com/vince-test-org/changelog-generator-example/commit/ea4c0a21a5fa2984fbf5b1047d45797e65b8ff5d))
+- Pull before bump version ([8d7c2fc](https://github.com/vince-test-org/changelog-generator-example/commit/8d7c2fcd83a1a94ba95fe232ba3faf62353728c1))
+- Trigger release by branch in template GitHub Action ([d580ec2](https://github.com/vince-test-org/changelog-generator-example/commit/d580ec20d6b0d399e0446c77e323520235f711de))
 - Bump version to 0.5.0 ([6c73068](https://github.com/vince-test-org/changelog-generator-example/commit/6c73068141262285933e0fd8a0a9d6c56aee5755))
 
 ## [0.4.6] - 2024-09-16
