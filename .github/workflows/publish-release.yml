@@ -3,8 +3,8 @@ name: Publish release
 on:
   workflow_dispatch:
   push:
-    tags:
-      - 'v*.*.*'
+    branches:
+      - 'release/v*.*.*'
 
 jobs:
   check-permission:
@@ -35,22 +35,29 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+      - name: Extract version from branch name
+        id: extract_version
+        run: |
+          # Extract version from the branch name (e.g., release/v1.2.3 -> 1.2.3)
+          version="${GITHUB_REF#refs/heads/release/v}"
+          echo "Extracted version: $version"
+          echo "::set-output name=version::$version"
 
       - name: Bump version and commit
         id: bump_version
         run: |
           # Extract the version from the tag name (e.g., refs/tags/v1.2.3 -> 1.2.3)
-          version="${GITHUB_REF#refs/tags/v}"
+          version=${{ steps.extract_version.outputs.version }}
           echo "Current version is $version"
           # Create a VERSION file to track the version
           echo $version > VERSION
           git add VERSION
           git commit -m "chore: bump version to $version"
-          git push origin main
+          git push origin HEAD
 
       - name: Create Tag
         run: |
-          version="${GITHUB_REF#refs/tags/v}"
+          version=${{ steps.extract_version.outputs.version }}
           git tag "v$version"
           git push origin "v$version"
 
@@ -68,9 +75,9 @@ jobs:
         run: |
           set +e
           git add CHANGELOG.md
-          git commit -m "docs: Update CHANGELOG for version $version"
+          git commit -m "docs: Update CHANGELOG for version ${{ steps.extract_version.outputs.version }}"
           git branch -m main
-          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git main
+          git push origin HEAD
 
       - name: Generate a release note
         uses: orhun/git-cliff-action@v3
@@ -87,7 +94,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           body_path: RELEASE.md
-          tag_name: ${{ github.ref_name }}
+          tag_name: "v${{ steps.extract_version.outputs.version }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
