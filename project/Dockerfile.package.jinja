@@ -30,20 +30,50 @@ RUN apt-get update && \
     xz-utils \
     && rm -rf /var/lib/apt/lists/*
 
+# Use non-editable install to avoid copying the source code into the image
+# https://docs.astral.sh/uv/guides/integration/docker/#non-editable-installs
+# Install uv
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
+
+# Change the working directory to the `app` directory
+WORKDIR /workspace
+
+# Install dependencies
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync --frozen --no-install-project --no-editable
+
+# Copy the project into the intermediate image
+ADD . /workspace
+
+# Sync the project
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --no-editable
+
+
+FROM python:3.12-slim
+
 # Download and install Python 3.12
-RUN wget https://www.python.org/ftp/python/3.12.0/Python-3.12.3.tgz && \
-    tar -xvf Python-3.12.3.tgz && \
-    cd Python-3.12.3 && \
-    ./configure --enable-optimizations && \
-    make -j$(nproc) && \
-    make altinstall && \
-    cd .. && \
-    rm -rf Python-3.12.3 Python-3.12.3.tgz
+# RUN wget https://www.python.org/ftp/python/3.12.0/Python-3.12.3.tgz && \
+#     tar -xvf Python-3.12.3.tgz && \
+#     cd Python-3.12.3 && \
+#     ./configure --enable-optimizations && \
+#     make -j$(nproc) && \
+#     make altinstall && \
+#     cd .. && \
+#     rm -rf Python-3.12.3 Python-3.12.3.tgz
 
-# Ensure pip is up-to-date
-RUN python3.12 -m ensurepip && \
-    python3.12 -m pip install --upgrade pip
+# # Ensure pip is up-to-date
+# RUN python3.12 -m ensurepip && \
+#     python3.12 -m pip install --upgrade pip
 
-# Use requirements.lock rather than requirements.txt for deterministic builds
-RUN --mount=source=dist,target=/dist PYTHONDONTWRITEBYTECODE=1 pip install --no-cache-dir /dist/*.whl
-CMD python -m {{ project_slug }}
+# # Use requirements.lock rather than requirements.txt for deterministic builds
+# COPY requirements.lock ./
+# RUN PYTHONDONTWRITEBYTECODE=1 pip install --no-cache-dir -r requirements.lock
+
+# Copy the environment, but not the source code
+COPY --from=builder --chown=workspace:workspace /workspace/.venv /workspace/.venv
+
+# Run the application
+CMD ["/app/.venv/bin/{{ project_slug }}.cli"]

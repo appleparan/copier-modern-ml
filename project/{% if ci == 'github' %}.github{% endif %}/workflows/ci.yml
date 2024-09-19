@@ -22,30 +22,29 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-      - uses: eifinger/setup-rye@v4
-        id: setup-rye
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v2
         with:
           enable-cache: true
-          cache-prefix: ${{ matrix.python-version }}
-      - name: Pin python-version ${{ matrix.python-version }}
-        run: rye pin ${{ matrix.python-version }}
-      - name: Install dependencies
-        if: steps.setup-rye.outputs.cache-hit != 'true'
+
+      - name: Set up Python ${{ matrix.python-version }}
+        run: uv python install ${{ matrix.python-version }}
+
+      - name: Install the project
+        run: uv sync --all-extras --dev
+
+      - name: Format
         run: |
-          rye sync --no-lock
-      # - name: Cache pre-commit
-      #   uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9  # v4.0.2
-      #   with:
-      #     path: ~/.cache/pre-commit
-      #     key: pre-commit-|${{ matrix.python-version }}|${{ hashFiles('.pre-commit-config.yaml') }}
-      # - name: Lint
-      #   run: |
-      #     rye run pre-commit run --all-files
+          uvx ruff format
+
       - name: Lint
         run: |
-          rye lint
+          uvx ruff check --fix --exit-non-zero-on-fix .
+
       - name: Lint GitHub Actions
         uses: eifinger/actionlint-action@v1
+
   test:
     needs: lint
     strategy:
@@ -57,23 +56,19 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-      - uses: eifinger/setup-rye@v4
-        id: setup-rye
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v2
         with:
           enable-cache: true
-          cache-prefix: ${{ matrix.python-version }}
-      - name: Pin python-version ${{ matrix.python-version }}
-        run: rye pin ${{ matrix.python-version }}
-      - name: Install dependencies
-        if: steps.setup-rye.outputs.cache-hit != 'true'
-        run: |
-          rye sync --no-lock
-      # - name: Cache pre-commit
-      #   uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9  # v4.0.2
-      #   with:
-      #     path: ~/.cache/pre-commit
-      #     key: pre-commit-|${{ matrix.python-version }}|${{ hashFiles('.pre-commit-config.yaml') }}
+
+      - name: Set up Python ${{ matrix.python-version }}
+        run: uv python install ${{ matrix.python-version }}
+
+      - name: Install the project
+        run: uv sync --all-extras --dev
+
       - name: Run tests
         run: |
-          rye run coverage run -m pytest src/tests/
-          rye run coverage report
+          uv run coverage run -m pytest src/tests/
+          uv run coverage run -m pytest src/tests/

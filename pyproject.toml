@@ -31,10 +31,9 @@ classifiers = [
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
-[tool.rye]
+[tool.uv]
+package = false
 managed = true
-virtual = true
-universal = true
 dev-dependencies = [
     "pre-commit",
     "pytest",

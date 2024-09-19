@@ -15,7 +15,7 @@ dependencies = [
     "matplotlib",
     "numpy",
     "omegaconf",
-    "pandas[parquet,performance]",
+    "pandas[parquet,performance]>=2.2.0",
     "plotly",
     "scikit-learn",
     "seaborn",
@@ -30,7 +30,7 @@ keywords = [
     "artificial intelligence",
     "python",
     "project",
-] # Change this
+]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Environment :: Console",
@@ -84,15 +84,14 @@ build-backend = "hatchling.build"
 [tool.hatch.metadata]
 allow-direct-references = true
 
-# Only need when `rye.virtual = false`
+# Only needed when `tool.uv.package = true`
 [tool.hatch.build.targets.wheel]
 packages = ["src/{{ project_slug }}"]
 
-[tool.rye]
+[tool.uv]
+package = {% if package %}true{% else %}false{% endif %}
+native-tls = {% if native_tls %}true{% else %}false{% endif %}
 managed = true
-universal = true
-virtual = {% if virtual %}true{% else %}false{% endif %}
-
 dev-dependencies = [
     "coverage",
     "coverage-badge",

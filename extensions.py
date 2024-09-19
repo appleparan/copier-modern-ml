@@ -5,7 +5,6 @@ import subprocess
 import unicodedata
 from datetime import date
 
-from copier_templates_extensions import ContextHook
 from jinja2.ext import Extension
 
 

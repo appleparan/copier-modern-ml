@@ -65,9 +65,17 @@ copyright_license:
     - MIT License
     - BSD 3-Clause "New" or "Revised" License
 
-virtual:
+package:
   type: bool
-  help: Do you want to create a virtual project(not installable Python packages)?
+  help: Do you want to create a package?
+  default: true
+  choices:
+    - true
+    - false
+
+native_tls:
+  type: bool
+  help: Do you want to load TLS certificates from the platform's native certificate store?
   default: false
   choices:
     - true

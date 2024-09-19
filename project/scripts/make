@@ -38,53 +38,48 @@ def environ(**kwargs: str) -> Iterator[None]:
         os.environ.update(original)
 
 
-def rye_install() -> None:
-    """Install dependencies using rye(uv)."""
-    shell('rye lock')
+def uv_install() -> None:
+    """Install dependencies using uv."""
     if 'CI' in os.environ:
         # Install pytorch CPU version first
-        # shell('rye run pip install torch torchvision torchaudio')
-        shell('rye config --set [tool.rye.sources].name=pytorch-cpu')
-        shell('rye config --set [tool.rye.sources].url="https://download.pytorch.org/whl/cpu"')
-        # shell('sed -i \'s/\["\[tool.rye.sources\]"\]/\[\[tool.rye.sources\]\]/g\' ~/.rye/config.toml')
-        shell('rye sync')
+        shell('uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu')      
+        shell('uv sync')
     else:
         # Install pytorch CPU version first
-        shell('rye run pip install torch torchvision torchaudio')
-        shell('rye sync')
+        shell('uv run pip install torch torchvision torchaudio')
+        shell('uv sync')
 
 
 def setup() -> None:
     """Setup the project."""
-    if not shutil.which('rye'):
-        raise ValueError('make: setup: rye must be installed, see https://github.com/astral-sh/rye')
+    if not shutil.which('uv'):
+        raise ValueError('make: setup: uv must be installed, see https://docs.astral.sh/uv/')
 
     print('Installing dependencies (default environment)')  # noqa: T201
-    rye_install()
+    uv_install()
 
     if PYTHON_VERSIONS:
         for version in PYTHON_VERSIONS:
             print(f"\nInstalling dependencies (python{version})")  # noqa: T201
-            rye_activate(version)
-            rye_install()
+            uv_activate(version)
+            uv_install()
 
 
-def rye_activate(python_ver: str = '3.12') -> None:
+def uv_activate(python_ver: str = '3.12') -> None:
     """Activate a virtual environment."""
     global exe, prefix  # noqa: PLW060
-    shell(f"rye pin {python_ver}")
-    shell(f"rye sync")
-    # shell(f"rye sync --no-lock")
+    shell(f"uv python install {python_ver}")
+    shell(f"uv sync")
 
 
 def run(version: str, cmd: str, *args: str, **kwargs: Any) -> None:
     """Run a command in a virtual environment."""
     kwargs = {'check': True, **kwargs}
     if version == 'default':
-        rye_activate(PYTHON_VERSION)
+        uv_activate(PYTHON_VERSION)
         subprocess.run([f"{prefix}{cmd}{exe}", *args], **kwargs)  # noqa: S603, PLW1510
     else:
-        rye_activate(version)
+        uv_activate(version)
         os.environ['MULTIRUN'] = '1'
         subprocess.run([f"{prefix}{cmd}{exe}", *args], **kwargs)  # noqa: S603, PLW1510
 
@@ -130,7 +125,7 @@ def main() -> int:
         print('  allrun                Run a command in all virtual environments.')  # noqa: T201
         print('  clean                 Delete build artifacts and cache files.')  # noqa: T201
         try:
-            run(PYTHON_VERSION, 'python', '-V', capture_output=True)
+            run(PYTHON_VERSION, 'python3', '-V', capture_output=True)
         except (subprocess.CalledProcessError, ValueError):
             pass
         else:

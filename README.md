@@ -17,19 +17,17 @@ and [BestieTemplates.jl](https://github.com/abelsiqueira/BestieTemplate.jl).
 
 ## Features
 
-* [rye](https://github.com/astral-sh/rye) for project and package management.
-Included following tools.
-  * [uv](https://github.com/astral-sh/uv) setup, with pre-defined `pyproject.toml`
-  * Pre-configured tools for code formatting, quality analysis and testing:
-  [ruff](https://github.com/charliermarsh/ruff),
-  [mypy](https://github.com/python/mypy),
-* Tests run with [pytest](https://github.com/pytest-dev/pytest) and plugins,
-with [coverage](https://github.com/nedbat/coveragepy) support
-* Documentation built with [mkdocs-material](https://github.com/squidfunk/mkdocs-material)
-  and [mkdocstrings plugin](https://github.com/mkdocstrings/mkdocstrings))
-* Support for GitHub workflows
-* Auto-generated `CHANGELOG.md` from Git (conventional) commits.
-[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0-beta.2/)
+* Uses ~[rye](https://github.com/astral-sh/rye)~ [uv](https://github.com/astral-sh/uv)
+for project and package management, which includes the following tools:
+  * [ruff](https://github.com/charliermarsh/ruff) for code formatting and quality analysis
+  * [mypy](https://github.com/python/mypy) for type checking
+* Testing is done with [pytest](https://github.com/pytest-dev/pytest) and its plugins
+* Documentation is built with [mkdocs-material](https://github.com/squidfunk/mkdocs-material)
+  and [mkdocstrings plugin](https://github.com/mkdocstrings/mkdocstrings)
+* Supports GitHub workflows, including:
+  * Automatic release with semantic versioning
+  * Auto-generated `CHANGELOG.md` and release notes using [git-cliff](https://github.com/orhun/git-cliff)
+    * Requires [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0-beta.2/).
 
 ## How to use it
 
@@ -37,26 +35,26 @@ with [coverage](https://github.com/nedbat/coveragepy) support
 
 * Python 3.11+
 * copier >= 9.3.1
-* rye >= 0.38.0
+* uv >= 0.4.12
 
 ### Install copier (global)
 
 ```bash
-python -m pipx install copier copier_templates_extensions
+uv tool install copier
 ```
 
 ### Start new project
 
 ```bash
-python -m copier copy --trust gh:appleparan/copier-modern-ml ~/path/to/your/project
+uvx --with copier_templates_extensions copier copy --trust gh:appleparan/copier-modern-ml ~/path/to/your/project
 ```
 
 ### Install Python and packages
 
 ```bash
 cd ~/path/to/your/project
-rye pin 3.12
-rye sync
+uv python install 3.12
+uv sync --dev --all-extras
 ```
 
 ### Intialize git
@@ -67,10 +65,10 @@ Finally, initialize git, then install `pre-commit` hooks.
 ```bash
 git init
 git add .
-rye run pre-commit run -a # Try to fix possible pre-commit issues (failures are expected)
+uvx pre-commit run -a # Try to fix possible pre-commit issues (failures are expected)
 git add .
 git commit -m "First commit"
-rye run pre-commit install # Future commits can't be directly to main unless you use -n
+uvx pre-commit install # Future commits can't be directly to main unless you use -n
 ```
 
 ### The resulting directory structure
@@ -84,10 +82,8 @@ The directory structure of your new project will look something like this
 ├── mkdocs.yml         <- mkdocs-material configuration file.
 ├── pyproject.toml     <- Project configuration file with package metadata for
 │                         {{ project_slug }} and configuration for tools like ruff
-├── requirements.lock       <- The requirements lock file for reproducing the production environment, e.g.
-│                              generated with `rye sync`
-├── requirements-dev.lock   <- The requirements lock file for reproducing the development environment, e.g.
-│                              generated with `rye sync`
+├── uv.lock            <- The lock file for reproducing the production environment, e.g.
+│                         generated with `uv sync`
 ├── data
 │   ├── external       <- Data from third party sources.
 │   ├── interim        <- Intermediate data that has been transformed.

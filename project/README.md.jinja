@@ -12,10 +12,8 @@
 ├── mkdocs.yml                  # mkdocs-material configuration file.
 ├── pyproject.toml              # Project configuration file with package metadata for
 │                                   {{ project_slug }} and configuration for tools like ruff
-├── requirements.lock           # The requirements lock file for reproducing the production environment, e.g.
-│                                   generated with `rye sync`
-├── requirements-dev.lock       # The requirements lock file for reproducing the development environment, e.g.
-│                                   generated with `rye sync`
+├── uv.lock                     # The lock file for reproducing the production environment, e.g.
+│                                   generated with `uv sync`
 ├── configs                     # Config files (models and training hyperparameters)
 │   └── model1.yaml
 │
@@ -54,89 +52,93 @@
 
 # For Developers
 
-## Decide to use virtual project
-Virtual projects are projects which are themselves not installable Python packages, but that will sync their dependencies. They are declared like a normal python package in a pyproject.toml, but they do not create a package. [ref. rye docs](https://rye.astral.sh/guide/virtual/)
+## Whether to use `package`
 
-* Set `tool.rye.virtual` key to `true` in `pyproject.toml`. [ref: rye docs](https://rye.astral.sh/guide/pyproject/#toolryevirtual)
+This determines if the project should be treated as a Python package or a "virtual" project.
 
+A `package` is a fully installable Python module,
+while a virtual project is not installable but manages its dependencies in the virtual environment.
 
-## Init package
-### Setup Python version
+If you don't want to use this packaging feature,
+you can set `tool.uv.package = false` in the pyproject.toml file.
+This tells `uv` to handle your project as a virtual project instead of a package.
+
+## Initialize package
+### Install Python (latest)
 ```
-rye pin 3.12
+uv python install
 ```
 
-### [First Sync](https://rye.astral.sh/guide/basics/#first-sync)
+### First Sync for predefined packages
 ```
-rye sync
+uv sync
 ```
 
 ## Install Packages
 ### Install packages
 ```
-rye sync --no-dev
+uv sync --frozen
 ```
 
 ### Install dev packages
 ```
-rye sync
+uv sync --all-extras --dev
 ```
 
 ## Testing
 ### Run tests
 ```
-rye run pytest
+uv run pytest
 ```
 
 ## Development
 ### Linting
 ```
-rye lint --fix
+uvx ruff check --fix .
 ```
 
 ### Formatting
 ```
-rye fmt
+uvx ruff fmt
 ```
 
 ### Run pre-commit
 ```
-rye run pre-commit run --all-files
+uvx pre-commit run --all-files
 ```
 
 ### Build package
 ```
-rye build
+uv build
 ```
 
 ## Documentation
 
 ### Serve Document
 ```
-rye run mkdocs serve
+uv run mkdocs serve
 ```
 
 ### Build Document
 ```
-rye run mkdocs build
+uv run mkdocs build
 ```
 
 ## Container
 ### Build Docker Image (from source)
 
-[ref. rye docs](https://rye.astral.sh/guide/docker/#container-from-source)
+[ref. uv docs](https://docs.astral.sh/uv/guides/integration/docker/#installing-a-project)
 
 ```
-docker build -t TAGNAME .
+docker build -t TAGNAME -f Dockerfile.source
 ```
 
 ### Build Docker Image (from package)
 
-[ref. rye docs](https://rye.astral.sh/guide/docker/#container-from-a-python-package)
+[ref. uv docs](https://docs.astral.sh/uv/guides/integration/docker/#non-editable-installs)
 
 ```
-rye build --wheel --clean
-docker build -t TAGNAME .
+docker build -t TAGNAME -f Dockerfile.package
 ```
 
 ### Run Docker Container

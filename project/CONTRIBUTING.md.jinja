@@ -21,10 +21,10 @@ Every little bit helps, and credit will always be given.
     ```bash
     git checkout -b feature/new-feature
     ```
-3. Make your changes and commit them with a clear message:
+3. Make your changes and commit them with a clear message with conventional commit:
     ```bash
     git add .
-    git commit -m "Add a clear and concise commit message"
+    git commit -m "feat: Add a clear and concise commit message"
     ```
 4. Push your changes to the remote repository:
     ```bash
@@ -63,7 +63,7 @@ Every little bit helps, and credit will always be given.
 - Tests should be written using `pytest`.
 - Run tests to ensure they pass:
     ```bash
-    rye run pytest
+    uv run pytest
     ```
 
 ## Other Contributions
@@ -71,7 +71,7 @@ Every little bit helps, and credit will always be given.
 - Documentation is a critical part of the project, and contributions to it are also welcomed.
 - Run `mkdocs` for documentation:
     ```bash
-    rye run mkdocs build
+    uv run mkdocs build
     ```
 - Please adhere to the project's Code of Conduct.
 

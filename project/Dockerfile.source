@@ -1,9 +1,6 @@
 # Use the official NVIDIA CUDA base image with Ubuntu
 FROM nvidia/cuda:12.4.1-runtime-ubuntu22.04
 
-# Set the working directory
-WORKDIR /workspace
-
 # Install dependencies for building Python from source
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -30,23 +27,40 @@ RUN apt-get update && \
     xz-utils \
     && rm -rf /var/lib/apt/lists/*
 
+# Install project
+# https://docs.astral.sh/uv/guides/integration/docker/#installing-a-project
+
+# Install uv
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
+
+# Copy the project into the image
+ADD . /workspace
+
+# Set the working directory
+WORKDIR /workspace
+
+# Install Python
+RUN uv install python 3.12
+
+# Install dependencies
+RUN uv sync --frozen
+
 # Download and install Python 3.12
-RUN wget https://www.python.org/ftp/python/3.12.0/Python-3.12.3.tgz && \
-    tar -xvf Python-3.12.3.tgz && \
-    cd Python-3.12.3 && \
-    ./configure --enable-optimizations && \
-    make -j$(nproc) && \
-    make altinstall && \
-    cd .. && \
-    rm -rf Python-3.12.3 Python-3.12.3.tgz
+# RUN wget https://www.python.org/ftp/python/3.12.0/Python-3.12.3.tgz && \
+#     tar -xvf Python-3.12.3.tgz && \
+#     cd Python-3.12.3 && \
+#     ./configure --enable-optimizations && \
+#     make -j$(nproc) && \
+#     make altinstall && \
+#     cd .. && \
+#     rm -rf Python-3.12.3 Python-3.12.3.tgz
 
-# Ensure pip is up-to-date
-RUN python3.12 -m ensurepip && \
-    python3.12 -m pip install --upgrade pip
+# # Ensure pip is up-to-date
+# RUN python3.12 -m ensurepip && \
+#     python3.12 -m pip install --upgrade pip
 
-# Use requirements.lock rather than requirements.txt for deterministic builds
-COPY requirements.lock ./
-RUN PYTHONDONTWRITEBYTECODE=1 pip install --no-cache-dir -r requirements.lock
+# # Use requirements.lock rather than requirements.txt for deterministic builds
+# COPY requirements.lock ./
+# RUN PYTHONDONTWRITEBYTECODE=1 pip install --no-cache-dir -r requirements.lock
 
-COPY src .
-CMD python -m {{ project_slug }}.cli
+CMD ["uv", "run", "{{ project_slug }}.cli"]

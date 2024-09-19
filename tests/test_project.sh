@@ -2,7 +2,7 @@
 set -eu
 
 PYTHON_VERSION="${PYTHON_VERSION-3.12}"
-PYTHON_VERSIONS="${PYTHON_VERSIONS-3.9 3.10 3.11 3.12}"
+PYTHON_VERSIONS="${PYTHON_VERSIONS-3.11 3.12}"
 . tests/helpers.sh
 output=tests/tmp
 make() {
@@ -71,7 +71,7 @@ echo "             TESTING PROJECT"
 echo "///////////////////////////////////////////"
 echo
 echo ">>> Creating initial commit (feat)"
-python <<EOF
+python3 << EOF
 import re
 with open(".copier-answers.yml") as file:
     answers = file.read()
@@ -99,7 +99,7 @@ echo
 echo ">>> Testing arbitrary commands"
 pycode="import sys; print(sys.version.split(' ', 1)[0].rsplit('.', 1)[0])"
 
-make run python -c "print('allrun: ', end=''); ${pycode}"
+make run python3 -c "print('allrun: ', end=''); ${pycode}"
 
 echo ">>> Creating second commit (fix)"
 touch empty
