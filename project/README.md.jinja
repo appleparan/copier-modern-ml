@@ -3,7 +3,7 @@
 {{ description }}
 
 
-# Project Organization
+## Project Organization
 
 ```
 {{ project_slug }}/
@@ -50,9 +50,9 @@
     └── visualization           # Scripts to create exploratory and results oriented visualizations.
 ```
 
-# For Developers
+## For Developers
 
-## Whether to use `package`
+### Whether to use `package`
 
 This determines if the project should be treated as a Python package or a "virtual" project.
 
@@ -63,7 +63,6 @@ If you don't want to use this packaging feature,
 you can set `tool.uv.package = false` in the pyproject.toml file.
 This tells `uv` to handle your project as a virtual project instead of a package.
 
-## Initialize package
 ### Install Python (latest)
 ```
 uv python install
@@ -74,8 +73,7 @@ uv python install
 uv sync
 ```
 
-## Install Packages
-### Install packages
+### Install Packages
 ```
 uv sync --frozen
 ```
@@ -85,13 +83,11 @@ uv sync --frozen
 uv sync --all-extras --dev
 ```
 
-## Testing
 ### Run tests
 ```
 uv run pytest
 ```
 
-## Development
 ### Linting
 ```
 uvx ruff check --fix .
@@ -112,8 +108,6 @@ uvx pre-commit run --all-files
 uv build
 ```
 
-## Documentation
-
 ### Serve Document
 ```
 uv run mkdocs serve
@@ -124,7 +118,6 @@ uv run mkdocs serve
 uv run mkdocs build
 ```
 
-## Container
 ### Build Docker Image (from source)
 
 [ref. uv docs](https://docs.astral.sh/uv/guides/integration/docker/#installing-a-project)
@@ -146,6 +139,6 @@ docker build -t TAGNAME -f Dockerfile.package
 docker run --gpus all -p 8000:8000 my-production-app
 ```
 
-# References
+## References
 * [Packaging Python Projects](https://packaging.python.org/tutorials/packaging-projects/)
 * [Python Packaging User Guide](https://packaging.python.org/)
