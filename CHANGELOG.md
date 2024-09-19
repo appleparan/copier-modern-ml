@@ -1,8 +1,19 @@
-## [unreleased]
+## [0.5.0] - 2024-09-19
+
+### Documentation
+
+- Update CHANGELOG for version ([ad1f2e1](https://github.com/vince-test-org/changelog-generator-example/commit/ad1f2e13c33de5c996a9ee5625ba751836c17b44))
+
+### Features
+
+- Drop rye, use uv instead ([705047d](https://github.com/vince-test-org/changelog-generator-example/commit/705047d233434b6039e58b304305eab1ed2f5889))
 
 ### Miscellaneous Tasks
 
 - Bump version to 0.4.6 ([a75ed96](https://github.com/vince-test-org/changelog-generator-example/commit/a75ed963937621c6ce1fa010f3d5476f54796b75))
+- Include "Bump to vX.X.X" into vX.X.X ([d87fa33](https://github.com/vince-test-org/changelog-generator-example/commit/d87fa33e0f96519bc5fedfe2e57c04fb5964bf8c))
+- Trigger release by branches ([44f2def](https://github.com/vince-test-org/changelog-generator-example/commit/44f2def1fc678522d2a49f9a09fbf9a973e2310b))
+- Bump version to 0.5.0 ([6c73068](https://github.com/vince-test-org/changelog-generator-example/commit/6c73068141262285933e0fd8a0a9d6c56aee5755))
 
 ## [0.4.6] - 2024-09-16
 

@@ -82,7 +82,7 @@ jobs:
           git add CHANGELOG.md
           git commit -m "docs: Update CHANGELOG for version ${{ steps.extract_version.outputs.version }}"
           git branch -m main
-          git push origin HEAD
+          git push origin HEAD --force
 
       - name: Generate a release note
         uses: orhun/git-cliff-action@v3
