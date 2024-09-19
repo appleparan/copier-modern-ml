@@ -43,6 +43,10 @@ jobs:
           echo "Extracted version: $version"
           echo "::set-output name=version::$version"
 
+      - name: Pull the latest changes from the remote branch
+        run: |
+          git pull origin ${{ github.ref_name }}
+
       - name: Bump version and commit
         id: bump_version
         run: |
