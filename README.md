@@ -9,7 +9,7 @@ template with modern Python workflows
 
 Inspired by [copier-uv](https://github.com/pawamoy/copier-uv),
 [cookiecutter-data-science](https://github.com/drivendataorg/cookiecutter-data-science),
-and [BestieTemplates.jl](https://github.com/abelsiqueira/BestieTemplate.jl).
+and [BestieTemplates.jl](https://github.com/JuliaBesties/BestieTemplate.jl).
 
 ## Packaging Guide
 
