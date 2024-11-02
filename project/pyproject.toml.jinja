@@ -62,6 +62,7 @@ dev = [
     "pytest",
     "pytest-cov",
     "pytest-html",
+    "pytest-mock",
     "pre-commit",
     "safety",
 ]
@@ -108,6 +109,7 @@ dev-dependencies = [
     "pytest",
     "pytest-cov",
     "pytest-html",
+    "pytest-mock",
     "pre-commit",
     "safety",
 ]
@@ -151,7 +153,7 @@ exclude = [
 ]
 # Same as Black.
 line-length = 88
-# Assume Python 3.11
+# Assume Python 3.12
 target-version = "py312"
 
 [tool.ruff.lint]
@@ -166,6 +168,7 @@ ignore = [
     "E999", # syntax-error
     "E741", # ambiguous-variable-name
     "F811", # redefined-while-unused
+    "PT004", # pytest-missing-fixture-name-underscore
 ]
 select = [
     "AIR",  # Airflow
@@ -206,7 +209,7 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
 [tool.ruff.format]
 # Like Black, use double quotes for strings.
-quote-style = "double"
+quote-style = "single"
 
 # Like Black, indent with spaces, rather than tabs.
 indent-style = "space"
@@ -249,6 +252,7 @@ max-complexity = 18
     "E402",
 ]
 "**/tests/**.py" = [
+    "ANN",
     "D100",
     "D103",
     "D104",
@@ -272,7 +276,7 @@ known-third-party = ["numpy", "scipy", "pandas", "matplotlib", "sklearn", "torch
 
 [tool.mypy]
 # https://mypy.readthedocs.io/en/latest/config_file.html#using-a-pyproject-toml-file
-python_version = "3.11"
+python_version = "3.12"
 plugins = "numpy.typing.mypy_plugin"
 pretty = true
 show_traceback = true
@@ -315,7 +319,8 @@ norecursedirs = [
     ".git",
     "__pycache__"
 ]
-python_files = "tests/*"
+testpaths = tests
+python_files = test_*.py
 log_cli = "true"
 markers = [
     "slow"
