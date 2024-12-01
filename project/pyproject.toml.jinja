@@ -92,7 +92,7 @@ dev-dependencies = [
     "mypy-extensions",
     "myst-parser",
     "ruff",
-    "pytest",
+    "pytest>=8.0.0",
     "pytest-cov",
     "pytest-html",
     "pytest-mock",
@@ -314,10 +314,14 @@ warn_unused_configs = true
 warn_unused_ignores = true
 
 [tool.pytest.ini_options]
-minversion = "6.0"
+minversion = "8.0"
 testpaths = [
     "tests",
 ]
+pythonpath = [
+  "src"
+]
+python_files = ["test_*.py"]
 # https://docs.pytest.org/en/6.2.x/customize.html#pyproject-toml
 # Directories that are not visited by pytest collector:
 norecursedirs = [
@@ -331,14 +335,11 @@ norecursedirs = [
     ".git",
     "__pycache__"
 ]
-testpaths = tests
-python_files = test_*.py
 log_cli = "true"
 markers = [
     "slow"
 ]
 doctest_optionflags = ["NUMBER", "NORMALIZE_WHITESPACE", "IGNORE_EXCEPTION_DETAIL"]
-
 addopts = [
     "--strict-markers",
     "--tb=short",
@@ -348,9 +349,6 @@ addopts = [
 filterwarnings = [
     "ignore::DeprecationWarning",
     "ignore::UserWarning",
-]
-pythonpath = [
-  "src"
 ]
 
 [tool.coverage.run]
