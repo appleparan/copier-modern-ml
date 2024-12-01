@@ -13,15 +13,14 @@ dependencies = [
     "ipykernel",
     "lightning",
     "matplotlib",
-    "numpy",
+    "numpy>=2.0.0",
     "omegaconf",
     "pandas[parquet,performance]>=2.2.0",
-    "plotly",
     "scikit-learn",
     "seaborn",
     "tensorboard",
-    "torch",
-    "torchvision",
+    "torch>=2.5.1",
+    "torchvision>=0.20.1",
     "tqdm",
     "typer",
 ]
@@ -45,26 +44,13 @@ classifiers = [
 ]
 
 [project.optional-dependencies]
-dev = [
-    "coverage",
-    "coverage-badge",
-    "git-changelog",
-    "mkdocs",
-    "mkdocs-material",
-    "mkdocstrings[python]",
-    "mkdocs-gen-files",
-    "mkdocs-section-index",
-    "mkdocs-literate-nav",
-    "mypy",
-    "mypy-extensions",
-    "myst-parser",
-    "ruff",
-    "pytest",
-    "pytest-cov",
-    "pytest-html",
-    "pytest-mock",
-    "pre-commit",
-    "safety",
+cpu = [
+  "torch>=2.5.1",
+  "torchvision>=0.20.1",
+]
+cu124 = [
+  "torch>=2.5.1",
+  "torchvision>=0.20.1",
 ]
 doc = [
     "mkdocs",
@@ -113,9 +99,35 @@ dev-dependencies = [
     "pre-commit",
     "safety",
 ]
+conflicts = [
+  [
+    { extra = "cpu" },
+    { extra = "cu124" },
+  ],
+]
+
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cpu", extra = "cpu", marker = "platform_system != 'Darwin'" },
+  { index = "pytorch-cu124", extra = "cu124" },
+]
+torchvision = [
+  { index = "pytorch-cpu", extra = "cpu", marker = "platform_system != 'Darwin'" },
+  { index = "pytorch-cu124", extra = "cu124" },
+]
 
 [tool.uv.pip]
 index-url = "https://pypi.org/simple"
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
 
 [tool.ruff]
 include = ["*.py", "*.pyi", "**/pyproject.toml", "*.ipynb"]
