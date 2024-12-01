@@ -41,7 +41,7 @@ jobs:
           # Extract version from the branch name (e.g., release/v1.2.3 -> 1.2.3)
           version="${GITHUB_REF#refs/heads/release/v}"
           echo "Extracted version: $version"
-          echo "::set-output name=version::$version"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
 
       - name: Pull the latest changes from the remote branch
         run: |
