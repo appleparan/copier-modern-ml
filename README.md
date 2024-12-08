@@ -4,7 +4,7 @@
 [![CI](https://github.com/appleparan/copier-modern-ml/actions/workflows/ci.yml/badge.svg)](https://github.com/appleparan/copier-modern-ml/actions?query=workflow%3Aci)
 [![docs](https://readthedocs.org/projects/copier-modern-ml/badge/?version=latest)](https://copier-modern-ml.readthedocs.io/en/latest/?badge=latest)
 
-Personal [Copier](https://copier.readthedocs.io/en/stable/)
+[Copier](https://copier.readthedocs.io/en/stable/)
 template with modern Python workflows
 
 Inspired by [copier-uv](https://github.com/pawamoy/copier-uv),
@@ -17,7 +17,7 @@ and [BestieTemplates.jl](https://github.com/JuliaBesties/BestieTemplate.jl).
 
 ## Features
 
-* Uses ~[rye](https://github.com/astral-sh/rye)~ [uv](https://github.com/astral-sh/uv)
+* Uses [uv](https://github.com/astral-sh/uv)
 for project and package management, which includes the following tools:
   * [ruff](https://github.com/charliermarsh/ruff) for code formatting and quality analysis
   * [mypy](https://github.com/python/mypy) for type checking
@@ -35,7 +35,7 @@ for project and package management, which includes the following tools:
 
 * Python 3.11+
 * copier >= 9.3.1
-* uv >= 0.4.12
+* uv >= 0.5.7
 
 ### Install copier (global)
 
