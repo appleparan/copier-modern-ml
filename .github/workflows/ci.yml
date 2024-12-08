@@ -51,5 +51,17 @@ jobs:
     - name: Install the project
       run: uv tool install copier
 
-    - name: Test project generation and workflow
-      run: CI=1 PYTHON_VERSION=${{ matrix.python-version }} bash tests/test_project.sh
+    - name: Test project generation and workflow (Run on Linux)
+      if: runner.os == 'Linux'
+      run: |
+        CI=1 PYTHON_VERSION=${{ matrix.python-version }} bash tests/test_project.sh
+
+    - name: Test project generation and workflow (Run on macOS)
+      if: runner.os == 'macOS'
+      run: |
+        CI=1 PYTHON_VERSION=${{ matrix.python-version }} bash tests/test_project.sh
+
+    - name: Test project generation and workflow (Run on Windows)
+      if: runner.os == 'Windows'
+      run: |
+        pwsh -Command tests/test_project.ps1 -CI -PythonVersion '${{ matrix.python-version }}'

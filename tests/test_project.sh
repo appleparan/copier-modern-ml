@@ -5,9 +5,11 @@ PYTHON_VERSION="${PYTHON_VERSION-3.12}"
 PYTHON_VERSIONS="${PYTHON_VERSIONS-3.11 3.12}"
 . tests/helpers.sh
 output=tests/tmp
+
 make() {
     ./scripts/make "$@"
 }
+
 # Function to check if a file exists
 check_file() {
     local FILE="$1"
