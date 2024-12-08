@@ -109,11 +109,11 @@ conflicts = [
 [tool.uv.sources]
 torch = [
   { index = "pytorch-cpu", extra = "cpu", marker = "platform_system != 'Darwin'" },
-  { index = "pytorch-cu124", extra = "cu124" },
+  { index = "pytorch-cu124", extra = "cu124", marker = "platform_system != 'Darwin'"},
 ]
 torchvision = [
   { index = "pytorch-cpu", extra = "cpu", marker = "platform_system != 'Darwin'" },
-  { index = "pytorch-cu124", extra = "cu124" },
+  { index = "pytorch-cu124", extra = "cu124", marker = "platform_system != 'Darwin'"},
 ]
 
 [tool.uv.pip]
