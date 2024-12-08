@@ -33,8 +33,10 @@ jobs:
         uses: astral-sh/setup-uv@v4
         with:
           enable-cache: true
-          python-version: ${{ matrix.python-version }}
           version: "latest"
+
+      - name: Set up Python ${{ matrix.python-version }}
+        run: uv python install ${{ matrix.python-version }}
 
       - name: Install the project
         run: uv sync --group dev docs --extra cpu
@@ -66,8 +68,10 @@ jobs:
         uses: astral-sh/setup-uv@v4
         with:
           enable-cache: true
-          python-version: ${{ matrix.python-version }}
           version: "latest"
+
+      - name: Set up Python ${{ matrix.python-version }}
+        run: uv python install ${{ matrix.python-version }}
 
       - name: Install the project
         run: uv sync --group dev docs --extra cpu
