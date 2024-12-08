@@ -90,24 +90,24 @@ package = {% if package %}true{% else %}false{% endif %}
 native-tls = {% if native_tls %}true{% else %}false{% endif %}
 managed = true
 dev-dependencies = [
-    "coverage",
-    "coverage-badge",
-    "mkdocs",
-    "mkdocs-material",
-    "mkdocstrings[python]",
-    "mkdocs-gen-files",
-    "mkdocs-section-index",
-    "mkdocs-literate-nav",
-    "mypy",
-    "mypy-extensions",
-    "myst-parser",
-    "ruff",
+    "coverage>=7.0.0",
+    "coverage-badge>=1.0.0",
+    "mkdocs>=1.6.1",
+    "mkdocs-material>=9.0.0",
+    "mkdocstrings[python]>=0.27.0",
+    "mkdocs-gen-files>=0.5.0",
+    "mkdocs-section-index>=0.3.9",
+    "mkdocs-literate-nav>=0.6.1",
+    "mypy>=1.13.0",
+    "mypy-extensions>=1.0.0",
+    "myst-parser>=4.0.0",
+    "ruff>=0.8.0",
     "pytest>=8.0.0",
-    "pytest-cov",
-    "pytest-html",
-    "pytest-mock",
-    "pre-commit",
-    "safety",
+    "pytest-cov>=6.0.0",
+    "pytest-html>=4.1.1",
+    "pytest-mock>=3.14.0",
+    "pre-commit>=4.0.0",
+    "safety>=3.2.11",
 ]
 conflicts = [
   [
@@ -151,10 +151,9 @@ torchaudio = [
 index-url = "https://pypi.org/simple"
 
 [[tool.uv.index]]
-# index for  macOS
 name = "pytorch-pypi"
 url = "https://pypi.org/simple"
-explicit = false
+explicit = true
 
 [[tool.uv.index]]
 name = "pytorch-cpu"
