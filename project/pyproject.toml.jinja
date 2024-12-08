@@ -127,40 +127,26 @@ conflicts = [
 
 [tool.uv.sources]
 torch = [
-  { index = "pytorch-pypi", extra = "cpu", marker = "platform_system == 'Darwin'" },
-  { index = "pytorch-pypi", extra = "cpu", marker = "platform_system == 'Windows'" },
   { index = "pytorch-cpu", extra = "cpu", marker = "platform_system == 'Linux'" },
   { index = "pytorch-cu124", extra = "cu124", marker = "platform_system == 'Windows'" },
-  { index = "pytorch-pypi", extra = "cu124", marker = "platform_system == 'Linux'" },
   { index = "pytorch-cu121", extra = "cu121", marker = "platform_system != 'Darwin'"},
   { index = "pytorch-cu118", extra = "cu118", marker = "platform_system != 'Darwin'"},
 ]
 torchvision = [
-  { index = "pytorch-pypi", extra = "cpu", marker = "platform_system == 'Darwin'" },
-  { index = "pytorch-pypi", extra = "cpu", marker = "platform_system == 'Windows'" },
   { index = "pytorch-cpu", extra = "cpu", marker = "platform_system == 'Linux'" },
   { index = "pytorch-cu124", extra = "cu124", marker = "platform_system == 'Windows'" },
-  { index = "pytorch-pypi", extra = "cu124", marker = "platform_system == 'Linux'" },
   { index = "pytorch-cu121", extra = "cu121", marker = "platform_system != 'Darwin'"},
   { index = "pytorch-cu118", extra = "cu118", marker = "platform_system != 'Darwin'"},
 ]
 torchaudio = [
-  { index = "pytorch-pypi", extra = "cpu", marker = "platform_system == 'Darwin'" },
-  { index = "pytorch-pypi", extra = "cpu", marker = "platform_system == 'Windows'" },
   { index = "pytorch-cpu", extra = "cpu", marker = "platform_system == 'Linux'" },
   { index = "pytorch-cu124", extra = "cu124", marker = "platform_system == 'Windows'" },
-  { index = "pytorch-pypi", extra = "cu124", marker = "platform_system == 'Linux'" },
   { index = "pytorch-cu121", extra = "cu121", marker = "platform_system != 'Darwin'"},
   { index = "pytorch-cu118", extra = "cu118", marker = "platform_system != 'Darwin'"},
 ]
 
 [tool.uv.pip]
 index-url = "https://pypi.org/simple"
-
-[[tool.uv.index]]
-name = "pytorch-pypi"
-url = "https://pypi.org/simple"
-explicit = true
 
 [[tool.uv.index]]
 name = "pytorch-cpu"
