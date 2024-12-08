@@ -37,7 +37,7 @@ jobs:
           version: "latest"
 
       - name: Install the project
-        run: uv sync --dev --extra cpu
+        run: uv sync --group dev docs --extra cpu
 
       - name: Format
         run: |
@@ -70,7 +70,7 @@ jobs:
           version: "latest"
 
       - name: Install the project
-        run: uv sync --dev --extra cpu
+        run: uv sync --group dev docs --extra cpu
 
       - name: Run tests
         run: |

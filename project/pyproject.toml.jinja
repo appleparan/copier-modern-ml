@@ -62,13 +62,35 @@ cpu = [
   "torchvision>=0.20.1",
   "torchaudio>=2.5.1",
 ]
-doc = [
-    "mkdocs",
-    "mkdocs-material",
-    "mkdocstrings[python]",
-    "mkdocs-gen-files",
-    "mkdocs-section-index",
-    "mkdocs-literate-nav",
+
+[dependency-groups]
+dev = [
+    "coverage>=7.0.0",
+    "coverage-badge>=1.0.0",
+    "mkdocs>=1.6.1",
+    "mkdocs-material>=9.0.0",
+    "mkdocstrings[python]>=0.27.0",
+    "mkdocs-gen-files>=0.5.0",
+    "mkdocs-section-index>=0.3.9",
+    "mkdocs-literate-nav>=0.6.1",
+    "mypy>=1.13.0",
+    "mypy-extensions>=1.0.0",
+    "myst-parser>=4.0.0",
+    "ruff>=0.8.0",
+    "pytest>=8.0.0",
+    "pytest-cov>=6.0.0",
+    "pytest-html>=4.1.1",
+    "pytest-mock>=3.14.0",
+    "pre-commit>=4.0.0",
+    "safety>=3.2.11",
+]
+docs = [
+    "mkdocs>=1.6.1",
+    "mkdocs-material>=9.0.0",
+    "mkdocstrings[python]>=0.27.0",
+    "mkdocs-gen-files>=0.5.0",
+    "mkdocs-section-index>=0.3.9",
+    "mkdocs-literate-nav>=0.6.1",
 ]
 
 [build-system]
@@ -89,26 +111,7 @@ packages = ["src/{{ project_slug }}"]
 package = {% if package %}true{% else %}false{% endif %}
 native-tls = {% if native_tls %}true{% else %}false{% endif %}
 managed = true
-dev-dependencies = [
-    "coverage>=7.0.0",
-    "coverage-badge>=1.0.0",
-    "mkdocs>=1.6.1",
-    "mkdocs-material>=9.0.0",
-    "mkdocstrings[python]>=0.27.0",
-    "mkdocs-gen-files>=0.5.0",
-    "mkdocs-section-index>=0.3.9",
-    "mkdocs-literate-nav>=0.6.1",
-    "mypy>=1.13.0",
-    "mypy-extensions>=1.0.0",
-    "myst-parser>=4.0.0",
-    "ruff>=0.8.0",
-    "pytest>=8.0.0",
-    "pytest-cov>=6.0.0",
-    "pytest-html>=4.1.1",
-    "pytest-mock>=3.14.0",
-    "pre-commit>=4.0.0",
-    "safety>=3.2.11",
-]
+default-groups = ["dev", "docs"]
 conflicts = [
   [
     { extra = "cu124" },
