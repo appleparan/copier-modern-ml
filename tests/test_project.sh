@@ -98,7 +98,6 @@ fi
 echo
 echo ">>> Testing arbitrary commands"
 pycode="import sys; print(sys.version.split(' ', 1)[0].rsplit('.', 1)[0])"
-
 make run python3 -c "print('allrun: ', end=''); ${pycode}"
 
 echo ">>> Creating second commit (fix)"
