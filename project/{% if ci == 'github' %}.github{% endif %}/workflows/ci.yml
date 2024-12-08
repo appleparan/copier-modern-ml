@@ -38,14 +38,7 @@ jobs:
         run: uv python install ${{ matrix.python-version }}
 
       - name: Install the project
-        run: |
-          if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
-            uv sync --dev --extras cpu
-          elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
-            uv sync --dev
-          elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
-            uv sync --dev
-          fi
+        run: uv sync --dev --extra cpu
 
       - name: Format
         run: |
@@ -79,14 +72,7 @@ jobs:
         run: uv python install ${{ matrix.python-version }}
 
       - name: Install the project
-        run: |
-          if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
-            uv sync --dev --extras cpu
-          elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
-            uv sync --dev
-          elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
-            uv sync --dev
-          fi
+        run: uv sync --dev --extra cpu
 
       - name: Run tests
         run: |

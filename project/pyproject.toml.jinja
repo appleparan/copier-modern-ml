@@ -19,8 +19,6 @@ dependencies = [
     "scikit-learn",
     "seaborn",
     "tensorboard",
-    "torch>=2.5.1",
-    "torchvision>=0.20.1",
     "tqdm",
     "typer",
 ]
@@ -44,13 +42,25 @@ classifiers = [
 ]
 
 [project.optional-dependencies]
-cpu = [
-  "torch>=2.5.1",
-  "torchvision>=0.20.1",
-]
 cu124 = [
   "torch>=2.5.1",
   "torchvision>=0.20.1",
+  "torchaudio>=2.5.1",
+]
+cu121 = [
+  "torch>=2.5.1",
+  "torchvision>=0.20.1",
+  "torchaudio>=2.5.1",
+]
+cu118 = [
+  "torch>=2.5.1",
+  "torchvision>=0.20.1",
+  "torchaudio>=2.5.1",
+]
+cpu = [
+  "torch>=2.5.1",
+  "torchvision>=0.20.1",
+  "torchaudio>=2.5.1",
 ]
 doc = [
     "mkdocs",
@@ -101,23 +111,50 @@ dev-dependencies = [
 ]
 conflicts = [
   [
-    { extra = "cpu" },
     { extra = "cu124" },
+    { extra = "cu121" },
+    { extra = "cu118" },
+    { extra = "cpu" },
   ],
 ]
 
 [tool.uv.sources]
 torch = [
-  { index = "pytorch-cpu", extra = "cpu", marker = "platform_system != 'Darwin'" },
-  { index = "pytorch-cu124", extra = "cu124", marker = "platform_system != 'Darwin'"},
+  { index = "pytorch-pypi", extra = "cpu", marker = "platform_system == 'Darwin'" },
+  { index = "pytorch-pypi", extra = "cpu", marker = "platform_system == 'Windows'" },
+  { index = "pytorch-cpu", extra = "cpu", marker = "platform_system == 'Linux'" },
+  { index = "pytorch-cu124", extra = "cu124", marker = "platform_system == 'Windows'" },
+  { index = "pytorch-pypi", extra = "cu124", marker = "platform_system == 'Linux'" },
+  { index = "pytorch-cu121", extra = "cu121", marker = "platform_system != 'Darwin'"},
+  { index = "pytorch-cu118", extra = "cu118", marker = "platform_system != 'Darwin'"},
 ]
 torchvision = [
-  { index = "pytorch-cpu", extra = "cpu", marker = "platform_system != 'Darwin'" },
-  { index = "pytorch-cu124", extra = "cu124", marker = "platform_system != 'Darwin'"},
+  { index = "pytorch-pypi", extra = "cpu", marker = "platform_system == 'Darwin'" },
+  { index = "pytorch-pypi", extra = "cpu", marker = "platform_system == 'Windows'" },
+  { index = "pytorch-cpu", extra = "cpu", marker = "platform_system == 'Linux'" },
+  { index = "pytorch-cu124", extra = "cu124", marker = "platform_system == 'Windows'" },
+  { index = "pytorch-pypi", extra = "cu124", marker = "platform_system == 'Linux'" },
+  { index = "pytorch-cu121", extra = "cu121", marker = "platform_system != 'Darwin'"},
+  { index = "pytorch-cu118", extra = "cu118", marker = "platform_system != 'Darwin'"},
+]
+torchaudio = [
+  { index = "pytorch-pypi", extra = "cpu", marker = "platform_system == 'Darwin'" },
+  { index = "pytorch-pypi", extra = "cpu", marker = "platform_system == 'Windows'" },
+  { index = "pytorch-cpu", extra = "cpu", marker = "platform_system == 'Linux'" },
+  { index = "pytorch-cu124", extra = "cu124", marker = "platform_system == 'Windows'" },
+  { index = "pytorch-pypi", extra = "cu124", marker = "platform_system == 'Linux'" },
+  { index = "pytorch-cu121", extra = "cu121", marker = "platform_system != 'Darwin'"},
+  { index = "pytorch-cu118", extra = "cu118", marker = "platform_system != 'Darwin'"},
 ]
 
 [tool.uv.pip]
 index-url = "https://pypi.org/simple"
+
+[[tool.uv.index]]
+# index for  macOS
+name = "pytorch-pypi"
+url = "https://pypi.org/simple"
+explicit = false
 
 [[tool.uv.index]]
 name = "pytorch-cpu"
@@ -127,6 +164,16 @@ explicit = true
 [[tool.uv.index]]
 name = "pytorch-cu124"
 url = "https://download.pytorch.org/whl/cu124"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cu121"
+url = "https://download.pytorch.org/whl/cu121"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cu118"
+url = "https://download.pytorch.org/whl/cu118"
 explicit = true
 
 [tool.ruff]
