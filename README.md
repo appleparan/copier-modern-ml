@@ -112,6 +112,11 @@ The directory structure of your new project will look something like this
     │
     └── cli.py                  <- Default CLI program
 ```
+## TODO
+
+* Add sample configuration management with Hydra
+* Add sample FastAPI app
+* For enterprise environemnt, add copier configuration to add `allow-insecure-host` in `uv.toml`
 
 ## Development
 
@@ -147,4 +152,9 @@ git add CHANGELOG.md RELEASE.md
 git commit -am "docs: Add CHANGELOG.md and RELEASE.md to release $BUMPED_VERSION"
 git tag -a $BUMPED_VERSION -m "Release $BUMPED_VERSION"
 git push origin tag $BUMPED_VERSION
+```
+
+For dry run:
+```shell
+uv run git-cliff --latest --strip header --tag $(uv run git-cliff --bumped-version) --unreleased
 ```
