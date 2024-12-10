@@ -63,58 +63,63 @@ If you don't want to use this packaging feature,
 you can set `tool.uv.package = false` in the pyproject.toml file.
 This tells `uv` to handle your project as a virtual project instead of a package.
 
-### Install Python (latest)
-```
-uv python install
-```
-
-### First Sync for predefined packages
-```
-uv sync
+### Install Python (3.12)
+```shell
+uv python install 3.12
 ```
 
-### Install Packages
+### Pin Python version
+```shell
+uv python pin 3.12
 ```
+
+### Install packages with PyTorch + CUDA 12.4 (Ubuntu)
+```shell
+uv sync --extra cu124
+```
+
+### Install packages without locking environments
+```shell
 uv sync --frozen
 ```
 
-### Install dev packages
-```
-uv sync --all-extras --dev
+### Install dev packages, too
+```shell
+uv sync --group dev docs --extra cu124
 ```
 
 ### Run tests
-```
+```shell
 uv run pytest
 ```
 
 ### Linting
-```
+```shell
 uvx ruff check --fix .
 ```
 
 ### Formatting
-```
+```shell
 uvx ruff fmt
 ```
 
 ### Run pre-commit
-```
+```shell
 uvx pre-commit run --all-files
 ```
 
 ### Build package
-```
+```shell
 uv build
 ```
 
 ### Serve Document
-```
+```shell
 uv run mkdocs serve
 ```
 
 ### Build Document
-```
+```shell
 uv run mkdocs build
 ```
 
@@ -122,7 +127,7 @@ uv run mkdocs build
 
 [ref. uv docs](https://docs.astral.sh/uv/guides/integration/docker/#installing-a-project)
 
-```
+```shell
 docker build -t TAGNAME -f Dockerfile.source
 ```
 
@@ -130,12 +135,12 @@ docker build -t TAGNAME -f Dockerfile.source
 
 [ref. uv docs](https://docs.astral.sh/uv/guides/integration/docker/#non-editable-installs)
 
-```
+```shell
 docker build -t TAGNAME -f Dockerfile.package
 ```
 
 ### Run Docker Container
-```
+```shell
 docker run --gpus all -p 8000:8000 my-production-app
 ```
 
