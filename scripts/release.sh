@@ -1,8 +1,11 @@
 #!/bin/bash
-echo "Release to $(uv run git-cliff --bumped-version)"
-uv run git-cliff --strip header -o CHANGELOG.md
-uv run git-cliff --latest --strip header -o RELEASE.md
+BUMPED_VERSION=$(uv run git-cliff --bumped-version)
+
+echo "Release to $BUMPED_VERSION"
+uv run git-cliff --strip header --tag $BUMPED_VERSION -o CHANGELOG.md
+uv run git-cliff --latest --strip header --tag $BUMPED_VERSION --unreleased -o RELEASE.md
+
 git add CHANGELOG.md RELEASE.md
-git commit -am "docs: Add CHANGELOG.md and RELEASE.md to release $(uv run git-cliff --bumped-version)"
-git tag -a $(uv run git-cliff --bumped-version) -m "Release $(uv run git-cliff --bumped-version)"
-git push origin tag $(uv run git-cliff --bumped-version)
+git commit -am "docs: Add CHANGELOG.md and RELEASE.md to release $BUMPED_VERSION"
+git tag -a $BUMPED_VERSION -m "Release $BUMPED_VERSION"
+git push origin tag $BUMPED_VERSION
