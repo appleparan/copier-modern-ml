@@ -119,3 +119,11 @@ The directory structure of your new project will look something like this
 ```shell
 uv run git-cliff --bumped-version
 ```
+
+### Release
+Assuming the next version is 0.6.0:
+
+```shell
+git tag -a v0.6.0
+git push origin tag v0.6.0
+```
