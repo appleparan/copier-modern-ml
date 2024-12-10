@@ -8,6 +8,7 @@ authors = [
 readme = "README.md"
 dependencies = [
     "colorlog>=6.9.0",
+    "datasets>=3.2.0",
     "hydra-colorlog>=1.2.0",
     "hydra-core>=1.3.2",
     "lightning>=2.0.0",
@@ -19,6 +20,7 @@ dependencies = [
     "seaborn>=0.13.2",
     "tensorboard>=2.18.0",
     "tqdm>=4.67.1",
+    "transformers>=4.47.0",
     "typer>=0.15.1",
 ]
 requires-python = ">=3.11, <4.0"
@@ -217,6 +219,7 @@ ignore = [
     "D101", # undocumented-public-class
     "E741", # ambiguous-variable-name
     "F811", # redefined-while-unused
+    "N806", # non-lowercase-variable-in-function
 ]
 select = [
     "A",    # flake8-builtins

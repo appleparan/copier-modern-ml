@@ -1,0 +1,149 @@
+"""CLI module."""
+
+from pathlib import Path
+
+import typer
+
+from {{ project_slug }}.nlp import train_boolq
+from {{ project_slug }}.tabular import train_titanic
+from {{ project_slug }}.vision import train_mnist
+
+app = typer.Typer(pretty_exceptions_show_locals=False)
+ROOT_DIR = Path(__file__).resolve().parents[2]
+
+
+@app.command()
+def hello() -> None:
+    """Hello function for the CLI.
+
+    Prints a simple "Hello, world!" message.
+    """
+    typer.echo('Hello, world!')
+
+
+@app.command()
+def nlp(
+    max_epochs: int = 10,
+    accelerator: str = 'auto',
+    devices: str = 'auto',
+    deterministic: bool = True,  # noqa: FBT001, FBT002
+    random_seed: int = 42,
+) -> None:
+    """NLP training CLI entrypoint.
+
+    This command trains an NLP model using the specified configuration options.
+
+    Args:
+        max_epochs (int, optional):
+            Maximum number of training epochs. Defaults to 10.
+        accelerator (str, optional):
+            Accelerator type (e.g., "cpu", "gpu", "tpu"). Defaults to "auto".
+        devices (str, optional):
+            Number of devices to use for training. Can be an integer, a string
+            ("auto"), or a list of device IDs. Defaults to "auto".
+            However, due to limitation of typer, this should be a string.
+        deterministic (bool, optional):
+            Whether to use deterministic algorithms for reproducibility.
+            Sets the `torch.backends.cudnn.deterministic` flag. Defaults to True.
+        random_seed (int, optional):
+            Random seed for reproducibility. Defaults to 42.
+    """
+    typer.echo('Starting NLP training...')
+    typer.echo(f'Project root directory: {ROOT_DIR}')
+    train_boolq(
+        ROOT_DIR,
+        max_epochs=max_epochs,
+        accelerator=accelerator,
+        devices=devices,
+        deterministic=deterministic,
+        random_seed=random_seed,
+    )
+
+@app.command()
+def tabular(
+    max_epochs: int = 10,
+    accelerator: str = 'auto',
+    devices: str = 'auto',
+    deterministic: bool = True,  # noqa: FBT001, FBT002
+    random_seed: int = 42,
+) -> None:
+    """Vision training CLI entrypoint.
+
+    This command trains a tabular model using the specified configuration options.
+
+    Args:
+        max_epochs (int, optional):
+            Maximum number of training epochs. Defaults to 10.
+        accelerator (str, optional):
+            Accelerator type (e.g., "cpu", "gpu", "tpu"). Defaults to "auto".
+        devices (str, optional):
+            Number of devices to use for training. Can be an integer, a string
+            ("auto"), or a list of device IDs. Defaults to "auto".
+            However, due to limitation of typer, this should be a string.
+        deterministic (bool, optional):
+            Whether to use deterministic algorithms for reproducibility.
+            Sets the `torch.backends.cudnn.deterministic` flag. Defaults to True.
+        random_seed (int, optional):
+            Random seed for reproducibility. Defaults to 42.
+    """
+    typer.echo('Starting tabular training...')
+    typer.echo(f'Project root directory: {ROOT_DIR}')
+    train_titanic(
+        ROOT_DIR,
+        max_epochs=max_epochs,
+        accelerator=accelerator,
+        devices=devices,
+        deterministic=deterministic,
+        random_seed=random_seed,
+    )
+
+
+@app.command()
+def vision(
+    max_epochs: int = 10,
+    accelerator: str = 'auto',
+    devices: str = 'auto',
+    deterministic: bool = True,  # noqa: FBT001, FBT002
+    random_seed: int = 42,
+) -> None:
+    """Vision training CLI entrypoint.
+
+    This command trains a vision model using the specified configuration options.
+
+    Args:
+        max_epochs (int, optional):
+            Maximum number of training epochs. Defaults to 10.
+        accelerator (str, optional):
+            Accelerator type (e.g., "cpu", "gpu", "tpu"). Defaults to "auto".
+        devices (str, optional):
+            Number of devices to use for training. Can be an integer, a string
+            ("auto"), or a list of device IDs. Defaults to "auto".
+            However, due to limitation of typer, this should be a string.
+        deterministic (bool, optional):
+            Whether to use deterministic algorithms for reproducibility.
+            Sets the `torch.backends.cudnn.deterministic` flag. Defaults to True.
+        random_seed (int, optional):
+            Random seed for reproducibility. Defaults to 42.
+    """
+    typer.echo('Starting vision training...')
+    typer.echo(f'Project root directory: {ROOT_DIR}')
+    train_mnist(
+        ROOT_DIR,
+        max_epochs=max_epochs,
+        accelerator=accelerator,
+        devices=devices,
+        deterministic=deterministic,
+        random_seed=random_seed,
+    )
+
+
+def main() -> None:
+    """Main entrypoint for the CLI application.
+
+    Runs the Typer app to handle user commands.
+    """
+    app()
+
+
+if __name__ == '__main__':
+    main()
