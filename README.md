@@ -121,9 +121,20 @@ uv run git-cliff --bumped-version
 ```
 
 ### Release
-Assuming the next version is 0.6.0:
+Execute scripts
+```
+sh scripts/release.sh
+```
+What `release.sh` do:
 
+1. Generate CHANGELOG and RELEASE
 ```shell
-git tag -a v0.6.0
-git push origin tag v0.6.0
+uv run git-cliff --strip header -o CHANGELOG.md
+uv run git-cliff --latest --strip header -o RELEASE.md
+```
+
+2. Add tags
+```shell
+git tag -a $(uv run git-cliff --bumped-version)
+git push origin tag $(uv run git-cliff --bumped-version)
 ```
