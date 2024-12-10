@@ -3,8 +3,8 @@ name: Publish release
 on:
   workflow_dispatch:
   push:
-    branches:
-      - 'release/v*.*.*'
+    tags:
+      - 'v*.*.*'
 
 jobs:
   check-permission:
@@ -29,6 +29,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: main
 
       - name: Set up Git for GitHub Actions
         run: |
@@ -43,33 +44,11 @@ jobs:
           echo "Extracted version: $version"
           echo "version=$version" >> "$GITHUB_OUTPUT"
 
-      - name: Pull the latest changes from the remote branch
-        run: |
-          git pull origin ${{ github.ref_name }}
-
-      - name: Bump version and commit
-        id: bump_version
-        run: |
-          set +e
-          # Extract the version from the tag name (e.g., refs/tags/v1.2.3 -> 1.2.3)
-          version=${{ steps.extract_version.outputs.version }}
-          echo "Current version is $version"
-          # Create a VERSION file to track the version
-          echo $version > VERSION
-          git add VERSION
-          git commit -m "chore: bump version to $version"
-          git push origin HEAD
-
-      - name: Create Tag
-        run: |
-          version=${{ steps.extract_version.outputs.version }}
-          git tag "v$version"
-          git push origin "v$version"
-
       - name: Generate a changelog
-        uses: orhun/git-cliff-action@v3
+        uses: orhun/git-cliff-action@v4
         id: git-cliff-changelog
         with:
+          version: latest
           config: cliff.toml
           args: --strip header
         env:
@@ -84,24 +63,10 @@ jobs:
           git branch -m main
           git push origin HEAD --force
 
-      - name: Generate a release note
-        uses: orhun/git-cliff-action@v3
-        id: git-cliff-release
-        with:
-          config: cliff.toml
-          args: --latest --strip header
-        env:
-          OUTPUT: RELEASE.md
-          GITHUB_REPO: ${{ github.repository }}
-
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          body_path: RELEASE.md
+          body_path: CHANGELOG.md
           tag_name: "v${{ steps.extract_version.outputs.version }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Clean up RELEASE.md
-        run: |
-          rm RELEASE.md
