@@ -17,6 +17,7 @@
 - Update README ([61142c4](https://github.com/vince-test-org/changelog-generator-example/commit/61142c4a088a1743ff4ccbfa314d9a69b72685cf))
 - Update CHANGELOG for version refs/tags/v0.6.0 ([9b5601a](https://github.com/vince-test-org/changelog-generator-example/commit/9b5601ae4af07a9d353f30497b545ba559699bb9))
 - Add CHANGELOG.md and RELEASE.md to release v0.6.1 ([19cb91d](https://github.com/vince-test-org/changelog-generator-example/commit/19cb91d4bf3430a58dbff8ed6322c4c73dee0e5c))
+- Add commit CHANGELOG and RELEASE in release.sh ([6e33188](https://github.com/vince-test-org/changelog-generator-example/commit/6e3318838599be1a7897fc629b1b279399ee841b))
 
 ### Features
 
@@ -36,6 +37,7 @@
 - Rollback to tag based release system ([876b8c0](https://github.com/vince-test-org/changelog-generator-example/commit/876b8c000ad22d2a5a9d01ea3678c764a5c2b4da))
 - Simplify release process ([2c210f5](https://github.com/vince-test-org/changelog-generator-example/commit/2c210f514ecb12067cd7706272fc1313d690a163))
 - Bump version ([f2620f6](https://github.com/vince-test-org/changelog-generator-example/commit/f2620f67150a7afac55341da28f584b2dde60339))
+- Bump version for re-release ([35ee026](https://github.com/vince-test-org/changelog-generator-example/commit/35ee0269643c2d55e4c326739e4313ee631dbc76))
 
 ### Build
 
