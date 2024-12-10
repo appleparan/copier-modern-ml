@@ -1,4 +1,4 @@
-## [unreleased]
+## [0.6.0] - 2024-12-10
 
 ### Bug Fixes
 
@@ -18,6 +18,7 @@
 - Update CHANGELOG for version refs/tags/v0.6.0 ([9b5601a](https://github.com/vince-test-org/changelog-generator-example/commit/9b5601ae4af07a9d353f30497b545ba559699bb9))
 - Add CHANGELOG.md and RELEASE.md to release v0.6.1 ([19cb91d](https://github.com/vince-test-org/changelog-generator-example/commit/19cb91d4bf3430a58dbff8ed6322c4c73dee0e5c))
 - Add commit CHANGELOG and RELEASE in release.sh ([6e33188](https://github.com/vince-test-org/changelog-generator-example/commit/6e3318838599be1a7897fc629b1b279399ee841b))
+- Add CHANGELOG.md and RELEASE.md to release v0.6.0 ([ecf434b](https://github.com/vince-test-org/changelog-generator-example/commit/ecf434b2c7c300dc16246c77bb491ebd99e1e621))
 
 ### Features
 
@@ -38,6 +39,7 @@
 - Simplify release process ([2c210f5](https://github.com/vince-test-org/changelog-generator-example/commit/2c210f514ecb12067cd7706272fc1313d690a163))
 - Bump version ([f2620f6](https://github.com/vince-test-org/changelog-generator-example/commit/f2620f67150a7afac55341da28f584b2dde60339))
 - Bump version for re-release ([35ee026](https://github.com/vince-test-org/changelog-generator-example/commit/35ee0269643c2d55e4c326739e4313ee631dbc76))
+- Proper RELEASE.md generation ([553db6b](https://github.com/vince-test-org/changelog-generator-example/commit/553db6bd0b9b9181a02f435d8972bbb1627b33dc))
 
 ### Build
 
