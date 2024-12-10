@@ -1,3 +1,14 @@
+## [unreleased]
+
+### Documentation
+
+- Update CHANGELOG for version refs/tags/v0.6.0 ([9b5601a](https://github.com/vince-test-org/changelog-generator-example/commit/9b5601ae4af07a9d353f30497b545ba559699bb9))
+
+### Miscellaneous Tasks
+
+- Simplify release process ([2c210f5](https://github.com/vince-test-org/changelog-generator-example/commit/2c210f514ecb12067cd7706272fc1313d690a163))
+- Bump version ([f2620f6](https://github.com/vince-test-org/changelog-generator-example/commit/f2620f67150a7afac55341da28f584b2dde60339))
+
 ## [0.6.0] - 2024-12-10
 
 ### Bug Fixes
