@@ -1,16 +1,5 @@
 ## [unreleased]
 
-### Documentation
-
-- Update CHANGELOG for version refs/tags/v0.6.0 ([9b5601a](https://github.com/vince-test-org/changelog-generator-example/commit/9b5601ae4af07a9d353f30497b545ba559699bb9))
-
-### Miscellaneous Tasks
-
-- Simplify release process ([2c210f5](https://github.com/vince-test-org/changelog-generator-example/commit/2c210f514ecb12067cd7706272fc1313d690a163))
-- Bump version ([f2620f6](https://github.com/vince-test-org/changelog-generator-example/commit/f2620f67150a7afac55341da28f584b2dde60339))
-
-## [0.6.0] - 2024-12-10
-
 ### Bug Fixes
 
 - Update some pyproject.toml configs ([c837b08](https://github.com/vince-test-org/changelog-generator-example/commit/c837b087dbf3ea0e1b23e95f30e3264375fa64f4))
@@ -26,6 +15,8 @@
 - Disable emoji support ([eb1694b](https://github.com/vince-test-org/changelog-generator-example/commit/eb1694bb6739edea8f03fa56acb22ff4931a2880))
 - Update README ([596e351](https://github.com/vince-test-org/changelog-generator-example/commit/596e3511da6cf5fabeb444903c09db1da3432600))
 - Update README ([61142c4](https://github.com/vince-test-org/changelog-generator-example/commit/61142c4a088a1743ff4ccbfa314d9a69b72685cf))
+- Update CHANGELOG for version refs/tags/v0.6.0 ([9b5601a](https://github.com/vince-test-org/changelog-generator-example/commit/9b5601ae4af07a9d353f30497b545ba559699bb9))
+- Add CHANGELOG.md and RELEASE.md to release v0.6.1 ([19cb91d](https://github.com/vince-test-org/changelog-generator-example/commit/19cb91d4bf3430a58dbff8ed6322c4c73dee0e5c))
 
 ### Features
 
@@ -43,6 +34,8 @@
 - Add Powershell script for test ([cd050b6](https://github.com/vince-test-org/changelog-generator-example/commit/cd050b6bd72c861927a4b0d599b3994b3af3ca81))
 - Bump version ([2da3e1c](https://github.com/vince-test-org/changelog-generator-example/commit/2da3e1c3c7f1b20180a08f9096d27ea6db3dd370))
 - Rollback to tag based release system ([876b8c0](https://github.com/vince-test-org/changelog-generator-example/commit/876b8c000ad22d2a5a9d01ea3678c764a5c2b4da))
+- Simplify release process ([2c210f5](https://github.com/vince-test-org/changelog-generator-example/commit/2c210f514ecb12067cd7706272fc1313d690a163))
+- Bump version ([f2620f6](https://github.com/vince-test-org/changelog-generator-example/commit/f2620f67150a7afac55341da28f584b2dde60339))
 
 ### Build
 
