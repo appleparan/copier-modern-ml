@@ -129,22 +129,22 @@ conflicts = [
 
 [tool.uv.sources]
 torch = [
-  { index = "pytorch-cpu", extra = "cpu", marker = "platform_system == 'Linux'" },
-  { index = "pytorch-cu124", extra = "cu124", marker = "platform_system == 'Windows'" },
-  { index = "pytorch-cu121", extra = "cu121", marker = "platform_system != 'Darwin'"},
-  { index = "pytorch-cu118", extra = "cu118", marker = "platform_system != 'Darwin'"},
+  { index = "pytorch-cpu", extra = "cpu", marker = "sys_platform == 'linux'" },
+  { index = "pytorch-cu124", extra = "cu124", marker = "sys_platform == 'win32'" },
+  { index = "pytorch-cu121", extra = "cu121", marker = "sys_platform != 'darwin'"},
+  { index = "pytorch-cu118", extra = "cu118", marker = "sys_platform != 'darwin'"},
 ]
 torchvision = [
-  { index = "pytorch-cpu", extra = "cpu", marker = "platform_system == 'Linux'" },
-  { index = "pytorch-cu124", extra = "cu124", marker = "platform_system == 'Windows'" },
-  { index = "pytorch-cu121", extra = "cu121", marker = "platform_system != 'Darwin'"},
-  { index = "pytorch-cu118", extra = "cu118", marker = "platform_system != 'Darwin'"},
+  { index = "pytorch-cpu", extra = "cpu", marker = "sys_platform == 'linux'" },
+  { index = "pytorch-cu124", extra = "cu124", marker = "sys_platform == 'win32'" },
+  { index = "pytorch-cu121", extra = "cu121", marker = "sys_platform != 'darwin'"},
+  { index = "pytorch-cu118", extra = "cu118", marker = "sys_platform != 'darwin'"},
 ]
 torchaudio = [
-  { index = "pytorch-cpu", extra = "cpu", marker = "platform_system == 'Linux'" },
-  { index = "pytorch-cu124", extra = "cu124", marker = "platform_system == 'Windows'" },
-  { index = "pytorch-cu121", extra = "cu121", marker = "platform_system != 'Darwin'"},
-  { index = "pytorch-cu118", extra = "cu118", marker = "platform_system != 'Darwin'"},
+  { index = "pytorch-cpu", extra = "cpu", marker = "sys_platform == 'linux'" },
+  { index = "pytorch-cu124", extra = "cu124", marker = "sys_platform == 'win32'" },
+  { index = "pytorch-cu121", extra = "cu121", marker = "sys_platform != 'darwin'"},
+  { index = "pytorch-cu118", extra = "cu118", marker = "sys_platform != 'darwin'"},
 ]
 
 [tool.uv.pip]
