@@ -1,3 +1,21 @@
+## [0.6.1] - 2025-01-11
+
+### Bug Fixes
+
+- Normalize platform_system to sys_platform ([f3bb2f5](https://github.com/vince-test-org/changelog-generator-example/commit/f3bb2f5535f5f87b5d9a05d69e6c32e596fd9811))
+- Add sympy v1.13.1 ([31fb501](https://github.com/vince-test-org/changelog-generator-example/commit/31fb5017d16e9f2b084eea90ac8de8aa964d50ed))
+- Update README ([0df6531](https://github.com/vince-test-org/changelog-generator-example/commit/0df6531f8281f95481d5031c159963ad28ef0906))
+
+### Documentation
+
+- Update README ([10debe2](https://github.com/vince-test-org/changelog-generator-example/commit/10debe2093e3cf273964098dbffcdcd915819956))
+- Update README (project) ([4ec4cd6](https://github.com/vince-test-org/changelog-generator-example/commit/4ec4cd6c6c57d752bce41c8daea422409ba78eb6))
+- Update README ([7513096](https://github.com/vince-test-org/changelog-generator-example/commit/75130967dd8b408841203a646cfc2dd5a7142891))
+
+### Miscellaneous Tasks
+
+- Update astral-sh/setup-uv action to v5 ([0489c3d](https://github.com/vince-test-org/changelog-generator-example/commit/0489c3d2749966229739f567d1b340dcdbba3d53))
+
 ## [0.6.0] - 2024-12-10
 
 ### Bug Fixes
@@ -20,6 +38,7 @@
 - Add commit CHANGELOG and RELEASE in release.sh ([6e33188](https://github.com/vince-test-org/changelog-generator-example/commit/6e3318838599be1a7897fc629b1b279399ee841b))
 - Add CHANGELOG.md and RELEASE.md to release v0.6.0 ([ecf434b](https://github.com/vince-test-org/changelog-generator-example/commit/ecf434b2c7c300dc16246c77bb491ebd99e1e621))
 - Add CHANGELOG.md and RELEASE.md to release v0.6.0 ([9493657](https://github.com/vince-test-org/changelog-generator-example/commit/949365761bc43fa36b7555ad657fd9154444fb90))
+- Add CHANGELOG.md and RELEASE.md to release v0.6.0 ([bf78045](https://github.com/vince-test-org/changelog-generator-example/commit/bf78045b517fac374248d72dd90786fff3f19f80))
 
 ### Features
 
