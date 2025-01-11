@@ -35,7 +35,7 @@ for project and package management, which includes the following tools:
 
 * Python 3.11+
 * copier >= 9.3.1
-* uv >= 0.5.13
+* uv >= 0.5.17
 
 ### Install copier (global)
 
@@ -54,7 +54,7 @@ uvx --with copier_templates_extensions copier copy --trust gh:appleparan/copier-
 ```bash
 cd ~/path/to/your/project
 uv python install 3.12
-uv sync --dev --extra cu124
+uv sync --group dev --group docs --extra cu124
 ```
 
 ### Intialize git
