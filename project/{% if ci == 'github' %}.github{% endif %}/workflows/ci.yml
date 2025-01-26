@@ -39,7 +39,7 @@ jobs:
         run: uv python install ${{ matrix.python-version }}
 
       - name: Install the project
-        run: uv sync --group dev docs --extra cpu
+        run: uv sync --group dev --group docs --extra cpu
 
       - name: Format
         run: |
@@ -74,7 +74,7 @@ jobs:
         run: uv python install ${{ matrix.python-version }}
 
       - name: Install the project
-        run: uv sync --group dev docs --extra cpu
+        run: uv sync --group dev --group docs --extra cpu
 
       - name: Run tests
         run: |
