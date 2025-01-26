@@ -205,7 +205,6 @@ def prepare_data(
     return train_dataset, val_dataset, test_dataset
 
 
-
 def train_boolq(
     root_dir: Path,
     max_epochs: int = 10,

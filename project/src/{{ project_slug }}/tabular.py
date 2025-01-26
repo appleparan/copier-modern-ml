@@ -192,7 +192,7 @@ def preprocess_titanic_data(random_seed: int = 42) -> None:
     data = data.drop(columns=['Name'])
 
     # Fill missing values
-    data['Age']= data['Age'].fillna(data['Age'].median())
+    data['Age'] = data['Age'].fillna(data['Age'].median())
 
     # Encode categorical variables
     data['Sex'] = LabelEncoder().fit_transform(data['Sex'])
