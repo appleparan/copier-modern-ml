@@ -1,3 +1,23 @@
+## [0.7.0] - 2025-01-27
+
+### Bug Fixes
+
+- Use Hydra Compose API to load config manually ([6b965f5](https://github.com/vince-test-org/changelog-generator-example/commit/6b965f5be2ca64ced27a0132fe5cf7b84c5c11ee))
+- Fix GitHub Actions mistypos ([d5b304e](https://github.com/vince-test-org/changelog-generator-example/commit/d5b304e6beda87f9c7a483ad4b85e966c8fadece))
+- Lint example code ([c00075e](https://github.com/vince-test-org/changelog-generator-example/commit/c00075e26b14968142f6f1e72021b47c4ba4f465))
+
+### Features
+
+- Add script for GitHub release ([2caa501](https://github.com/vince-test-org/changelog-generator-example/commit/2caa5013cbcac70b602e090f5370d4a64dca6bb6))
+
+### Miscellaneous Tasks
+
+- Fix release.sh to push commits correctly ([22b28ea](https://github.com/vince-test-org/changelog-generator-example/commit/22b28ea8858f0a99d6071cdd9b730d6bdb3a1a9e))
+
+### Build
+
+- Add "v" prefix to version tags ([4ef96c4](https://github.com/vince-test-org/changelog-generator-example/commit/4ef96c4905f414e6b0294fcec39ec57377816b24))
+
 ## [0.6.1] - 2025-01-11
 
 ### Bug Fixes
@@ -11,6 +31,7 @@
 - Update README ([10debe2](https://github.com/vince-test-org/changelog-generator-example/commit/10debe2093e3cf273964098dbffcdcd915819956))
 - Update README (project) ([4ec4cd6](https://github.com/vince-test-org/changelog-generator-example/commit/4ec4cd6c6c57d752bce41c8daea422409ba78eb6))
 - Update README ([7513096](https://github.com/vince-test-org/changelog-generator-example/commit/75130967dd8b408841203a646cfc2dd5a7142891))
+- Add CHANGELOG.md and RELEASE.md to release v0.6.1 ([3cb9c63](https://github.com/vince-test-org/changelog-generator-example/commit/3cb9c63452bc701aed322fbe9726da0e56cf1183))
 
 ### Miscellaneous Tasks
 
