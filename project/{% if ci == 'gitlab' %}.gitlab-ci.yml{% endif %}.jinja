@@ -1,55 +1,81 @@
-# To contribute improvements to CI/CD templates, please follow the Development guide at:
-# https://docs.gitlab.com/ee/development/cicd/templates.html
-# This specific template is located at:
-# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Python.gitlab-ci.yml
-
-# Official language image. Look for the different tagged releases at:
-# https://hub.docker.com/r/library/python/tags/
-image: python:latest
-
-# Change pip's cache directory to be inside the project directory since we can
-# only cache local items.
 variables:
-  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  UV_VERSION: "0.5.17"  # uv version
+  PYTHON_VERSION: "3.12"  # basic Python version
+  BASE_LAYER: "bookworm-slim"  # uv base image
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"  # cache directory
 
-# https://pip.pypa.io/en/stable/topics/caching/
-cache:
-  paths:
-    - .cache/pip
+stages:
+  - lint
+  - test
+  - release
 
-before_script:
-  - python --version ; pip --version  # For debugging
-  - pip install virtualenv
-  - virtualenv venv
-  - source venv/bin/activate
+# Lint job
+lint:
+  stage: lint
+  parallel:
+    matrix:
+      - PYTHON_VERSION: "3.11"
+      - PYTHON_VERSION: "3.12"
+  image: ghcr.io/astral-sh/uv:$UV_VERSION-python$PYTHON_VERSION-$BASE_LAYER
+  tags:
+    - $OS
+  script:
+    - echo "Using UV version $UV_VERSION with Python $PYTHON_VERSION"
+    - echo "Installing project dependencies"
+    - uv sync --group dev --group docs --extra cpu
+    - echo "Running format checks"
+    - uv run ruff format
+    - echo "Running lint checks"
+    - uv run ruff check --fix --exit-non-zero-on-fix .
+  cache:
+    paths:
+      - .cache/pip/
 
+# Test job
 test:
+  stage: test
+  needs:
+    - lint
+  parallel:
+    matrix:
+      - PYTHON_VERSION: "3.11"
+      - PYTHON_VERSION: "3.12"
+  image: ghcr.io/astral-sh/uv:$UV_VERSION-python$PYTHON_VERSION-$BASE_LAYER
+  tags:
+    - $OS
   script:
-    - pip install ruff tox  # you can also use tox
-    - pip install --editable ".[test]"
-    - tox -e py,ruff
-
-run:
-  script:
-    - pip install .
-    # run the command here
-  artifacts:
+    - echo "Using UV version $UV_VERSION with Python $PYTHON_VERSION"
+    - echo "Installing project dependencies"
+    - uv sync --group dev --group docs --extra cpu
+    - echo "Running tests"
+    - uv run coverage run -m pytest src/tests/
+  cache:
     paths:
-      - build/*
+      - .cache/pip/
 
-pages:
-  script:
-    - pip install sphinx sphinx-rtd-theme
-    - cd doc
-    - make html
-    - mv build/html/ ../public/
-  artifacts:
-    paths:
-      - public
+release:
+  stage: release
+  # Run when specific tag was pushed
   rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: '$CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/'  # Run tags matched with 'v*.*.*'
+    - when: manual  # 수동 실행도 허용
+  script:
+    - echo "Checking permissions for release..."
+    # Like GitHub's actions-check-permissions
+    - if [ -z "$CI_JOB_TOKEN" ]; then echo "No CI_JOB_TOKEN available, exiting"; exit 1; fi
 
-deploy:
-  stage: deploy
-  script: echo "Define your deployment script!"
-  environment: production
+    - echo "Setting up Git configuration..."
+    - git config --global user.name "$CI_COMMIT_AUTHOR_NAME"
+    - git config --global user.email "$CI_COMMIT_AUTHOR_EMAIL"
+
+    - echo "Fetching tags..."
+    - git fetch --tags
+
+    - echo "Creating release for tag $CI_COMMIT_TAG..."
+    # Create GitLab Release
+    - curl --header "PRIVATE-TOKEN: $CI_JOB_TOKEN" \
+        --data "name=Release $CI_COMMIT_TAG&tag_name=$CI_COMMIT_TAG&description=$(cat RELEASE.md)" \
+        "$CI_API_V4_URL/projects/$CI_PROJECT_ID/releases"
+
+  tags:
+    - release-runner  # GitLab runner tag
