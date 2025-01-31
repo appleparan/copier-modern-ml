@@ -45,12 +45,12 @@ classifiers = [
 ]
 
 [project.optional-dependencies]
-cu124 = [
+cu126 = [
   "torch~=2.6.0",
   "torchvision~=0.21.0",
   "torchaudio~=2.6.0",
 ]
-cu121 = [
+cu124 = [
   "torch~=2.6.0",
   "torchvision~=0.21.0",
   "torchaudio~=2.6.0",
@@ -121,8 +121,8 @@ managed = true
 default-groups = ["dev", "docs"]
 conflicts = [
   [
+    { extra = "cu126" },
     { extra = "cu124" },
-    { extra = "cu121" },
     { extra = "cu118" },
     { extra = "cpu" },
   ],
@@ -131,20 +131,20 @@ conflicts = [
 [tool.uv.sources]
 torch = [
   { index = "pytorch-cpu", extra = "cpu", marker = "sys_platform == 'linux'" },
-  { index = "pytorch-cu124", extra = "cu124", marker = "sys_platform == 'win32'" },
-  { index = "pytorch-cu121", extra = "cu121", marker = "sys_platform != 'darwin'"},
+  { index = "pytorch-cu126", extra = "cu126", marker = "sys_platform == 'win32'" },
+  { index = "pytorch-cu124", extra = "cu124", marker = "sys_platform != 'darwin'"},
   { index = "pytorch-cu118", extra = "cu118", marker = "sys_platform != 'darwin'"},
 ]
 torchvision = [
   { index = "pytorch-cpu", extra = "cpu", marker = "sys_platform == 'linux'" },
-  { index = "pytorch-cu124", extra = "cu124", marker = "sys_platform == 'win32'" },
-  { index = "pytorch-cu121", extra = "cu121", marker = "sys_platform != 'darwin'"},
+  { index = "pytorch-cu126", extra = "cu126", marker = "sys_platform == 'win32'" },
+  { index = "pytorch-cu124", extra = "cu124", marker = "sys_platform != 'darwin'"},
   { index = "pytorch-cu118", extra = "cu118", marker = "sys_platform != 'darwin'"},
 ]
 torchaudio = [
   { index = "pytorch-cpu", extra = "cpu", marker = "sys_platform == 'linux'" },
-  { index = "pytorch-cu124", extra = "cu124", marker = "sys_platform == 'win32'" },
-  { index = "pytorch-cu121", extra = "cu121", marker = "sys_platform != 'darwin'"},
+  { index = "pytorch-cu126", extra = "cu126", marker = "sys_platform == 'win32'" },
+  { index = "pytorch-cu124", extra = "cu124", marker = "sys_platform != 'darwin'"},
   { index = "pytorch-cu118", extra = "cu118", marker = "sys_platform != 'darwin'"},
 ]
 
@@ -157,13 +157,13 @@ url = "https://download.pytorch.org/whl/cpu"
 explicit = true
 
 [[tool.uv.index]]
-name = "pytorch-cu124"
-url = "https://download.pytorch.org/whl/cu124"
+name = "pytorch-cu126"
+url = "https://download.pytorch.org/whl/cu126"
 explicit = true
 
 [[tool.uv.index]]
-name = "pytorch-cu121"
-url = "https://download.pytorch.org/whl/cu121"
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
 explicit = true
 
 [[tool.uv.index]]
