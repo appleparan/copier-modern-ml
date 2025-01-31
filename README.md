@@ -114,7 +114,6 @@ The directory structure of your new project will look something like this
 ```
 ## TODO
 
-* Add sample configuration management with Hydra
 * Add sample FastAPI app
 * For enterprise environemnt, add copier configuration to add `allow-insecure-host` in `uv.toml`
 
