@@ -17,11 +17,15 @@ if [ -f "$PYPROJECT_FILE" ]; then
 fi
 
 git add CHANGELOG.md RELEASE.md
-[[ -f "$PYPROJECT_FILE" ]] && git add "$PYPROJECT_FILE"
-[[ -f "$INIT_FILE" ]] && git add "$INIT_FILE"
-[[ -f "$TEST_VERSION_FILE" ]] && git add "$TEST_VERSION_FILE"
+[ -f "$PYPROJECT_FILE" ] && git add "$PYPROJECT_FILE"
+[ -f "$INIT_FILE" ] && git add "$INIT_FILE"
+[ -f "$TEST_VERSION_FILE" ] && git add "$TEST_VERSION_FILE"
 
-git commit -am "docs: Add CHANGELOG.md and RELEASE.md to release $BUMPED_VERSION"
+git commit -am "chore(release): bump version to $PLAIN_VERSION"
 git push origin
-git tag -a $BUMPED_VERSION -m "Release $BUMPED_VERSION"
+
+# Create and push the tag (use BUMPED_VERSION with "v")
+git tag -a "$BUMPED_VERSION" -m "Release $BUMPED_VERSION"
 git push origin --tags
+
+echo "Released version $BUMPED_VERSION successfully!"
