@@ -34,8 +34,8 @@ for project and package management, which includes the following tools:
 ### Install dependencies
 
 * Python 3.12+
-* copier >= 9.3.1
-* uv >= 0.5.17
+* copier >= 9.4.1
+* uv >= 0.6.0
 
 ### Install copier (global)
 

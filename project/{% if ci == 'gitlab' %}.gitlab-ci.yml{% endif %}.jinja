@@ -1,5 +1,5 @@
 variables:
-  UV_VERSION: "0.5.17"  # uv version
+  UV_VERSION: "0.6.0"  # uv version
   PYTHON_VERSION: "3.12"  # basic Python version
   BASE_LAYER: "bookworm-slim"  # uv base image
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"  # cache directory
@@ -14,8 +14,8 @@ lint:
   stage: lint
   parallel:
     matrix:
-      - PYTHON_VERSION: "3.11"
       - PYTHON_VERSION: "3.12"
+      - PYTHON_VERSION: "3.13"
   image: ghcr.io/astral-sh/uv:$UV_VERSION-python$PYTHON_VERSION-$BASE_LAYER
   tags:
     - $OS
@@ -38,8 +38,8 @@ test:
     - lint
   parallel:
     matrix:
-      - PYTHON_VERSION: "3.11"
       - PYTHON_VERSION: "3.12"
+      - PYTHON_VERSION: "3.13"
   image: ghcr.io/astral-sh/uv:$UV_VERSION-python$PYTHON_VERSION-$BASE_LAYER
   tags:
     - $OS
