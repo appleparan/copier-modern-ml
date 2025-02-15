@@ -120,6 +120,7 @@ packages = ["src/{{ project_slug }}"]
 [tool.uv]
 package = {% if package %}true{% else %}false{% endif %}
 native-tls = {% if native_tls %}true{% else %}false{% endif %}
+{% if allow_insecure_host %}allow-insecure-host = ["pypi.org", "files.pythonhosted.org"]{% endif %}
 managed = true
 default-groups = ["dev", "docs"]
 conflicts = [

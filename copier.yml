@@ -85,6 +85,14 @@ native_tls:
     - true
     - false
 
+allow_insecure_host:
+  type: bool
+  help: Do you want to allow insecure hosts?
+  default: false
+  choices:
+    - true
+    - false
+
 ci:
   type: str
   help: What Continuous Integration service do you want to use?
