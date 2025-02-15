@@ -57,12 +57,13 @@ uv python install 3.12
 uv sync --group dev --group docs --extra cu124
 ```
 
-### Intialize git
+### Initialize git
 
 Finally, initialize git, then install `pre-commit` hooks.
 (it takes some time at the first installation)
 
 ```bash
+uv tool install pre-commit
 git init
 git add .
 uvx pre-commit run -a # Try to fix possible pre-commit issues (failures are expected)
@@ -113,9 +114,7 @@ The directory structure of your new project will look something like this
     └── cli.py                  <- Default CLI program
 ```
 ## TODO
-
 * Add sample FastAPI app
-* For enterprise environemnt, add copier configuration to add `allow-insecure-host` in `uv.toml`
 
 ## Development
 
