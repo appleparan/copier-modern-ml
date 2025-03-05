@@ -1,3 +1,10 @@
+## [0.9.1] - 2025-03-05
+
+### Bug Fixes
+
+- Move tests/ outside of src/ ([80241e8](https://github.com/appleparan/copier-modern-ml/commit/80241e8cd2ffed70d7c8b4e4a29c33fe737c86f1))
+- Fix mistypo ([4b7f5bf](https://github.com/appleparan/copier-modern-ml/commit/4b7f5bf9b3279ad9c8fb66f00d1e2b72b7ff463d))
+
 ## [0.9.0] - 2025-02-15
 
 ### Bug Fixes
@@ -18,6 +25,10 @@
 
 - Use repo URL to link for commit in RELEASE note generation ([8c0926d](https://github.com/appleparan/copier-modern-ml/commit/8c0926d408753ac2a2099b9119ff03b48874d4ad))
 - Support allow-insecure-host for custom CA certificates envs. ([37b86c3](https://github.com/appleparan/copier-modern-ml/commit/37b86c36bed613a7a9eeb21d9d9735d0e43e2ce5))
+
+### Miscellaneous Tasks
+
+- Bump version to 0.9.0 ([26f2a3b](https://github.com/appleparan/copier-modern-ml/commit/26f2a3bbb889c2e7eea4252c33adbab315b606d9))
 
 ## [0.8.0] - 2025-01-31
 
