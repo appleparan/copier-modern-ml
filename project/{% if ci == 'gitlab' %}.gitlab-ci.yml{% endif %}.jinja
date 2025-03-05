@@ -48,7 +48,7 @@ test:
     - echo "Installing project dependencies"
     - uv sync --group dev --group docs --extra cpu
     - echo "Running tests"
-    - uv run coverage run -m pytest src/tests/
+    - uv run coverage run -m pytest tests/
   cache:
     paths:
       - .cache/pip/

@@ -82,4 +82,4 @@ jobs:
 
       - name: Run tests
         run: |
-          uv run coverage run -m pytest src/tests/
+          uv run coverage run -m pytest tests/
