@@ -1,6 +1,6 @@
 [project]
 name = "copier-modern-ml"
-version = "0.9.1"
+version = "0.9.2"
 description = "Personal Python machine learning project template with modern workflows made by copier"
 readme = "README.md"
 authors = [

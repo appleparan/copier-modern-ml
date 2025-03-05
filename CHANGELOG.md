@@ -1,9 +1,19 @@
+## [0.9.2] - 2025-03-05
+
+### Miscellaneous Tasks
+
+- Fix ci to cover tests ([bd3518d](https://github.com/appleparan/copier-modern-ml/commit/bd3518d9413470efc864740b05eadcb464e0b9a0))
+
 ## [0.9.1] - 2025-03-05
 
 ### Bug Fixes
 
 - Move tests/ outside of src/ ([80241e8](https://github.com/appleparan/copier-modern-ml/commit/80241e8cd2ffed70d7c8b4e4a29c33fe737c86f1))
 - Fix mistypo ([4b7f5bf](https://github.com/appleparan/copier-modern-ml/commit/4b7f5bf9b3279ad9c8fb66f00d1e2b72b7ff463d))
+
+### Miscellaneous Tasks
+
+- Bump version to 0.9.1 ([6be88df](https://github.com/appleparan/copier-modern-ml/commit/6be88df77dd1689369a82f92dc37903efea077ba))
 
 ## [0.9.0] - 2025-02-15
 
