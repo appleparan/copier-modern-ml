@@ -118,6 +118,11 @@ The directory structure of your new project will look something like this
 
 ## Development
 
+### Generate package from local template
+```shell
+uvx --with copier_templates_extensions copier copy --trust LOCAL_TEMPLATE_PATH PACKAGE_NAME
+```
+
 ### Check next version
 ```shell
 uv run git-cliff --bumped-version
@@ -156,3 +161,13 @@ For dry run:
 ```shell
 uv run git-cliff --latest --strip header --tag $(uv run git-cliff --bumped-version) --unreleased
 ```
+
+### PyTorch Index URL (PyTorch 2.7)
+
+| Compute Platform | Linux | Windows | macOS |
+|------------------|-------|---------|-------|
+| **CPU Only** | ☐ `https://download.pytorch.org/whl/cpu` | ☐ default | ☐ default |
+| **CUDA 11.8** | ☐ `https://download.pytorch.org/whl/cu118` | ☐ `https://download.pytorch.org/whl/cu118` | ❌ Not supported |
+| **CUDA 12.6** | ☐ default | ☐ `https://download.pytorch.org/whl/cu126` | ❌ Not supported |
+| **CUDA 12.8** | ☐ `https://download.pytorch.org/whl/cu128` | ☐ `https://download.pytorch.org/whl/cu128` | ❌ Not supported |
+| **ROCm 6.3** | ☐ `https://download.pytorch.org/whl/rocm6.3` | ❌ Not supported | ❌ Not supported |
