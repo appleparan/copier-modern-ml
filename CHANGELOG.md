@@ -1,3 +1,9 @@
+## [0.10.1] - 2025-06-08
+
+### Bug Fixes
+
+- Fix mistypos ([fe2994d](https://github.com/appleparan/copier-modern-ml/commit/fe2994d992b6c7a988769de0bb355a330f12f258))
+
 ## [0.10.0] - 2025-06-08
 
 ### Bug Fixes
@@ -23,6 +29,7 @@
 
 - Update packages ([4f9feb3](https://github.com/appleparan/copier-modern-ml/commit/4f9feb3a79f38f59f2e8eeef75bfa5ebd1961963))
 - Remove sympy restriction ([579936c](https://github.com/appleparan/copier-modern-ml/commit/579936cb17f58652cc064cfa6389a51745464af7))
+- Bump version to 0.10.0 ([82ef7a5](https://github.com/appleparan/copier-modern-ml/commit/82ef7a5e616fae91e370f3d385ca75a2c520fda7))
 
 ### Refactor
 
