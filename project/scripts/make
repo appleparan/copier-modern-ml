@@ -42,7 +42,9 @@ def uv_install() -> None:
     """Install dependencies using uv."""
     if 'CI' in os.environ:
         # Install pytorch CPU version first
-        shell('uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu')      
+        shell(
+            'uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu'
+        )
         shell('uv sync')
     else:
         # Install pytorch CPU version first
@@ -53,14 +55,16 @@ def uv_install() -> None:
 def setup() -> None:
     """Setup the project."""
     if not shutil.which('uv'):
-        raise ValueError('make: setup: uv must be installed, see https://docs.astral.sh/uv/')
+        raise ValueError(
+            'make: setup: uv must be installed, see https://docs.astral.sh/uv/'
+        )
 
     print('Installing dependencies (default environment)')  # noqa: T201
     uv_install()
 
     if PYTHON_VERSIONS:
         for version in PYTHON_VERSIONS:
-            print(f"\nInstalling dependencies (python{version})")  # noqa: T201
+            print(f'\nInstalling dependencies (python{version})')  # noqa: T201
             uv_activate(version)
             uv_install()
 
@@ -68,8 +72,8 @@ def setup() -> None:
 def uv_activate(python_ver: str = '3.12') -> None:
     """Activate a virtual environment."""
     global exe, prefix  # noqa: PLW060
-    shell(f"uv python install {python_ver}")
-    shell(f"uv sync")
+    shell(f'uv python install {python_ver}')
+    shell(f'uv sync')
 
 
 def run(version: str, cmd: str, *args: str, **kwargs: Any) -> None:
@@ -77,11 +81,11 @@ def run(version: str, cmd: str, *args: str, **kwargs: Any) -> None:
     kwargs = {'check': True, **kwargs}
     if version == 'default':
         uv_activate(PYTHON_VERSION)
-        subprocess.run([f"{prefix}{cmd}{exe}", *args], **kwargs)  # noqa: S603, PLW1510
+        subprocess.run([f'{prefix}{cmd}{exe}', *args], **kwargs)  # noqa: S603, PLW1510
     else:
         uv_activate(version)
         os.environ['MULTIRUN'] = '1'
-        subprocess.run([f"{prefix}{cmd}{exe}", *args], **kwargs)  # noqa: S603, PLW1510
+        subprocess.run([f'{prefix}{cmd}{exe}', *args], **kwargs)  # noqa: S603, PLW1510
 
 
 def multirun(cmd: str, *args: str, **kwargs: Any) -> None:
@@ -104,13 +108,20 @@ def clean() -> None:
     """Delete build artifacts and cache files."""
     paths_to_clean = ['build', 'dist', 'htmlcov', 'site', '.coverage*', '.pdm-build']
     for path in paths_to_clean:
-        shell(f"rm -rf {path}")
+        shell(f'rm -rf {path}')
 
-    cache_dirs = ['.cache', '.pytest_cache', '.mypy_cache', '.ruff_cache', '__pycache__']
+    cache_dirs = [
+        '.cache',
+        '.pytest_cache',
+        '.mypy_cache',
+        '.ruff_cache',
+        '__pycache__',
+    ]
     for dirpath in Path('.').rglob('*'):
-        if any(dirpath.match(pattern) for pattern in cache_dirs) and not (dirpath.match('.venv') or dirpath.match('.venvs')):
+        if any(dirpath.match(pattern) for pattern in cache_dirs) and not (
+            dirpath.match('.venv') or dirpath.match('.venvs')
+        ):
             shutil.rmtree(path, ignore_errors=True)
-
 
 
 def main() -> int:
@@ -119,9 +130,15 @@ def main() -> int:
     if not args or args[0] == 'help':
         print('Available commands')  # noqa: T201
         print('  help                  Print this help. Add task name to print help.')  # noqa: T201
-        print('  setup                 Setup all virtual environments (install dependencies).')  # noqa: T201
-        print('  run                   Run a command in the default virtual environment.')  # noqa: T201
-        print('  multirun              Run a command for all configured Python versions.')  # noqa: T201
+        print(
+            '  setup                 Setup all virtual environments (install dependencies).'
+        )  # noqa: T201
+        print(
+            '  run                   Run a command in the default virtual environment.'
+        )  # noqa: T201
+        print(
+            '  multirun              Run a command for all configured Python versions.'
+        )  # noqa: T201
         print('  allrun                Run a command in all virtual environments.')  # noqa: T201
         print('  clean                 Delete build artifacts and cache files.')  # noqa: T201
         try:
@@ -129,7 +146,7 @@ def main() -> int:
         except (subprocess.CalledProcessError, ValueError):
             pass
         else:
-            print(f"args: {args}")  # noqa: T201
+            print(f'args: {args}')  # noqa: T201
 
     while args:
         cmd = args.pop(0)

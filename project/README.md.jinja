@@ -5,7 +5,7 @@
 
 ## Project Organization
 
-```
+```shell
 {{ project_slug }}/
 ├── LICENSE                     # Open-source license if one is chosen
 ├── README.md                   # The top-level README for developers using this project.
@@ -63,19 +63,19 @@ If you don't want to use this packaging feature,
 you can set `tool.uv.package = false` in the pyproject.toml file.
 This tells `uv` to handle your project as a virtual project instead of a package.
 
-### Install Python (3.12)
+### Install Python (3.13)
 ```shell
-uv python install 3.12
+uv python install 3.13
 ```
 
 ### Pin Python version
 ```shell
-uv python pin 3.12
+uv python pin 3.13
 ```
 
-### Install packages with PyTorch + CUDA 12.4 (Ubuntu)
+### Install packages with PyTorch + CUDA 12.6 (Ubuntu)
 ```shell
-uv sync --extra cu124
+uv sync --extra cu126
 ```
 
 ### Install packages without locking environments
@@ -153,37 +153,39 @@ uv run git-cliff --bumped-version
 
 ### Release
 Execute scripts
-```
+```shell
 sh scripts/release.sh
 ```
+
 What `release.sh` do:
 
 1. Set next version to `BUMPED_VERSION`: This ensures that the `git-cliff --bumped-version` command produces consistent results.
 
-```shell
-BUMPED_VERSION=$(uv run git-cliff --bumped-version)
-```
+    ```shell
+    BUMPED_VERSION=$(uv run git-cliff --bumped-version)
+    ```
 
 2. Generate `CHANGELOG.md` and `RELEASE.md`: The script creates or updates the changelog and release notes using the bumped version:
 
-```shell
-uv run git-cliff --strip header --tag $BUMPED_VERSION -o CHANGELOG.md
-uv run git-cliff --latest --strip header --tag $BUMPED_VERSION --unreleased -o RELEASE.md
-```
+    ```shell
+    uv run git-cliff --strip header --tag $BUMPED_VERSION -o CHANGELOG.md
+    uv run git-cliff --latest --strip header --tag $BUMPED_VERSION --unreleased -o RELEASE.md
+    ```
 
 3. Commit updated `CHANGELOG.md` and `RELEASE.md` then add tags and push: It commits the updated files, creates a tag for the new version, and pushes the changes to the repository:
 
-```shell
-git add CHANGELOG.md RELEASE.md
-git commit -am "docs: Add CHANGELOG.md and RELEASE.md to release $BUMPED_VERSION"
-git tag -a v$BUMPED_VERSION -m "Release $BUMPED_VERSION"
-git push origin tag $BUMPED_VERSION
-```
+    ```shell
+    git add CHANGELOG.md RELEASE.md
+    git commit -am "docs: Add CHANGELOG.md and RELEASE.md to release $BUMPED_VERSION"
+    git tag -a v$BUMPED_VERSION -m "Release $BUMPED_VERSION"
+    git push origin tag $BUMPED_VERSION
+    ```
 
-For dry run:
-```shell
-uv run git-cliff --latest --strip header --tag $(uv run git-cliff --bumped-version) --unreleased
-```
+4. For dry run:
+
+    ```shell
+    uv run git-cliff --latest --strip header --tag $(uv run git-cliff --bumped-version) --unreleased
+    ```
 
 ## References
 * [Packaging Python Projects](https://packaging.python.org/tutorials/packaging-projects/)

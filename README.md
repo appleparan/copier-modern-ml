@@ -53,7 +53,8 @@ uvx --with copier_templates_extensions copier copy --trust gh:appleparan/copier-
 
 ```bash
 cd ~/path/to/your/project
-uv python install 3.12
+uv python install 3.13
+uv python pin 3.13
 uv sync --group dev --group docs --extra cu124
 ```
 
