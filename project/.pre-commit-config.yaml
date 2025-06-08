@@ -1,9 +1,21 @@
 default_language_version:
-  python: python3.12
+  python: python3.13
 
-default_stages: [commit, push]
+default_stages:
+  - pre-commit
+  - pre-push
+  - commit-msg
 
 repos:
+  - repo: local
+    hooks:
+      # Prevent committing .rej files
+      - id: forbidden-files
+        name: forbidden files
+        entry: found Copier update rejection files; review them and remove them
+        language: fail
+        files: "\\.rej$"
+
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0  # Use the ref you want to point at
     hooks:
@@ -27,7 +39,7 @@ repos:
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
-    rev: v0.9.6
+    rev: v0.11.13
     hooks:
       - id: ruff
         args: [ --fix, --exit-non-zero-on-fix ]
@@ -38,18 +50,20 @@ repos:
         language: system
 
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.44.0
+    rev: v0.45.0
     hooks:
       - id: markdownlint-fix
         args: [--disable=MD013]
 
-  # - repo: local
-  #   hooks:
-  #     - id: mypy
-  #       name: mypy
-  #       entry: python -m mypy
-  #       exclude: |
-  #         ^tests/|
-  #       types: [python]
-  #       args: [--strict]
-  #       language: system
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v4.2.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+        args: []
+
+  - repo: https://github.com/mattlqx/pre-commit-sign
+    rev: v1.2.0
+    hooks:
+      - id: sign-commit
+        stages: [commit-msg]
