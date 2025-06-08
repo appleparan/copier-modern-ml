@@ -32,7 +32,7 @@ make clean
 ### Project Setup (for generated projects)
 ```bash
 # Install dependencies with uv
-uv sync --group dev --group docs --extra cu124
+uv sync --group dev --group docs --extra cu126
 
 # Setup development environment
 make setup
