@@ -46,13 +46,13 @@ uv tool install copier
 ### Start new project
 
 ```bash
-uvx --with copier_templates_extensions copier copy --trust gh:appleparan/copier-modern-ml ~/path/to/your/project
+uvx --with copier_templates_extensions copier copy --trust gh:appleparan/copier-modern-ml ~/src/PATH/TO/YOUR/PROJECT
 ```
 
 ### Install Python and packages
 
 ```bash
-cd ~/path/to/your/project
+cd ~/src/PATH/TO/YOUR/PROJECT
 uv python install 3.13
 uv python pin 3.13
 uv sync --group dev --group docs --extra cu124
@@ -91,23 +91,15 @@ The directory structure of your new project will look something like this
 │   ├── interim        <- Intermediate data that has been transformed.
 │   ├── processed      <- The final, canonical data sets for modeling.
 │   └── raw            <- The original, immutable data dump.
-│
 ├── docs               <- A default mkdocs project; see www.mkdocs.org for details
-│
 ├── models             <- Trained and serialized models, model predictions, or model summaries
-│
 ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
 │                         the creator's initials, and a short `-` delimited description, e.g.
 │                         `1.0-jqp-initial-data-exploration`.
-│
 ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-│
 ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
 │   └── figures        <- Generated graphics and figures to be used in reporting
-│
-│
-├── src/tests          <- Unit test files.
-│
+├── tests              <- Unit test files.
 └── src/{{ project_slug }}   <- Source code for use in this project.
     │
     ├── __init__.py             <- Makes {{ project_slug }} a Python module

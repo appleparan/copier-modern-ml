@@ -106,9 +106,14 @@ theme:
 #extra_css:
 
 extra_javascript:
-  - javascripts/mathjax.js
-  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?version=4.8.0
+  - javascripts/mermaid-init.js
+  - javascripts/mathjax-init.js # Load mathjax-init.js before loading MathJax itself
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+validation:
+  links:
+    absolute_links: relative_to_docs  # Absolute links are relative to the docs directory.
 
 # +--------------------------------------------------------------------------------------------------------+
 # |                                                                                                        |
@@ -172,7 +177,11 @@ markdown_extensions:
   ## Add support for converting some sequences of characters into their corresponding symbols
   - pymdownx.smartsymbols
   ## Add support for highlighting code blocks
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.tasklist:
@@ -180,12 +189,12 @@ markdown_extensions:
   ## Add support for tilde strikethrough <del></del>
   - pymdownx.tilde
 
+# Assume REF_DOCS_DIR_NAME = 'reference' in scripts/gen_ref_pages.py
 nav:
   - Home: index.md
-  - API Reference: api/
-  # - Guide:
-  #     - Introduction: guide/introduction.md
-  #     - Installation: guide/installation.md
+  - Overview: overview.md
+  - Getting Started: getting-started.md
+  - API Reference: reference/
 
 plugins:
   - search
@@ -207,5 +216,10 @@ plugins:
               ignore_init_summary: true
             docstring_section_style: list
             filters: ["!^_", "!^test_"]
-          import:
-          - https://docs.python.org/3/objects.inv
+            extra:
+              autodoc_type_aliases: true
+          inventories:
+            - https://docs.python.org/3/objects.inv  # Python standard library
+            - https://numpy.org/doc/stable/objects.inv # numpy
+            - https://docs.pydantic.dev/latest/objects.inv
+

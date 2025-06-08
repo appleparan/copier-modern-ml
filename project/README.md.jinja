@@ -1,53 +1,38 @@
 # {{ project_name }}
 
-{{ description }}
+{{ project_description }}
 
 
 ## Project Organization
 
-```shell
+```plaintext
 {{ project_slug }}/
-├── LICENSE                     # Open-source license if one is chosen
-├── README.md                   # The top-level README for developers using this project.
-├── mkdocs.yml                  # mkdocs-material configuration file.
-├── pyproject.toml              # Project configuration file with package metadata for
-│                                   {{ project_slug }} and configuration for tools like ruff
-├── uv.lock                     # The lock file for reproducing the production environment, e.g.
-│                                   generated with `uv sync`
-├── configs                     # Config files (models and training hyperparameters)
-│   └── model1.yaml
-│
+├── LICENSE            <- Open-source license if one is chosen
+├── README.md          <- The top-level README for developers using this project.
+├── mkdocs.yml         <- mkdocs-material configuration file.
+├── pyproject.toml     <- Project configuration file with package metadata for
+│                         {{ project_slug }} and configuration for tools like ruff
+├── uv.lock            <- The lock file for reproducing the production environment, e.g.
+│                         generated with `uv sync`
 ├── data
-│   ├── external                # Data from third party sources.
-│   ├── interim                 # Intermediate data that has been transformed.
-│   ├── processed               # The final, canonical data sets for modeling.
-│   └── raw                     # The original, immutable data dump.
-│
-├── docs                        # Project documentation.
-│
-├── models                      # Trained and serialized models.
-│
-├── notebooks                   # Jupyter notebooks.
-│
-├── references                  # Data dictionaries, manuals, and all other explanatory materials.
-│
-├── reports                     # Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures                 # Generated graphics and figures to be used in reporting.
-│
-├── pyproject.toml              # The pyproject.toml file for reproducing the analysis environment.
-├── src/tests                   # Unit test files.
-│
-└── src/{{ project_slug }}      # Source code for use in this project.
+│   ├── external       <- Data from third party sources.
+│   ├── interim        <- Intermediate data that has been transformed.
+│   ├── processed      <- The final, canonical data sets for modeling.
+│   └── raw            <- The original, immutable data dump.
+├── docs               <- A default mkdocs project; see www.mkdocs.org for details
+├── models             <- Trained and serialized models, model predictions, or model summaries
+├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
+│                         the creator's initials, and a short `-` delimited description, e.g.
+│                         `1.0-jqp-initial-data-exploration`.
+├── references         <- Data dictionaries, manuals, and all other explanatory materials.
+├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
+│   └── figures        <- Generated graphics and figures to be used in reporting
+├── tests              <- Unit test files.
+└── src/{{ project_slug }}   <- Source code for use in this project.
     │
-    ├── __init__.py             # Makes {{ project_slug }} a Python module
+    ├── __init__.py             <- Makes {{ project_slug }} a Python module
     │
-    ├── cli.py                  # Default CLI program
-    │
-    ├── data                    # Data engineering scripts.
-    │
-    ├── models                  # ML model engineering (a folder for each model).
-    │
-    └── visualization           # Scripts to create exploratory and results oriented visualizations.
+    └── cli.py                  <- Default CLI program
 ```
 
 ## For Developers
