@@ -55,7 +55,7 @@ uvx --with copier_templates_extensions copier copy --trust gh:appleparan/copier-
 cd ~/src/PATH/TO/YOUR/PROJECT
 uv python install 3.13
 uv python pin 3.13
-uv sync --group dev --group docs --extra cu124
+uv sync --group dev --group docs --extra cu126
 ```
 
 ### Initialize git
