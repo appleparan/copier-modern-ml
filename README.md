@@ -34,8 +34,8 @@ for project and package management, which includes the following tools:
 ### Install dependencies
 
 * Python 3.12+
-* copier >= 9.4.1
-* uv >= 0.6.0
+* copier >= 9.7.1
+* uv >= 0.7.0
 
 ### Install copier (global)
 
@@ -113,7 +113,7 @@ The directory structure of your new project will look something like this
 
 ### Generate package from local template
 ```shell
-uvx --with copier_templates_extensions copier copy --trust LOCAL_TEMPLATE_PATH PACKAGE_NAME
+uvx --with copier_templates_extensions copier copy --vcs-ref HEAD --trust LOCAL_TEMPLATE_PATH PACKAGE_NAME
 ```
 
 ### Check next version
