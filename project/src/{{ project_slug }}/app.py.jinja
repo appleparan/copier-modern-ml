@@ -7,35 +7,39 @@ from {{ project_slug }}.api.routes import health, predict
 from {{ project_slug }}.api.settings import get_settings
 
 
-def create_app() -> FastAPI:
+def create_app(settings=None) -> FastAPI:
     """Create and configure the FastAPI application.
-    
+
+    Args:
+        settings: Optional settings instance. If not provided, will use get_settings().
+
     Returns:
         FastAPI: Configured FastAPI application instance.
     """
-    settings = get_settings()
-    
+    if settings is None:
+        settings = get_settings()
+
     app = FastAPI(
-        title="{{ project_name }}",
-        description="{{ project_description }}",
-        version="{{ version }}",
-        docs_url="/docs" if settings.debug else None,
-        redoc_url="/redoc" if settings.debug else None,
+        title='tset_project',
+        description='test',
+        version='0.1.0',
+        docs_url='/docs' if settings.debug else None,
+        redoc_url='/redoc' if settings.debug else None,
     )
-    
+
     # Add CORS middleware
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.cors_origins,
         allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"],
+        allow_methods=['*'],
+        allow_headers=['*'],
     )
-    
+
     # Include routers
-    app.include_router(health.router, prefix="/api/v1", tags=["health"])
-    app.include_router(predict.router, prefix="/api/v1", tags=["prediction"])
-    
+    app.include_router(health.router, prefix='/api/v1', tags=['health'])
+    app.include_router(predict.router, prefix='/api/v1', tags=['prediction'])
+
     return app
 
 
