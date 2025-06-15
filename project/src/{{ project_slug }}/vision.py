@@ -155,12 +155,8 @@ def train_mnist(
     L.seed_everything(random_seed, workers=True)
 
     # Data transformations and loading
-    transform = transforms.Compose(
-        [transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))]
-    )
-    mnist_dataset = datasets.MNIST(
-        root_dir, train=True, download=True, transform=transform
-    )
+    transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
+    mnist_dataset = datasets.MNIST(root_dir, train=True, download=True, transform=transform)
 
     train_size = int(0.8 * len(mnist_dataset))
     val_size = len(mnist_dataset) - train_size
@@ -169,9 +165,7 @@ def train_mnist(
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
     val_loader = DataLoader(val_dataset, batch_size=batch_size)
 
-    test_dataset = datasets.MNIST(
-        root_dir, train=False, download=True, transform=transform
-    )
+    test_dataset = datasets.MNIST(root_dir, train=False, download=True, transform=transform)
     test_loader = DataLoader(test_dataset, batch_size=batch_size)
 
     # Model and Trainer setup

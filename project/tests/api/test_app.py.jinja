@@ -40,7 +40,10 @@ class TestApp:
         # Should return 200 and have CORS headers
         assert response.status_code == 200
         # Check if Access-Control-Allow-Origin header is present (added by CORS middleware)
-        assert 'Access-Control-Allow-Origin' in response.headers or 'access-control-allow-origin' in response.headers
+        assert (
+            'Access-Control-Allow-Origin' in response.headers
+            or 'access-control-allow-origin' in response.headers
+        )
 
     def test_api_routes_registered(self, client: TestClient):
         """Test that all API routes are properly registered.

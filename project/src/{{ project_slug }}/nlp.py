@@ -239,15 +239,9 @@ def train_boolq(
     train_dataset, val_dataset, test_dataset = prepare_data(tokenizer)
 
     # Convert to torch Dataset
-    train_dataset.set_format(
-        type='torch', columns=['input_ids', 'attention_mask', 'labels']
-    )
-    val_dataset.set_format(
-        type='torch', columns=['input_ids', 'attention_mask', 'labels']
-    )
-    test_dataset.set_format(
-        type='torch', columns=['input_ids', 'attention_mask', 'labels']
-    )
+    train_dataset.set_format(type='torch', columns=['input_ids', 'attention_mask', 'labels'])
+    val_dataset.set_format(type='torch', columns=['input_ids', 'attention_mask', 'labels'])
+    test_dataset.set_format(type='torch', columns=['input_ids', 'attention_mask', 'labels'])
 
     # Set DataLoader
     train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True)

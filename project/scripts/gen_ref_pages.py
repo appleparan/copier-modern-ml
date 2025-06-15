@@ -56,7 +56,9 @@ def process_module(path: Path, src_dir: Path) -> tuple[tuple[str, ...], Path, Pa
     return parts, doc_path, full_doc_path
 
 
-def generate_doc_file(full_doc_path: Path, parts: tuple[str, ...], path: Path, root_dir: Path) -> None:
+def generate_doc_file(
+    full_doc_path: Path, parts: tuple[str, ...], path: Path, root_dir: Path
+) -> None:
     """Generate a documentation file for a module.
 
     Args:

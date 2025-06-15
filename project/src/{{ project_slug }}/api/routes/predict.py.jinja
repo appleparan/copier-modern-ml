@@ -27,11 +27,15 @@ class PredictionResponse(BaseModel):
 
 
 @router.post('/predict', response_model=PredictionResponse)
-async def predict(request: PredictionRequest, settings: Settings = Depends(get_settings)) -> PredictionResponse:
+async def predict(
+    request: PredictionRequest,
+    settings: Settings = Depends(get_settings),  # noqa: B008
+) -> PredictionResponse:
     """Make predictions using the specified model.
 
     Args:
         request: Prediction request containing input data.
+        settings: Application settings.
 
     Returns:
         PredictionResponse: Prediction results.
@@ -73,7 +77,7 @@ async def predict(request: PredictionRequest, settings: Settings = Depends(get_s
 
 
 @router.get('/models', response_model=list[str])
-async def list_models(settings: Settings = Depends(get_settings)) -> list[str]:
+async def list_models(settings: Settings = Depends(get_settings)) -> list[str]:  # noqa: B008
     """List available models.
 
     Args:

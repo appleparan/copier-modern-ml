@@ -15,10 +15,7 @@ class TestPredictEndpoints:
             client: FastAPI test client.
             sample_prediction_data: Sample input data for predictions.
         """
-        request_data = {
-            'data': sample_prediction_data,
-            'model_name': 'test_model'
-        }
+        request_data = {'data': sample_prediction_data, 'model_name': 'test_model'}
 
         response = client.post('/api/v1/predict', json=request_data)
 
@@ -41,9 +38,7 @@ class TestPredictEndpoints:
             client: FastAPI test client.
             sample_prediction_data: Sample input data for predictions.
         """
-        request_data = {
-            'data': sample_prediction_data
-        }
+        request_data = {'data': sample_prediction_data}
 
         response = client.post('/api/v1/predict', json=request_data)
 
@@ -61,10 +56,7 @@ class TestPredictEndpoints:
         # Create data exceeding max_batch_size (10 in test settings)
         large_data = [{'feature': i} for i in range(15)]
 
-        request_data = {
-            'data': large_data,
-            'model_name': 'test_model'
-        }
+        request_data = {'data': large_data, 'model_name': 'test_model'}
 
         response = client.post('/api/v1/predict', json=request_data)
 
@@ -80,10 +72,7 @@ class TestPredictEndpoints:
         Args:
             client: FastAPI test client.
         """
-        request_data = {
-            'data': [],
-            'model_name': 'test_model'
-        }
+        request_data = {'data': [], 'model_name': 'test_model'}
 
         response = client.post('/api/v1/predict', json=request_data)
 
@@ -99,9 +88,7 @@ class TestPredictEndpoints:
             client: FastAPI test client.
         """
         # Missing required 'data' field
-        request_data = {
-            'model_name': 'test_model'
-        }
+        request_data = {'model_name': 'test_model'}
 
         response = client.post('/api/v1/predict', json=request_data)
 
@@ -129,10 +116,7 @@ class TestPredictEndpoints:
             client: FastAPI test client.
             sample_prediction_data: Sample input data for predictions.
         """
-        request_data = {
-            'data': sample_prediction_data,
-            'model_name': 'test_model'
-        }
+        request_data = {'data': sample_prediction_data, 'model_name': 'test_model'}
 
         response = client.post('/api/v1/predict', json=request_data)
 
@@ -148,10 +132,7 @@ class TestPredictEndpoints:
         """
         test_data = [{'feature': i} for i in range(data_size)]
 
-        request_data = {
-            'data': test_data,
-            'model_name': 'test_model'
-        }
+        request_data = {'data': test_data, 'model_name': 'test_model'}
 
         response = client.post('/api/v1/predict', json=request_data)
 

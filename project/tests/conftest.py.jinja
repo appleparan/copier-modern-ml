@@ -3,7 +3,6 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from {{ project_slug }}.app import create_app
 from {{ project_slug }}.api.settings import Settings, get_settings
 
 
@@ -38,6 +37,7 @@ def app(test_settings: Settings):
     Yields:
         FastAPI: Test FastAPI application instance.
     """
+
     # Override settings for testing
     def get_test_settings():
         return test_settings
