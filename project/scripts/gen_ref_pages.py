@@ -24,7 +24,9 @@ def should_skip_module(module_path: Path) -> bool:
     return first_dir == 'tests' or module_path.name.startswith('_')
 
 
-def process_module(path: Path, src_dir: Path) -> tuple[tuple[str, ...], Path, Path] | None:
+def process_module(
+    path: Path, src_dir: Path
+) -> tuple[tuple[str, ...], Path, Path] | None:
     """Process a single Python module for documentation.
 
     Args:
@@ -56,7 +58,9 @@ def process_module(path: Path, src_dir: Path) -> tuple[tuple[str, ...], Path, Pa
     return parts, doc_path, full_doc_path
 
 
-def generate_doc_file(full_doc_path: Path, parts: tuple[str, ...], path: Path, root_dir: Path) -> None:
+def generate_doc_file(
+    full_doc_path: Path, parts: tuple[str, ...], path: Path, root_dir: Path
+) -> None:
     """Generate a documentation file for a module.
 
     Args:
