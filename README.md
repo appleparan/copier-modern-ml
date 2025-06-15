@@ -106,8 +106,6 @@ The directory structure of your new project will look something like this
     │
     └── cli.py                  <- Default CLI program
 ```
-## TODO
-* Add sample FastAPI app
 
 ## Development
 
