@@ -3,6 +3,10 @@
 {{ project_description }}
 """
 
+from {{ project_slug }}.app import create_app
+
 __author__ = """{{ author_fullname }}"""
 __email__ = '{{ author_email }}'
 __version__ = '{{ version }}'
+
+__all__ = ["create_app"]
