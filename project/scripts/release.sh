@@ -36,7 +36,11 @@ if [ -f "$TEST_VERSION_FILE" ]; then
     fi
 fi
 
-git add CHANGELOG.md RELEASE.md
+# Update uv.lock file for new version
+uv lock
+
+git add CHANGELOG.md RELEASE.md uv.lock
+
 [ -f "$PYPROJECT_FILE" ] && git add "$PYPROJECT_FILE"
 [ -f "$INIT_FILE" ] && git add "$INIT_FILE"
 [ -f "$TEST_VERSION_FILE" ] && git add "$TEST_VERSION_FILE"
