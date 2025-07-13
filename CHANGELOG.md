@@ -1,3 +1,14 @@
+## [0.12.0] - 2025-07-13
+
+### Documentation
+
+- Add commented production stage option to Dockerfile ([41196b6](https://github.com/appleparan/copier-modern-ml/commit/41196b61de3ec00adabafd9c86c1237339b4301c))
+
+### Features
+
+- Update release script to lock uv dependencies ([5f57731](https://github.com/appleparan/copier-modern-ml/commit/5f57731dbf5b29a1fd1412e168a9924cc8f1632c))
+- Update main release script to lock uv dependencies ([560a395](https://github.com/appleparan/copier-modern-ml/commit/560a39527a8a08597376e126ddca7f2869ab039c))
+
 ## [0.11.0] - 2025-06-15
 
 ### Bug Fixes
@@ -20,6 +31,7 @@
 - Add FastAPI and Pydantic to project template ([b0c307d](https://github.com/appleparan/copier-modern-ml/commit/b0c307d35e826176332540ff73c51e8e3e69b23c))
 - Disable torchaudio source ([efb5c02](https://github.com/appleparan/copier-modern-ml/commit/efb5c02c62799e5093a091e8535bb87af4a26de6))
 - Remove safety ([1d8f7ef](https://github.com/appleparan/copier-modern-ml/commit/1d8f7ef726e80ec50f3254408e7a2816083f8466))
+- Bump version to 0.11.0 ([c4de985](https://github.com/appleparan/copier-modern-ml/commit/c4de98550735a4be31b9ef46c098c679eaa70ea5))
 
 ### Styling
 
