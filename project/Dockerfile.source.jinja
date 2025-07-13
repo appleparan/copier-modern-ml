@@ -3,6 +3,9 @@ FROM nvidia/cuda:12.6.3-cudnn-devel-ubuntu24.04
 # https://docs.astral.sh/uv/guides/integration/docker/#intermediate-layers
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
+# Production stage - UV runtime
+# FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim AS production
+
 # Declare environmental variables
 ENV DEBIAN_FRONTEND=noninteractive \
     DEBCONF_NONINTERACTIVE_SEEN=true \
