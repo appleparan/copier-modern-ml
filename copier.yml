@@ -101,38 +101,50 @@ ci:
       GitLab CI: gitlab
   default: github
 
-# FILES --------------------------------
+# DIRECTORIES -------------------------
+create_directories:
+  type: bool
+  help: Do you want to create project directories (data, configs, models, etc.)?
+  default: true
+
 configs_dir:
   type: str
   help: The directory where configuration files are stored
   default: configs
+  when: "{{ create_directories }}"
 
 data_dir:
   type: str
   help: The directory where data files are stored
   default: data
+  when: "{{ create_directories }}"
 
 examples_dir:
   type: str
   help: The directory where example files are stored
   default: examples
+  when: "{{ create_directories }}"
 
 notebooks_dir:
   type: str
   help: The directory where Jupyter notebooks are stored
   default: notebooks
+  when: "{{ create_directories }}"
 
 models_dir:
   type: str
   help: The directory where model files are stored
   default: models
+  when: "{{ create_directories }}"
 
 references_dir:
   type: str
   help: The directory where reference files are stored
   default: references
+  when: "{{ create_directories }}"
 
 reports_dir:
   type: str
   help: The directory where report files are stored
   default: reports
+  when: "{{ create_directories }}"
