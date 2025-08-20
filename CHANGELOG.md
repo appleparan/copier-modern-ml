@@ -1,3 +1,19 @@
+## [0.13.0] - 2025-08-20
+
+### Bug Fixes
+
+- Convert LICENSE to Jinja template for license selection ([f1b454a](https://github.com/appleparan/copier-modern-ml/commit/f1b454ae091aab2147107a9920d5523f4b2d5316))
+
+### Features
+
+- Replace manual version updates with uv version command ([7960185](https://github.com/appleparan/copier-modern-ml/commit/796018579061208baf75611f20a094f1f2417232))
+- Update root release script to use uv version command ([ae70a0c](https://github.com/appleparan/copier-modern-ml/commit/ae70a0cb8f2c0b51fb86b2dbaeb6730797bf711b))
+- Add conditional directory creation option ([2b5d226](https://github.com/appleparan/copier-modern-ml/commit/2b5d22641d44d22627c9a01a2bf3e7cacbd1dcbb))
+
+### Cleanup
+
+- Remove old unconditional directory templates ([280e2fb](https://github.com/appleparan/copier-modern-ml/commit/280e2fb424539ce0a6e56add6076e34eb418b08c))
+
 ## [0.12.0] - 2025-07-13
 
 ### Documentation
@@ -8,6 +24,10 @@
 
 - Update release script to lock uv dependencies ([5f57731](https://github.com/appleparan/copier-modern-ml/commit/5f57731dbf5b29a1fd1412e168a9924cc8f1632c))
 - Update main release script to lock uv dependencies ([560a395](https://github.com/appleparan/copier-modern-ml/commit/560a39527a8a08597376e126ddca7f2869ab039c))
+
+### Miscellaneous Tasks
+
+- Bump version to 0.12.0 ([cd39c60](https://github.com/appleparan/copier-modern-ml/commit/cd39c6010a697fd48644ec22674688562d6847f5))
 
 ## [0.11.0] - 2025-06-15
 
