@@ -148,3 +148,9 @@ reports_dir:
   help: The directory where report files are stored
   default: reports
   when: "{{ create_directories }}"
+
+# EXAMPLES -------------------------
+create_examples:
+  type: bool
+  help: Do you want to create example files (FastAPI app, CLI, NLP, tabular, vision)?
+  default: true
