@@ -1,3 +1,14 @@
+## [0.14.0] - 2025-08-23
+
+### Features
+
+- Add dynamic version management using importlib.metadata ([95f2a27](https://github.com/appleparan/copier-modern-ml/commit/95f2a2762de30b6fab44a8b1978a5bb2cc9df50d))
+
+### Miscellaneous Tasks
+
+- Update uv.lock with latest dependencies ([8bdd767](https://github.com/appleparan/copier-modern-ml/commit/8bdd7678c4f03ec6bb269cc4b1cf649f7461ef8b))
+- Remove VERSION file as version is now managed dynamically ([5cd32ad](https://github.com/appleparan/copier-modern-ml/commit/5cd32ad82736b9cca4701c19b943b06753d239ff))
+
 ## [0.13.0] - 2025-08-20
 
 ### Bug Fixes
@@ -9,6 +20,10 @@
 - Replace manual version updates with uv version command ([7960185](https://github.com/appleparan/copier-modern-ml/commit/796018579061208baf75611f20a094f1f2417232))
 - Update root release script to use uv version command ([ae70a0c](https://github.com/appleparan/copier-modern-ml/commit/ae70a0cb8f2c0b51fb86b2dbaeb6730797bf711b))
 - Add conditional directory creation option ([2b5d226](https://github.com/appleparan/copier-modern-ml/commit/2b5d22641d44d22627c9a01a2bf3e7cacbd1dcbb))
+
+### Miscellaneous Tasks
+
+- Bump version to 0.13.0 ([388b752](https://github.com/appleparan/copier-modern-ml/commit/388b752dbd28c73fba09fb1ba258e3bc65d338bc))
 
 ### Cleanup
 
