@@ -1,3 +1,14 @@
+## [0.15.0] - 2025-08-23
+
+### Features
+
+- Add conditional example file generation ([943476d](https://github.com/appleparan/copier-modern-ml/commit/943476deb2410d0949dd8b24f10c4dd39d727508))
+- Complete conditional example system with tests ([3bfd72a](https://github.com/appleparan/copier-modern-ml/commit/3bfd72acf92fd1b1fde408af6eab3efa8c8dd257))
+
+### Styling
+
+- Sort imports in __init__.py template ([e757016](https://github.com/appleparan/copier-modern-ml/commit/e757016df51d5f3828666ac87e5e1ac3fe2ab811))
+
 ## [0.14.0] - 2025-08-23
 
 ### Features
@@ -8,6 +19,7 @@
 
 - Update uv.lock with latest dependencies ([8bdd767](https://github.com/appleparan/copier-modern-ml/commit/8bdd7678c4f03ec6bb269cc4b1cf649f7461ef8b))
 - Remove VERSION file as version is now managed dynamically ([5cd32ad](https://github.com/appleparan/copier-modern-ml/commit/5cd32ad82736b9cca4701c19b943b06753d239ff))
+- Bump version to 0.14.0 ([2356e67](https://github.com/appleparan/copier-modern-ml/commit/2356e679e579101bf8176853a0c53700f871a1d0))
 
 ## [0.13.0] - 2025-08-20
 
