@@ -2,7 +2,7 @@
 
 {{ project_description }}
 """
-from importlib.metadata import version, PackageNotFoundError
+from importlib.metadata import PackageNotFoundError, version
 
 from {{ project_slug }}.app import create_app
 
