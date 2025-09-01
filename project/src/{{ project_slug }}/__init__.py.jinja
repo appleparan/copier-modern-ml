@@ -2,14 +2,15 @@
 
 {{ project_description }}
 """
+
 from importlib.metadata import PackageNotFoundError, version
 
 {% if create_examples %}from {{ project_slug }}.app import create_app{% endif %}
 
 try:
-    __version__ = version("{{ project_slug }}")
+    __version__ = version('{{ project_slug }}')
 except PackageNotFoundError:
-    __version__ = "unknown"
+    __version__ = 'unknown'
 
 __author__ = """{{ author_fullname }}"""
 __email__ = '{{ author_email }}'

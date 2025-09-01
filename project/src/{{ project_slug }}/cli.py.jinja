@@ -187,6 +187,12 @@ def vision(
 {% endif %}
 
 
+@app.command()
+def hello() -> None:
+    """Say hello to the user."""
+    typer.echo("Hello, user!")
+
+
 def main() -> None:
     """Main entrypoint for the CLI application.
 
