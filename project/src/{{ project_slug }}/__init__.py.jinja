@@ -4,7 +4,7 @@
 """
 from importlib.metadata import PackageNotFoundError, version
 
-from {{ project_slug }}.app import create_app
+{% if create_examples %}from {{ project_slug }}.app import create_app{% endif %}
 
 try:
     __version__ = version("{{ project_slug }}")
@@ -14,4 +14,4 @@ except PackageNotFoundError:
 __author__ = """{{ author_fullname }}"""
 __email__ = '{{ author_email }}'
 
-__all__ = ['create_app']
+__all__ = {% if create_examples %}['create_app']{% else %}[]{% endif %}

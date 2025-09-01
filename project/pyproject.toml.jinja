@@ -8,24 +8,24 @@ authors = [
 readme = "README.md"
 dependencies = [
     "colorlog>=6.9.0",
-    "datasets>=3.6.0",
+{% if create_examples %}    "datasets>=3.6.0",
     "fastapi[standard]~=0.115.12",
     "hydra-colorlog>=1.2.0",
     "hydra-core>=1.3.2",
-    "lightning>=2.0.0",
+    "lightning>=2.0.0",{% endif %}
     "matplotlib>=3.9.3",
     "numpy~=2.2.3",
-    "omegaconf>=2.3.0",
-    "pydantic~=2.11.7",
+{% if create_examples %}    "omegaconf>=2.3.0",
+    "pydantic~=2.11.7",{% endif %}
     "pandas[parquet,performance]>=2.3.0",
-    "pydantic-settings>=2.0.0",
-    "pydantic-extra-types>=2.0.0",
+{% if create_examples %}    "pydantic-settings>=2.0.0",
+    "pydantic-extra-types>=2.0.0",{% endif %}
     "rich~=14.0.0",
     "scikit-learn>=1.5.2",
     "seaborn>=0.13.2",
-    "tensorboard>=2.18.0",
+{% if create_examples %}    "tensorboard>=2.18.0",{% endif %}
     "tqdm>=4.67.1",
-    "transformers>=4.52.0",
+{% if create_examples %}    "transformers>=4.52.0",{% endif %}
     "typer>=0.16.0",
 ]
 requires-python = ">=3.12, <4.0"
@@ -51,7 +51,7 @@ classifiers = [
 [project.urls]
 Homepage = "{{ repo_url }}"
 
-[project.optional-dependencies]
+{% if create_examples %}[project.optional-dependencies]
 cu128 = [
   "torch~=2.7.1",
   "torchvision~=0.22.1",
@@ -68,6 +68,7 @@ cpu = [
   "torch~=2.7.1",
   "torchvision~=0.22.1",
 ]
+{% endif %}
 
 [dependency-groups]
 dev = [
@@ -120,10 +121,12 @@ packages = ["src/{{ project_slug }}"]
 [tool.uv]
 package = {% if package %}true{% else %}false{% endif %}
 native-tls = {% if native_tls %}true{% else %}false{% endif %}
-{% if allow_insecure_host %}allow-insecure-host = ["pypi.org", "files.pythonhosted.org"]{% endif %}
+{% if allow_insecure_host -%}
+allow-insecure-host = ["pypi.org", "files.pythonhosted.org"]
+{% endif -%}
 managed = true
 default-groups = ["dev", "docs"]
-conflicts = [
+{% if create_examples %}conflicts = [
   [
     { extra = "cu128" },
     { extra = "cu126" },
@@ -132,8 +135,9 @@ conflicts = [
     { extra = "cpu" },
   ],
 ]
+{% endif %}
 
-[tool.uv.sources]
+{% if create_examples %}[tool.uv.sources]
 torch = [
   { index = "pytorch-cpu", extra = "cpu", marker = "sys_platform == 'linux'" },
   { index = "pytorch-cu128", extra = "cu128", marker = "sys_platform != 'darwin'"},
@@ -155,11 +159,12 @@ torchvision = [
 #  { index = "pytorch-cu118", extra = "cu118", marker = "sys_platform != 'darwin'"},
 ##  { index = "pytorch-rocm63", extra = "rocm63", marker = "sys_platform == 'linux'"},
 #]
+{% endif %}
 
 [tool.uv.pip]
 index-url = "https://pypi.org/simple"
 
-[[tool.uv.index]]
+{% if create_examples %}[[tool.uv.index]]
 name = "pytorch-cpu"
 url = "https://download.pytorch.org/whl/cpu"
 explicit = true
@@ -183,6 +188,7 @@ explicit = true
 # name = "pytorch-rocm63"
 # url = "https://download.pytorch.org/whl/rocm6.3"
 # explicit = true
+{% endif %}
 
 [tool.ruff]
 include = ["*.py", "*.pyi", "**/pyproject.toml", "*.ipynb"]
