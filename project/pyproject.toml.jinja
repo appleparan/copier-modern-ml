@@ -125,7 +125,7 @@ native-tls = {% if native_tls %}true{% else %}false{% endif %}
 allow-insecure-host = ["pypi.org", "files.pythonhosted.org"]
 {% endif -%}
 managed = true
-default-groups = ["dev", "docs"]
+# default-groups = ["dev", "docs"]
 {% if create_examples %}conflicts = [
   [
     { extra = "cu128" },
