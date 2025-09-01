@@ -1,9 +1,29 @@
+## [0.16.0] - 2025-09-01
+
+### Bug Fixes
+
+- Comment out default-groups for conditional configuration ([68736a6](https://github.com/appleparan/copier-modern-ml/commit/68736a667867de091ebaa0b92660f37e39190a2a))
+- Update linting noqa comments for CLI functions ([ba0a08e](https://github.com/appleparan/copier-modern-ml/commit/ba0a08e0e3ec51437232b241e164537f60737326))
+
+### Features
+
+- Implement conditional dependencies and PyTorch settings ([bc39023](https://github.com/appleparan/copier-modern-ml/commit/bc39023c6da36011eae3b2c13f5f051b0a16ea92))
+- Make CLI commands conditional based on create_examples ([e5b31be](https://github.com/appleparan/copier-modern-ml/commit/e5b31be1299a71238a26d4f47b655b8f5ef62394))
+
+### Refactor
+
+- Simplify hello CLI command and clean up imports ([818c0cb](https://github.com/appleparan/copier-modern-ml/commit/818c0cbddb68c29fa034559c60529934e3367879))
+
 ## [0.15.0] - 2025-08-23
 
 ### Features
 
 - Add conditional example file generation ([943476d](https://github.com/appleparan/copier-modern-ml/commit/943476deb2410d0949dd8b24f10c4dd39d727508))
 - Complete conditional example system with tests ([3bfd72a](https://github.com/appleparan/copier-modern-ml/commit/3bfd72acf92fd1b1fde408af6eab3efa8c8dd257))
+
+### Miscellaneous Tasks
+
+- Bump version to 0.15.0 ([633b5ff](https://github.com/appleparan/copier-modern-ml/commit/633b5ff9e0012fd2e387e33e32dd0350fc4bb5b9))
 
 ### Styling
 
