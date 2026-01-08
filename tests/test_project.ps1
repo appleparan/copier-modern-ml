@@ -78,6 +78,7 @@ git tag v0.1.0
 if (-not $env:SKIP_SETUP) {
     Write-Host ">>> Setting up Python environment"
     Write-Host "Installing uv dependencies..."
+    uv python pin $PYTHON_VERSION
     uv sync --group dev --group docs
     Write-Host ""
 }
