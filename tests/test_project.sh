@@ -115,8 +115,8 @@ fi
 echo "✓ Linting check passed"
 
 echo
-echo ">>> Running type checks with mypy"
-if ! uv run mypy src/; then
+echo ">>> Running type checks with ty"
+if ! uvx ty check; then
     echo "ERROR: Type checking failed"
     exit 1
 fi
@@ -150,7 +150,7 @@ echo
 echo "Summary:"
 echo "  ✓ Code formatting (ruff format)"
 echo "  ✓ Linting (ruff check)"
-echo "  ✓ Type checking (mypy)"
+echo "  ✓ Type checking (ty)"
 echo "  ✓ Documentation build (mkdocs)"
 echo "  ✓ Tests (pytest)"
 echo

@@ -110,8 +110,8 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "✓ Linting check passed" -ForegroundColor Green
 
 Write-Host ""
-Write-Host ">>> Running type checks with mypy"
-uv run mypy src/
+Write-Host ">>> Running type checks with ty"
+uvx ty check
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: Type checking failed" -ForegroundColor Red
     exit 1
@@ -149,7 +149,7 @@ Write-Host ""
 Write-Host "Summary:"
 Write-Host "  ✓ Code formatting (ruff format)" -ForegroundColor Green
 Write-Host "  ✓ Linting (ruff check)" -ForegroundColor Green
-Write-Host "  ✓ Type checking (mypy)" -ForegroundColor Green
+Write-Host "  ✓ Type checking (ty)" -ForegroundColor Green
 Write-Host "  ✓ Documentation build (mkdocs)" -ForegroundColor Green
 Write-Host "  ✓ Tests (pytest)" -ForegroundColor Green
 Write-Host ""
