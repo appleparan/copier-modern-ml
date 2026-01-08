@@ -2,7 +2,7 @@ from pathlib import Path
 
 import lightning as L  # noqa: N812
 import torch
-from datasets import load_dataset
+from datasets import load_dataset, Dataset
 from torch.optim import AdamW
 from torch.utils.data import DataLoader
 from transformers import (
@@ -83,9 +83,9 @@ class TinyBertClassifier(L.LightningModule):
         """
         inputs = batch  # type: ignore[index]
         outputs = self(
-            inputs['input_ids'],
-            attention_mask=inputs['attention_mask'],
-            labels=inputs['labels'],
+            inputs['input_ids'],  # type: ignore[index]
+            attention_mask=inputs['attention_mask'],  # type: ignore[index]
+            labels=inputs['labels'],  # type: ignore[index]
         )
         loss = outputs.loss
         self.log('train_loss', loss)
@@ -114,7 +114,7 @@ class TinyBertClassifier(L.LightningModule):
         )
         val_loss = outputs.loss
         preds = torch.argmax(outputs.logits, dim=1)
-        acc = (preds == inputs['labels']).float().mean()
+        acc = (preds == inputs['labels']).float().mean()  # type: ignore[index]
         self.log('val_loss', val_loss, prog_bar=True)
         self.log('val_acc', acc, prog_bar=True)
         return val_loss
@@ -142,7 +142,7 @@ class TinyBertClassifier(L.LightningModule):
         )
         test_loss = outputs.loss
         preds = torch.argmax(outputs.logits, dim=1)
-        acc = (preds == inputs['labels']).float().mean()
+        acc = (preds == inputs['labels']).float().mean()  # type: ignore[index]
         self.log('test_loss', test_loss, prog_bar=True)
         self.log('test_acc', acc, prog_bar=True)
         return test_loss
@@ -158,7 +158,7 @@ class TinyBertClassifier(L.LightningModule):
 
 def prepare_data(
     tokenizer: PreTrainedTokenizer, max_length: int = 512
-) -> tuple[torch.utils.data.Dataset, torch.utils.data.Dataset, torch.utils.data.Dataset]:
+) -> tuple[Dataset, Dataset, Dataset]:
     """Prepares the training and validation datasets for the BoolQ task.
 
     Args:
@@ -168,9 +168,9 @@ def prepare_data(
             The maximum sequence length for tokenization. Defaults to 512.
 
     Returns:
-        torch.utils.data.Dataset: training dataset
-        torch.utils.data.Dataset: validation dataset
-        torch.utils.data.Dataset: testing dataset
+        Dataset: training dataset
+        Dataset: validation dataset
+        Dataset: testing dataset
     """
     # Load a subset of the BoolQ dataset
     _train_ds = load_dataset('boolq', split='train[:4000]')

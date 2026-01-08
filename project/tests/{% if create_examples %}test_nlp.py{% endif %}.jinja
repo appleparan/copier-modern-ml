@@ -27,9 +27,9 @@ def test_prepare_data():
     tokenizer = AutoTokenizer.from_pretrained('google/bert_uncased_L-2_H-128_A-2')
     train_dataset, val_dataset, test_dataset = prepare_data(tokenizer, max_length=128)
 
-    assert len(train_dataset) == 4000
-    assert len(val_dataset) == 1000
-    assert len(test_dataset) == 1000
+    assert train_dataset.len() == 4000
+    assert val_dataset.len() == 1000
+    assert test_dataset.len() == 1000
 
 
 @pytest.mark.slow

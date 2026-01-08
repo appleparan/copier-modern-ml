@@ -131,7 +131,7 @@ class TabularClassifier(L.LightningModule):
         self,
         batch: tuple[dict[str, torch.Tensor], torch.Tensor],
         batch_idx: int,  # noqa: ARG002
-    ) -> torch.Tensor:
+    ) -> torch.Tensor | None:
         """Perform a validation step.
 
         Args:
@@ -140,7 +140,7 @@ class TabularClassifier(L.LightningModule):
             batch_idx (int): The index of the batch.
 
         Returns:
-            torch.Tensor: The computed training loss.
+            torch.Tensor (optional): The computed training loss.
         """
         x, y = batch
         preds = self(x)
