@@ -3,18 +3,14 @@
 import logging
 from pathlib import Path
 
-{% if create_examples %}
-import hydra
+{% if create_examples %}import hydra
 import typer
 from omegaconf import DictConfig, OmegaConf
 
 from {{ project_slug }}.nlp import train_boolq
 from {{ project_slug }}.tabular import train_titanic
 from {{ project_slug }}.vision import train_mnist
-{% else %}
-import typer
-{% endif %}
-
+{% else %}import typer{% endif %}
 ROOT_DIR = Path(__file__).resolve().parents[2]
 
 app = typer.Typer(pretty_exceptions_show_locals=False)

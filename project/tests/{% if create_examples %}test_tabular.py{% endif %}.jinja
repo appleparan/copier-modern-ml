@@ -1,10 +1,10 @@
-import pytest
 import numpy as np
+import pytest
 import torch
-from pathlib import Path
+
 from {{ project_slug }}.tabular import (
-    TabularDataset,
     TabularClassifier,
+    TabularDataset,
     preprocess_titanic_data,
     train_titanic,
 )

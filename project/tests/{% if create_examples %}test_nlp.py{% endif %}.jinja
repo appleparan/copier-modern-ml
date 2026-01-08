@@ -1,8 +1,8 @@
 import pytest
-from {{ project_slug }}.nlp import TinyBertClassifier, prepare_data, train_boolq
-from pathlib import Path
 import torch
 from transformers import AutoTokenizer
+
+from {{ project_slug }}.nlp import TinyBertClassifier, prepare_data, train_boolq
 
 
 def test_tiny_bert_classifier_init():
