@@ -24,6 +24,7 @@
 - Update Python package dependencies and configurations ([10ccf29](https://github.com/appleparan/copier-modern-ml/commit/10ccf29040fb4454eecbf9109ad95896c49a94df))
 - Ignore boolean type hint rules in ruff configuration ([545b485](https://github.com/appleparan/copier-modern-ml/commit/545b4858bd6f8f696aff208e225063054caa2367))
 - Update test scripts to use Python 3.13 ([d4778f0](https://github.com/appleparan/copier-modern-ml/commit/d4778f0953c9d55d1c9fa658f4bb7c55f0db8b29))
+- Bump version to 0.17.0 ([a2974bf](https://github.com/appleparan/copier-modern-ml/commit/a2974bf6c2ea639af9a851ffea8c4785393a1c1a))
 
 ### Styling
 
