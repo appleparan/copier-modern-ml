@@ -68,7 +68,8 @@ cu126 = [
 ]
 cpu = [
   "torch==2.9.1",
-  "torchvision==0.24.1+cpu",
+  "torchvision==0.24.1+cpu; sys_platform == 'linux'",
+  "torchvision==0.24.1; sys_platform != 'linux'",
 ]
 {% endif %}
 
@@ -133,32 +134,48 @@ managed = true
     { extra = "cu126" },
 #    { extra = "rocm64" },
     { extra = "cpu" },
+    { extra = "default" },
   ],
 ]
 {% endif %}
 
 {% if create_examples %}[tool.uv.sources]
 torch = [
-  { index = "pytorch-cpu", extra = "cpu" },
-  { index = "pytorch-cu130", extra = "cu130", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
-  { index = "pytorch-cu128", extra = "cu128", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
-  { index = "pytorch-cu126", extra = "cu126", marker = "sys_platform == 'linux' or sys_platform == 'win32'"},
-#  { index = "pytorch-rocm64", extra = "rocm64", marker = "sys_platform == 'linux'"},
+  # macOS: CPU only (no CUDA support)
+  { index = "pytorch-cpu", marker = "sys_platform == 'darwin'" },
+  
+  # Linux: cu128/default uses PyPI default, no source needed
+  { index = "pytorch-cpu", extra = "cpu", marker = "sys_platform == 'linux'" },
+  { index = "pytorch-cu126", extra = "cu126", marker = "sys_platform == 'linux'" },
+  { index = "pytorch-cu130", extra = "cu130", marker = "sys_platform == 'linux'" },
+  
+  # Windows: All CUDA versions require explicit index URL
+  { index = "pytorch-cpu", extra = "cpu", marker = "sys_platform == 'win32'" },
+  { index = "pytorch-cu126", extra = "cu126", marker = "sys_platform == 'win32'" },
+  { index = "pytorch-cu128", extra = "cu128", marker = "sys_platform == 'win32'" },
+  { index = "pytorch-cu130", extra = "cu130", marker = "sys_platform == 'win32'" },
+  
+  # Other platforms: fallback to CPU
+  { index = "pytorch-cpu", marker = "sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32'" },
 ]
 torchvision = [
-  { index = "pytorch-cpu", extra = "cpu" },
-  { index = "pytorch-cu130", extra = "cu130", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
-  { index = "pytorch-cu128", extra = "cu128", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
-  { index = "pytorch-cu126", extra = "cu126", marker = "sys_platform == 'linux' or sys_platform == 'win32'"},
-#  { index = "pytorch-rocm64", extra = "rocm64", marker = "sys_platform == 'linux'"},
+  # macOS: CPU only (no CUDA support)
+  { index = "pytorch-cpu", marker = "sys_platform == 'darwin'" },
+  
+  # Linux: cu128/default uses PyPI default, no source needed
+  { index = "pytorch-cpu", extra = "cpu", marker = "sys_platform == 'linux'" },
+  { index = "pytorch-cu126", extra = "cu126", marker = "sys_platform == 'linux'" },
+  { index = "pytorch-cu130", extra = "cu130", marker = "sys_platform == 'linux'" },
+  
+  # Windows: All CUDA versions require explicit index URL
+  { index = "pytorch-cpu", extra = "cpu", marker = "sys_platform == 'win32'" },
+  { index = "pytorch-cu126", extra = "cu126", marker = "sys_platform == 'win32'" },
+  { index = "pytorch-cu128", extra = "cu128", marker = "sys_platform == 'win32'" },
+  { index = "pytorch-cu130", extra = "cu130", marker = "sys_platform == 'win32'" },
+  
+  # Other platforms: fallback to CPU
+  { index = "pytorch-cpu", marker = "sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32'" },
 ]
-#torchaudio = [
-#  { index = "pytorch-cpu", extra = "cpu" },
-#  { index = "pytorch-cu130", extra = "cu130", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
-#  { index = "pytorch-cu128", extra = "cu128", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
-#  { index = "pytorch-cu126", extra = "cu126", marker = "sys_platform == 'linux' or sys_platform == 'win32'"},
-##  { index = "pytorch-rocm64", extra = "rocm64", marker = "sys_platform == 'linux'"},
-#]
 {% endif %}
 
 [tool.uv.pip]
