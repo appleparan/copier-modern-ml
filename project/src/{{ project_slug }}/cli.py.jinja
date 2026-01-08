@@ -3,14 +3,16 @@
 import logging
 from pathlib import Path
 
-import typer
 {% if create_examples %}
 import hydra
+import typer
 from omegaconf import DictConfig, OmegaConf
 
 from {{ project_slug }}.nlp import train_boolq
 from {{ project_slug }}.tabular import train_titanic
 from {{ project_slug }}.vision import train_mnist
+{% else %}
+import typer
 {% endif %}
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
@@ -39,12 +41,13 @@ def hello() -> None:
 
     typer.echo('Hello, world!')
 
+
 {% if create_examples %}@app.command()
 def nlp(
     max_epochs: int | None = 10,
     accelerator: str | None = 'auto',
     devices: str | None = 'auto',
-    deterministic: bool | None = True,  # noqa: FBT001, FBT002
+    deterministic: bool | None = True,
     random_seed: int | None = 42,
 ) -> None:
     """NLP training CLI entrypoint.
@@ -92,7 +95,7 @@ def tabular(
     max_epochs: int | None = 10,
     accelerator: str | None = 'auto',
     devices: str | None = 'auto',
-    deterministic: bool | None = True,  # noqa: FBT001, FBT002
+    deterministic: bool | None = True,
     random_seed: int | None = 42,
 ) -> None:
     """Vision training CLI entrypoint.
@@ -140,7 +143,7 @@ def vision(
     max_epochs: int | None = 10,
     accelerator: str | None = 'auto',
     devices: str | None = 'auto',
-    deterministic: bool | None = True,  # noqa: FBT001, FBT002
+    deterministic: bool | None = True,
     random_seed: int | None = 42,
 ) -> None:
     """Vision training CLI entrypoint.

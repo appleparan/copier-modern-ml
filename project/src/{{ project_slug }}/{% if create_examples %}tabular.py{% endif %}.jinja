@@ -4,13 +4,14 @@ import lightning as L  # noqa: N812
 import numpy as np
 import pandas as pd
 import torch
+from numpy.typing import NDArray
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from torch import nn
 from torch.utils.data import DataLoader, Dataset
 
 
-class TabularDataset(Dataset):
+class TabularDataset(Dataset[tuple[torch.Tensor, torch.Tensor]]):
     """Custom dataset for tabular data.
 
     Args:
@@ -71,7 +72,7 @@ class TabularClassifier(L.LightningModule):
         input_dim: int,
         hidden_dim: int = 64,
         output_dim: int = 2,
-        lr: float | None = 1e-3,
+        lr: float = 1e-3,
     ):
         """Initialize the TabularClassifier.
 
@@ -152,7 +153,7 @@ class TabularClassifier(L.LightningModule):
         self,
         batch: tuple[dict[str, torch.Tensor], torch.Tensor],
         batch_idx: int,  # noqa: ARG002
-    ) -> torch.Tensor:
+    ) -> torch.Tensor | None:
         """Perform a test step.
 
         Args:
@@ -161,7 +162,7 @@ class TabularClassifier(L.LightningModule):
             batch_idx (int): The index of the batch.
 
         Returns:
-            torch.Tensor: The computed training loss.
+            torch.Tensor (optional): The computed training loss.
         """
         x, y = batch
         preds = self(x)
@@ -179,7 +180,7 @@ class TabularClassifier(L.LightningModule):
         return torch.optim.Adam(self.parameters(), lr=self.lr)
 
 
-def preprocess_titanic_data(random_seed: int = 42) -> None:
+def preprocess_titanic_data(random_seed: int = 42) -> tuple[np.ndarray, ...]:
     """Load and preprocess the Titanic dataset.
 
     Args:
@@ -224,7 +225,7 @@ def train_titanic(
     batch_size: int = 16,
     accelerator: str = 'auto',
     devices: int | str | list[int] = 'auto',
-    deterministic: bool = True,  # noqa: FBT001, FBT002
+    deterministic: bool = True,
     random_seed: int = 42,
 ) -> None:
     """Train titanic datasets with classification model.

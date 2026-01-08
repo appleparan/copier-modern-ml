@@ -12,8 +12,9 @@ from {{ project_slug }}.tabular import (
 
 def test_tabular_dataset():
     """Test TabularDataset class."""
-    data = np.random.randn(100, 5)
-    labels = np.random.randint(0, 2, 100)
+    rng = np.random.default_rng(42)
+    data = rng.standard_normal((100, 5))
+    labels = rng.integers(0, 2, 100)
 
     dataset = TabularDataset(data, labels)
     assert len(dataset) == 100

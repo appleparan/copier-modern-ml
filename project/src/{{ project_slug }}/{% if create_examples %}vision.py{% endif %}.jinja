@@ -49,13 +49,13 @@ class MNISTClassifier(L.LightningModule):
 
     def training_step(
         self,
-        batch: tuple[dict[str, torch.Tensor], torch.Tensor],
+        batch: tuple[torch.Tensor, torch.Tensor],
         batch_idx: int,  # noqa: ARG002
     ) -> torch.Tensor:
         """Perform a training step.
 
         Args:
-            batch (tuple[dict[str, torch.Tensor], torch.Tensor]):
+            batch (tuple[torch.Tensor, torch.Tensor]):
                 The input batch containing features and labels.
             batch_idx (int): The index of the batch.
 
@@ -70,13 +70,13 @@ class MNISTClassifier(L.LightningModule):
 
     def validation_step(
         self,
-        batch: tuple[dict[str, torch.Tensor], torch.Tensor],
+        batch: tuple[torch.Tensor, torch.Tensor],
         batch_idx: int,  # noqa: ARG002
     ) -> torch.Tensor:
         """Perform a validation step.
 
         Args:
-            batch (tuple[dict[str, torch.Tensor], torch.Tensor]):
+            batch (tuple[torch.Tensor, torch.Tensor]):
                 The input batch containing features and labels.
             batch_idx (int): The index of the batch.
 
@@ -129,7 +129,7 @@ def train_mnist(
     batch_size: int = 16,
     accelerator: str = 'auto',
     devices: int | str | list[int] = 'auto',
-    deterministic: bool = True,  # noqa: FBT001, FBT002
+    deterministic: bool = True,
     random_seed: int = 42,
 ) -> None:
     """Train MNIST dataset with classification model.

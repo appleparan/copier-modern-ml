@@ -3,9 +3,9 @@ from pathlib import Path
 import lightning as L  # noqa: N812
 import torch
 from datasets import load_dataset
+from torch.optim import AdamW
 from torch.utils.data import DataLoader
 from transformers import (
-    AdamW,
     AutoModelForSequenceClassification,
     AutoTokenizer,
     PreTrainedTokenizer,
@@ -81,7 +81,7 @@ class TinyBertClassifier(L.LightningModule):
         Returns:
             torch.Tensor: The computed training loss.
         """
-        inputs = batch
+        inputs = batch  # type: ignore[index]
         outputs = self(
             inputs['input_ids'],
             attention_mask=inputs['attention_mask'],
@@ -106,11 +106,11 @@ class TinyBertClassifier(L.LightningModule):
         Returns:
             torch.Tensor: The computed validation loss.
         """
-        inputs = batch
+        inputs = batch  # type: ignore[index]
         outputs = self(
-            inputs['input_ids'],
-            attention_mask=inputs['attention_mask'],
-            labels=inputs['labels'],
+            inputs['input_ids'],    # type: ignore[index]
+            attention_mask=inputs['attention_mask'],    # type: ignore[index]
+            labels=inputs['labels'],    # type: ignore[index]
         )
         val_loss = outputs.loss
         preds = torch.argmax(outputs.logits, dim=1)
@@ -134,11 +134,11 @@ class TinyBertClassifier(L.LightningModule):
         Returns:
             torch.Tensor: The computed validation loss.
         """
-        inputs = batch
+        inputs = batch  # type: ignore[index]
         outputs = self(
-            inputs['input_ids'],
-            attention_mask=inputs['attention_mask'],
-            labels=inputs['labels'],
+            inputs['input_ids'],    # type: ignore[index]
+            attention_mask=inputs['attention_mask'],    # type: ignore[index]
+            labels=inputs['labels'],    # type: ignore[index]
         )
         test_loss = outputs.loss
         preds = torch.argmax(outputs.logits, dim=1)
@@ -158,7 +158,7 @@ class TinyBertClassifier(L.LightningModule):
 
 def prepare_data(
     tokenizer: PreTrainedTokenizer, max_length: int = 512
-) -> tuple[torch.utils.data.Dataset, torch.utils.data.Dataset]:
+) -> tuple[torch.utils.data.Dataset, torch.utils.data.Dataset, torch.utils.data.Dataset]:
     """Prepares the training and validation datasets for the BoolQ task.
 
     Args:
@@ -168,8 +168,9 @@ def prepare_data(
             The maximum sequence length for tokenization. Defaults to 512.
 
     Returns:
-        tuple[torch.utils.data.Dataset, torch.utils.data.Dataset]:
-            A tuple containing the training dataset and validation dataset.
+        torch.utils.data.Dataset: training dataset
+        torch.utils.data.Dataset: validation dataset
+        torch.utils.data.Dataset: testing dataset
     """
     # Load a subset of the BoolQ dataset
     _train_ds = load_dataset('boolq', split='train[:4000]')
@@ -210,7 +211,7 @@ def train_boolq(
     max_epochs: int = 10,
     accelerator: str = 'auto',
     devices: int | str | list[int] = 'auto',
-    deterministic: bool = True,  # noqa: FBT001, FBT002
+    deterministic: bool = True,
     random_seed: int = 42,
 ) -> None:
     """Train boolq datasets with BERT tiny model.
