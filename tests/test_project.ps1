@@ -112,7 +112,7 @@ Write-Host "✓ Linting check passed" -ForegroundColor Green
 
 Write-Host ""
 Write-Host ">>> Running type checks with ty"
-uvx ty check
+uv run ty check
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: Type checking failed" -ForegroundColor Red
     exit 1

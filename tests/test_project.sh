@@ -117,7 +117,7 @@ echo "✓ Linting check passed"
 
 echo
 echo ">>> Running type checks with ty"
-if ! uvx ty check; then
+if ! uv run ty check; then
     echo "ERROR: Type checking failed"
     exit 1
 fi
