@@ -53,20 +53,20 @@ Homepage = "{{ repo_url }}"
 
 {% if create_examples %}[project.optional-dependencies]
 cu128 = [
-  "torch~=2.7.1",
-  "torchvision~=0.22.1",
+  "torch~=2.9.1",
+  "torchvision~=0.24.1",
 ]
 cu126 = [
-  "torch~=2.7.1",
-  "torchvision~=0.22.1",
+  "torch~=2.9.1",
+  "torchvision~=0.24.1",
 ]
 cu118 = [
-  "torch~=2.7.1",
-  "torchvision~=0.22.1",
+  "torch~=2.9.1",
+  "torchvision~=0.24.1",
 ]
 cpu = [
-  "torch~=2.7.1",
-  "torchvision~=0.22.1",
+  "torch~=2.9.1",
+  "torchvision~=0.24.1",
 ]
 {% endif %}
 
@@ -128,10 +128,10 @@ managed = true
 # default-groups = ["dev", "docs"]
 {% if create_examples %}conflicts = [
   [
+    { extra = "cu130" },
     { extra = "cu128" },
     { extra = "cu126" },
-    { extra = "cu118" },
-#    { extra = "rocm63" },
+#    { extra = "rocm64" },
     { extra = "cpu" },
   ],
 ]
@@ -140,24 +140,24 @@ managed = true
 {% if create_examples %}[tool.uv.sources]
 torch = [
   { index = "pytorch-cpu", extra = "cpu", marker = "sys_platform == 'linux'" },
-  { index = "pytorch-cu128", extra = "cu128", marker = "sys_platform != 'darwin'"},
-  { index = "pytorch-cu126", extra = "cu126", marker = "sys_platform == 'win32'" },
-  { index = "pytorch-cu118", extra = "cu118", marker = "sys_platform != 'darwin'"},
-#  { index = "pytorch-rocm63", extra = "rocm63", marker = "sys_platform == 'linux'"},
+  { index = "pytorch-cu130", extra = "cu130", marker = "sys_platform != 'darwin'"},
+  { index = "pytorch-cu128", extra = "cu128", marker = "sys_platform == 'win32'" },
+  { index = "pytorch-cu126", extra = "cu126", marker = "sys_platform != 'darwin'"},
+#  { index = "pytorch-rocm64", extra = "rocm64", marker = "sys_platform == 'linux'"},
 ]
 torchvision = [
   { index = "pytorch-cpu", extra = "cpu", marker = "sys_platform == 'linux'" },
-  { index = "pytorch-cu128", extra = "cu128", marker = "sys_platform != 'darwin'"},
-  { index = "pytorch-cu126", extra = "cu126", marker = "sys_platform == 'win32'" },
-  { index = "pytorch-cu118", extra = "cu118", marker = "sys_platform != 'darwin'"},
-#  { index = "pytorch-rocm63", extra = "rocm63", marker = "sys_platform == 'linux'"},
+  { index = "pytorch-cu130", extra = "cu130", marker = "sys_platform != 'darwin'"},
+  { index = "pytorch-cu128", extra = "cu128", marker = "sys_platform == 'win32'" },
+  { index = "pytorch-cu126", extra = "cu126", marker = "sys_platform != 'darwin'"},
+#  { index = "pytorch-rocm64", extra = "rocm64", marker = "sys_platform == 'linux'"},
 ]
 #torchaudio = [
 #  { index = "pytorch-cpu", extra = "cpu", marker = "sys_platform == 'linux'" },
-#  { index = "pytorch-cu128", extra = "cu128", marker = "sys_platform != 'darwin'"},
-#  { index = "pytorch-cu126", extra = "cu126", marker = "sys_platform == 'win32'" },
-#  { index = "pytorch-cu118", extra = "cu118", marker = "sys_platform != 'darwin'"},
-##  { index = "pytorch-rocm63", extra = "rocm63", marker = "sys_platform == 'linux'"},
+#  { index = "pytorch-cu130", extra = "cu130", marker = "sys_platform != 'darwin'"},
+#  { index = "pytorch-cu128", extra = "cu128", marker = "sys_platform == 'win32'" },
+#  { index = "pytorch-cu126", extra = "cu126", marker = "sys_platform != 'darwin'"},
+##  { index = "pytorch-rocm64", extra = "rocm64", marker = "sys_platform == 'linux'"},
 #]
 {% endif %}
 
@@ -170,6 +170,11 @@ url = "https://download.pytorch.org/whl/cpu"
 explicit = true
 
 [[tool.uv.index]]
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/cu130"
+explicit = true
+
+[[tool.uv.index]]
 name = "pytorch-cu128"
 url = "https://download.pytorch.org/whl/cu128"
 explicit = true
@@ -179,14 +184,9 @@ name = "pytorch-cu126"
 url = "https://download.pytorch.org/whl/cu126"
 explicit = true
 
-[[tool.uv.index]]
-name = "pytorch-cu118"
-url = "https://download.pytorch.org/whl/cu118"
-explicit = true
-
 # [[tool.uv.index]]
-# name = "pytorch-rocm63"
-# url = "https://download.pytorch.org/whl/rocm6.3"
+# name = "pytorch-rocm64"
+# url = "https://download.pytorch.org/whl/rocm6.4"
 # explicit = true
 {% endif %}
 
