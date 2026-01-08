@@ -40,7 +40,7 @@ Write-Host "///////////////////////////////////////////"
 Write-Host ""
 
 # Example generate command
-& Generate -Path $PWD -Output $output
+& Generate -SourceDir $PWD -TargetDir $output
 
 Set-Location -Path $output
 Get-Content ".copier-answers.yml"
