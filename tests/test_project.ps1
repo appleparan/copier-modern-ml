@@ -161,4 +161,8 @@ git add empty
 git commit -m "fix: Fix all bugs"
 
 Write-Host ">>> Cleaning directory"
-uv cache clean
+try {
+    uv cache clean
+} catch {
+    Write-Host "Warning: Cache clean failed (cache may not exist)" -ForegroundColor Yellow
+}

@@ -162,4 +162,4 @@ git add empty
 git commit -m "fix: Fix all bugs"
 echo
 echo ">>> Cleaning directory"
-uv cache clean
+uv cache clean || true
