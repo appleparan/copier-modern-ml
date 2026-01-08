@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -eu
 
-PYTHON_VERSION="${PYTHON_VERSION-3.12}"
-PYTHON_VERSIONS="${PYTHON_VERSIONS-3.11 3.12}"
+PYTHON_VERSION="${PYTHON_VERSION-3.13}"
+PYTHON_VERSIONS="${PYTHON_VERSIONS-3.12 3.13}"
 . tests/helpers.sh
 output=tests/tmp
 
