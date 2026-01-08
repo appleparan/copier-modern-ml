@@ -160,6 +160,6 @@ echo ">>> Creating second commit (fix)"
 touch empty
 git add empty
 git commit -m "fix: Fix all bugs"
-echo
-echo ">>> Cleaning directory"
-uv cache clean || true
+# echo
+# echo ">>> Cleaning directory"
+# uv cache clean || true
