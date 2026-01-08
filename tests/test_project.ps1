@@ -2,8 +2,8 @@
 # Enable strict mode
 Set-StrictMode -Version Latest
 
-$PYTHON_VERSION = $env:PYTHON_VERSION -or "3.13"
-$PYTHON_VERSIONS = $env:PYTHON_VERSIONS -or "3.12 3.13"
+$PYTHON_VERSION = $env:PYTHON_VERSION -or "3.14"
+$PYTHON_VERSIONS = $env:PYTHON_VERSIONS -or "3.12 3.13 3.14"
 . tests/helpers.ps1
 $output = "tests/tmp"
 
