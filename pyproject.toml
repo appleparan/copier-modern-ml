@@ -31,14 +31,15 @@ classifiers = [
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
-[tool.uv]
-package = false
-managed = true
-dev-dependencies = [
+[dependency-groups]
+dev = [
     "pre-commit",
     "pytest",
     "git-cliff",
 ]
+[tool.uv]
+package = false
+managed = true
 
 [tool.ruff.format]
 quote-style = "single"
