@@ -47,6 +47,8 @@ def test_mnist_classifier_validation_step():
 @pytest.mark.slow
 def test_train_mnist(tmp_path):
     """Test MNIST training function."""
-    train_mnist(root_dir=tmp_path, max_epochs=1, batch_size=32, accelerator='cpu', devices=1, random_seed=42)
+    train_mnist(
+        root_dir=tmp_path, max_epochs=1, batch_size=32, accelerator='cpu', devices=1, random_seed=42
+    )
     # Check that model artifacts are created
-    assert any(tmp_path.glob("**/*.ckpt"))
+    assert any(tmp_path.glob('**/*.ckpt'))

@@ -108,9 +108,9 @@ class TinyBertClassifier(L.LightningModule):
         """
         inputs = batch  # type: ignore[index]
         outputs = self(
-            inputs['input_ids'],    # type: ignore[index]
-            attention_mask=inputs['attention_mask'],    # type: ignore[index]
-            labels=inputs['labels'],    # type: ignore[index]
+            inputs['input_ids'],  # type: ignore[index]
+            attention_mask=inputs['attention_mask'],  # type: ignore[index]
+            labels=inputs['labels'],  # type: ignore[index]
         )
         val_loss = outputs.loss
         preds = torch.argmax(outputs.logits, dim=1)
@@ -136,9 +136,9 @@ class TinyBertClassifier(L.LightningModule):
         """
         inputs = batch  # type: ignore[index]
         outputs = self(
-            inputs['input_ids'],    # type: ignore[index]
-            attention_mask=inputs['attention_mask'],    # type: ignore[index]
-            labels=inputs['labels'],    # type: ignore[index]
+            inputs['input_ids'],  # type: ignore[index]
+            attention_mask=inputs['attention_mask'],  # type: ignore[index]
+            labels=inputs['labels'],  # type: ignore[index]
         )
         test_loss = outputs.loss
         preds = torch.argmax(outputs.logits, dim=1)

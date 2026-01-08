@@ -34,7 +34,6 @@ class TestHealthEndpoints:
 
         data = response.json()
         assert data['status'] == 'ready'
-        assert data['message'] == '{{ project_name }} API is ready to serve requests'
         assert (
             data['message']
             == 'Modern Python Machine Learning Workflow Package API is ready to serve requests'

@@ -6,7 +6,7 @@ from {{ project_slug }}.tabular import (
     TabularDataset,
     TabularClassifier,
     preprocess_titanic_data,
-    train_titanic
+    train_titanic,
 )
 
 
@@ -60,6 +60,8 @@ def test_preprocess_titanic_data():
 @pytest.mark.slow
 def test_train_titanic(tmp_path):
     """Test Titanic training function."""
-    train_titanic(root_dir=tmp_path, max_epochs=1, batch_size=32, accelerator='cpu', devices=1, random_seed=42)
+    train_titanic(
+        root_dir=tmp_path, max_epochs=1, batch_size=32, accelerator='cpu', devices=1, random_seed=42
+    )
     # Check that model artifacts are created
-    assert any(tmp_path.glob("**/*.ckpt"))
+    assert any(tmp_path.glob('**/*.ckpt'))
