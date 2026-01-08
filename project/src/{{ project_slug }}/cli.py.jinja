@@ -39,7 +39,6 @@ def hello() -> None:
 
     typer.echo('Hello, world!')
 
-
 {% if create_examples %}@app.command()
 def nlp(
     max_epochs: int | None = 10,
@@ -87,7 +86,6 @@ def nlp(
         random_seed=random_seed,
     )
 {% endif %}
-
 
 {% if create_examples %}@app.command()
 def tabular(
@@ -137,7 +135,6 @@ def tabular(
     )
 {% endif %}
 
-
 {% if create_examples %}@app.command()
 def vision(
     max_epochs: int | None = 10,
@@ -186,11 +183,10 @@ def vision(
     )
 {% endif %}
 
-
 @app.command()
 def hello() -> None:
     """Say hello to the user."""
-    typer.echo("Hello, user!")
+    typer.echo('Hello, user!')
 
 
 def main() -> None:
