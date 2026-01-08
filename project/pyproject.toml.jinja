@@ -54,15 +54,15 @@ classifiers = [
 Homepage = "{{ repo_url }}"
 
 {% if create_examples %}[project.optional-dependencies]
+cu130 = [
+  "torch~=2.9.1",
+  "torchvision~=0.24.1",
+]
 cu128 = [
   "torch~=2.9.1",
   "torchvision~=0.24.1",
 ]
 cu126 = [
-  "torch~=2.9.1",
-  "torchvision~=0.24.1",
-]
-cu118 = [
   "torch~=2.9.1",
   "torchvision~=0.24.1",
 ]
