@@ -1,3 +1,21 @@
+## [0.19.0] - 2026-01-08
+
+### Bug Fixes
+
+- Correct Generate function parameter names in PowerShell test script ([78aaf52](https://github.com/appleparan/copier-modern-ml/commit/78aaf52e07a7e73f1ccae5f1445716e230cbc25d))
+- Correct torchvision+cpu platform markers for Windows compatibility ([14336f2](https://github.com/appleparan/copier-modern-ml/commit/14336f28b147280987eac349d66352cbdc4232bb))
+- Handle uv cache clean failures gracefully in test scripts ([c681531](https://github.com/appleparan/copier-modern-ml/commit/c6815312ee5001cdff49765e149f39fc45b0cf6d))
+
+### Features
+
+- Add huggingface_hub with hf_xet extra to dependencies ([d76a26f](https://github.com/appleparan/copier-modern-ml/commit/d76a26f97438a5767b1402487edf279dcb2cf47d))
+
+### Refactor
+
+- Migrate from deprecated tool.uv.dev-dependencies to dependency-groups ([a141b43](https://github.com/appleparan/copier-modern-ml/commit/a141b43a5c3c74c199d5f359689ce66dfaf693e1))
+- Replace huggingface_hub[hf_xet] with standalone hf-xet package ([6ffdd9a](https://github.com/appleparan/copier-modern-ml/commit/6ffdd9a165ad0c4bc9187e9590da06c343ac9b24))
+- Remove manual uv cache clean from test scripts ([4f988b1](https://github.com/appleparan/copier-modern-ml/commit/4f988b1eaeb080fa50394b473dcac1a5ee877441))
+
 ## [0.18.0] - 2026-01-08
 
 ### Features
@@ -7,6 +25,7 @@
 ### Miscellaneous Tasks
 
 - Bump version to 0.17.0 ([34e9464](https://github.com/appleparan/copier-modern-ml/commit/34e94647027e8cd20bd4cc3a9d9918328d0b1033))
+- Bump version to 0.18.0 ([c627c1e](https://github.com/appleparan/copier-modern-ml/commit/c627c1e32bf16dc13d7be050e27462c4a7bc22da))
 
 ### Refactor
 
