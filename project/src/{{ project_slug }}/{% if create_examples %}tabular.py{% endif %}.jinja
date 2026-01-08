@@ -41,7 +41,7 @@ class TabularDataset(Dataset[tuple[torch.Tensor, torch.Tensor]]):
         """
         return len(self.data)
 
-    def __getitem__(self, idx: int) -> tuple[torch.Tensor, torch.Tensor]:
+    def __getitem__(self, idx: int) -> tuple[torch.Tensor, torch.Tensor]:  # type: ignore[override]
         """Get a sample and its corresponding label.
 
         Args:
