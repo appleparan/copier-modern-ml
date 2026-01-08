@@ -1,3 +1,46 @@
+## [0.17.0] - 2026-01-08
+
+### Bug Fixes
+
+- Update CUDA version labels in optional dependencies ([5e069c3](https://github.com/appleparan/copier-modern-ml/commit/5e069c3f62d6f3d0e2e538f8ae0ccbd8e51b258b))
+- Correct ty version constraint to 0.0.10 ([3ef1a16](https://github.com/appleparan/copier-modern-ml/commit/3ef1a1619aecd752566660813b86c17ead4e4637))
+- Correct type hints and annotations ([ed06b96](https://github.com/appleparan/copier-modern-ml/commit/ed06b963a18f218c70b304574cce121dc794e95c))
+- Add +cpu suffix to torchvision in CPU extra ([8fb5ba6](https://github.com/appleparan/copier-modern-ml/commit/8fb5ba6074ea838a4dc9b033634f29f11d91a9e1))
+- Resolve linting and type errors in NLP and tabular modules ([b747c5c](https://github.com/appleparan/copier-modern-ml/commit/b747c5c0eeac9d026ba9e4ca7c996d78690367a8))
+
+### Documentation
+
+- Add TODO comment for hydra-core replacement ([fced63d](https://github.com/appleparan/copier-modern-ml/commit/fced63d3fa0ff7be94d92ea7cba3a52c4db8633a))
+
+### Features
+
+- Add CPU-only PyTorch extra and update CI workflows ([1251ce0](https://github.com/appleparan/copier-modern-ml/commit/1251ce0a2ea757dff62e6cfc9b7e1daf08030599))
+- Add Python 3.14 support to CI workflows and test scripts ([f518dfe](https://github.com/appleparan/copier-modern-ml/commit/f518dfe6216a75a5b4a33dd47b121914e63894da))
+
+### Miscellaneous Tasks
+
+- Update uv setup action to v7 and uv version to 0.9.12 ([6cdbebe](https://github.com/appleparan/copier-modern-ml/commit/6cdbebefd91c2eec0ff20b312628bdc5ba19fd90))
+- Update PyTorch to 2.9.1 and adjust CUDA support ([e4e9bbd](https://github.com/appleparan/copier-modern-ml/commit/e4e9bbd599ad017fbad9309a2595d4ad97ccfacb))
+- Update Python package dependencies and configurations ([10ccf29](https://github.com/appleparan/copier-modern-ml/commit/10ccf29040fb4454eecbf9109ad95896c49a94df))
+- Ignore boolean type hint rules in ruff configuration ([545b485](https://github.com/appleparan/copier-modern-ml/commit/545b4858bd6f8f696aff208e225063054caa2367))
+- Update test scripts to use Python 3.13 ([d4778f0](https://github.com/appleparan/copier-modern-ml/commit/d4778f0953c9d55d1c9fa658f4bb7c55f0db8b29))
+
+### Styling
+
+- Apply linting fixes to test code and CLI module ([f29493b](https://github.com/appleparan/copier-modern-ml/commit/f29493b4270bff1da31f1330b1721b7205bc22bf))
+- Apply additional code formatting and linting fixes ([080be07](https://github.com/appleparan/copier-modern-ml/commit/080be075939e34dec08338d7bd6ebe15047d5021))
+- Apply code formatting to NLP and tabular modules ([dd58dfc](https://github.com/appleparan/copier-modern-ml/commit/dd58dfc3131166af1eaa3bb4ec8facfde925dac5))
+- Apply comprehensive code formatting across modules ([cada841](https://github.com/appleparan/copier-modern-ml/commit/cada841217de53f02e55b2296acaf7e6b8908eef))
+
+### Testing
+
+- Modernize test scripts with direct uv commands and quality checks ([7fca685](https://github.com/appleparan/copier-modern-ml/commit/7fca6859ecdb9479441816069368ecc3710cdad7))
+- Replace mypy with ty for type checking ([067599a](https://github.com/appleparan/copier-modern-ml/commit/067599a8ed84724250b758ef1c3bcc517afd0ef7))
+- Update helper scripts with correct copier parameters ([150f1ec](https://github.com/appleparan/copier-modern-ml/commit/150f1ecd7e715808cb01f4ab22d6e9f2fbca7943))
+- Add Python version pinning before dependency installation ([3a653fd](https://github.com/appleparan/copier-modern-ml/commit/3a653fddf93539da621dd26ab3bb23136df9debd))
+- Shorten project slug in test helpers ([75dd36f](https://github.com/appleparan/copier-modern-ml/commit/75dd36f8df265b78fddd2c81f4668455b2a53e3f))
+- Use uv run instead of uvx for ty check ([30d8a00](https://github.com/appleparan/copier-modern-ml/commit/30d8a00787377bf2b63fcb241734b7a2b09e5475))
+
 ## [0.16.0] - 2025-09-01
 
 ### Bug Fixes
@@ -9,6 +52,10 @@
 
 - Implement conditional dependencies and PyTorch settings ([bc39023](https://github.com/appleparan/copier-modern-ml/commit/bc39023c6da36011eae3b2c13f5f051b0a16ea92))
 - Make CLI commands conditional based on create_examples ([e5b31be](https://github.com/appleparan/copier-modern-ml/commit/e5b31be1299a71238a26d4f47b655b8f5ef62394))
+
+### Miscellaneous Tasks
+
+- Bump version to 0.16.0 ([e23b1a8](https://github.com/appleparan/copier-modern-ml/commit/e23b1a88e4e8ca7244a01a3ab10979a9cb38fef7))
 
 ### Refactor
 
