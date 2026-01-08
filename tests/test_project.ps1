@@ -79,7 +79,7 @@ if (-not $env:SKIP_SETUP) {
     Write-Host ">>> Setting up Python environment"
     Write-Host "Installing uv dependencies..."
     uv python pin $PYTHON_VERSION
-    uv sync --group dev --group docs
+    uv sync --group dev --group docs --extra cpu
     Write-Host ""
 }
 

@@ -46,7 +46,7 @@ test:
   script:
     - echo "Using UV version $UV_VERSION with Python $PYTHON_VERSION"
     - echo "Installing project dependencies"
-    - uv sync --group dev --group docs --extra cpu
+    - uv sync --group dev --group docs
     - echo "Running tests"
     - uv run coverage run -m pytest tests/
   cache:

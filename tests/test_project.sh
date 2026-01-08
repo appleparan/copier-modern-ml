@@ -86,7 +86,7 @@ if [ -z "${SKIP_SETUP:-}" ]; then
     echo ">>> Setting up Python environment"
     echo "Installing uv dependencies..."
     uv python pin $PYTHON_VERSION
-    uv sync --group dev --group docs
+    uv sync --group dev --group docs --extra cpu
     echo
 fi
 
