@@ -6,10 +6,6 @@ PYTHON_VERSIONS="${PYTHON_VERSIONS-3.11 3.12}"
 . tests/helpers.sh
 output=tests/tmp
 
-make() {
-    ./scripts/make "$@"
-}
-
 # Function to check if a file exists
 check_file() {
     local FILE="$1"
@@ -85,22 +81,79 @@ git add -A .
 git commit -am "feat: Initial commit"
 git tag v0.1.0
 echo
-echo ">>> Printing help"
-make help
-echo
+
 if [ -z "${SKIP_SETUP:-}" ]; then
-    echo ">>> Setting up Python environments"
-    make setup
-    echo
-    echo ">>> Printing help again"
-    make help
+    echo ">>> Setting up Python environment"
+    echo "Installing uv dependencies..."
+    uv sync --group dev --group docs
     echo
 fi
 
 echo
-echo ">>> Testing arbitrary commands"
+echo ">>> Testing Python environment"
 pycode="import sys; print(sys.version.split(' ', 1)[0].rsplit('.', 1)[0])"
-make run python3 -c "print('allrun: ', end=''); ${pycode}"
+uv run python3 -c "print('Python version: ', end=''); ${pycode}"
+
+echo
+echo "///////////////////////////////////////////"
+echo "          RUNNING CODE QUALITY CHECKS"
+echo "///////////////////////////////////////////"
+echo
+echo ">>> Running ruff format (should have no changes)"
+if ! uv run ruff format --check .; then
+    echo "ERROR: Code is not properly formatted"
+    exit 1
+fi
+echo "✓ Code formatting check passed"
+
+echo
+echo ">>> Running ruff linting (should have no issues)"
+if ! uv run ruff check .; then
+    echo "ERROR: Linting issues found"
+    exit 1
+fi
+echo "✓ Linting check passed"
+
+echo
+echo ">>> Running type checks with mypy"
+if ! uv run mypy src/; then
+    echo "ERROR: Type checking failed"
+    exit 1
+fi
+echo "✓ Type checking passed"
+
+echo
+echo ">>> Building documentation with mkdocs"
+if ! uv run mkdocs build --strict; then
+    echo "ERROR: Documentation build failed"
+    exit 1
+fi
+echo "✓ Documentation build passed"
+
+echo
+echo "///////////////////////////////////////////"
+echo "             RUNNING TESTS"
+echo "///////////////////////////////////////////"
+echo
+echo ">>> Running pytest"
+if ! uv run pytest -v; then
+    echo "ERROR: Tests failed"
+    exit 1
+fi
+echo "✓ All tests passed"
+
+echo
+echo "///////////////////////////////////////////"
+echo "          ALL CHECKS PASSED ✓"
+echo "///////////////////////////////////////////"
+echo
+echo "Summary:"
+echo "  ✓ Code formatting (ruff format)"
+echo "  ✓ Linting (ruff check)"
+echo "  ✓ Type checking (mypy)"
+echo "  ✓ Documentation build (mkdocs)"
+echo "  ✓ Tests (pytest)"
+echo
 
 echo ">>> Creating second commit (fix)"
 touch empty
@@ -108,4 +161,4 @@ git add empty
 git commit -m "fix: Fix all bugs"
 echo
 echo ">>> Cleaning directory"
-make clean
+uv cache clean
