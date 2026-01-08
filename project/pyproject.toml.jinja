@@ -7,26 +7,26 @@ authors = [
 ]
 readme = "README.md"
 dependencies = [
-    "colorlog>=6.9.0",
-{% if create_examples %}    "datasets>=3.6.0",
-    "fastapi[standard]~=0.115.12",
+    "colorlog~=6.10.1",
+{% if create_examples %}    "datasets~=4.4.2",
+    "fastapi[standard]~=0.128.0",
     "hydra-colorlog>=1.2.0",
     "hydra-core>=1.3.2",
     "lightning>=2.0.0",{% endif %}
-    "matplotlib>=3.9.3",
-    "numpy~=2.2.3",
+    "matplotlib>=3.10.8",
+    "numpy~=2.3.5",
 {% if create_examples %}    "omegaconf>=2.3.0",
-    "pydantic~=2.11.7",{% endif %}
-    "pandas[parquet,performance]>=2.3.0",
-{% if create_examples %}    "pydantic-settings>=2.0.0",
-    "pydantic-extra-types>=2.0.0",{% endif %}
-    "rich~=14.0.0",
-    "scikit-learn>=1.5.2",
+    "pydantic~=2.12.5",{% endif %}
+    "pandas[parquet,performance]~=2.3.3",
+{% if create_examples %}    "pydantic-settings~=2.12.0",
+    "pydantic-extra-types~=2.11.0",{% endif %}
+    "rich~=14.2.0",
+    "scikit-learn~=1.8.0",
     "seaborn>=0.13.2",
-{% if create_examples %}    "tensorboard>=2.18.0",{% endif %}
-    "tqdm>=4.67.1",
-{% if create_examples %}    "transformers>=4.52.0",{% endif %}
-    "typer>=0.16.0",
+{% if create_examples %}    "tensorboard~=2.20.0",{% endif %}
+    "tqdm~=4.67.1",
+{% if create_examples %}    "transformers>=4.57.3",{% endif %}
+    "typer>=0.21.1",
 ]
 requires-python = ">=3.12, <4.0"
 keywords = [
@@ -38,11 +38,13 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Environment :: Console",
     "Environment :: GPU :: NVIDIA CUDA :: 12",
+    "Environment :: GPU :: NVIDIA CUDA :: 13",
     "Intended Audience :: Developers",
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Operating System :: POSIX",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
     "Topic :: Software Development :: Libraries :: Python Modules"
@@ -72,36 +74,34 @@ cpu = [
 
 [dependency-groups]
 dev = [
-    "coverage>=7.8.0",
-    "coverage-badge>=1.0.0",
-    "git-cliff>=2.9.1",
-    "mkdocs>=1.6.1",
-    "mkdocs-material>=9.6.14",
-    "mkdocstrings[python]>=0.27.0",
-    "mkdocs-gen-files>=0.5.0",
-    "mkdocs-section-index>=0.3.9",
-    "mkdocs-literate-nav>=0.6.1",
-    "mypy>=1.16.0",
-    "mypy-extensions>=1.1.0",
-    "myst-parser>=4.0.1",
-    "ruff>=0.11.12",
-    "pytest>=8.4.0",
-    "pytest-asyncio~=1.0.0",
-    "pytest-cov>=6.0.0",
-    "pytest-html>=4.1.1",
-    "pytest-mock>=3.14.0",
-    "pre-commit>=4.0.0",
+    "coverage>=7.13.1",
+    "coverage-badge>=1.1.2",
+    "git-cliff>=2.11.0",
+    "mkdocs~=1.6.1",
+    "mkdocs-material>=9.7.1",
+    "mkdocstrings[python]>=1.0.0",
+    "mkdocs-gen-files~=0.6.0",
+    "mkdocs-section-index>=0.3.10",
+    "mkdocs-literate-nav>=0.6.2",    
+    "ruff>=0.14.10",
+    "pytest~=9.0.2",
+    "pytest-asyncio~=1.3.0",
+    "pytest-cov~=7.0.0",
+    "pytest-html~=4.1.1",
+    "pytest-mock~=3.15.1",
+    "pre-commit~=4.5.1",
+    "ty>=0.10.0",
 ]
 docs = [
-    "mkdocs>=1.6.1",
-    "mkdocs-material>=9.6.14",
-    "mkdocstrings[python]>=0.27.0",
-    "mkdocs-gen-files>=0.5.0",
-    "mkdocs-section-index>=0.3.9",
-    "mkdocs-literate-nav>=0.6.1",
+    "mkdocs~=1.6.1",
+    "mkdocs-material>=9.7.1",
+    "mkdocstrings[python]>=1.0.0",
+    "mkdocs-gen-files~=0.6.0",
+    "mkdocs-section-index>=0.3.10",
+    "mkdocs-literate-nav>=0.6.2", 
 ]
 jupy = [
-    "ipykernel>=6.29.5",
+    "ipykernel~=7.1.0",
 ]
 
 [build-system]
@@ -205,7 +205,6 @@ exclude = [
     ".git",
     ".git-rewrite",
     ".hg",
-    ".mypy_cache",
     ".nox",
     ".pants.d",
     ".pytype",
@@ -353,33 +352,6 @@ convention = "google"
 [tool.ruff.lint.isort]
 known-first-party = ["{{ project_slug }}"]
 known-third-party = ["numpy", "scipy", "pandas", "matplotlib", "sklearn", "torch", "tqdm"]
-
-[tool.mypy]
-# https://mypy.readthedocs.io/en/latest/config_file.html#using-a-pyproject-toml-file
-python_version = "3.13"
-plugins = "numpy.typing.mypy_plugin"
-pretty = true
-show_traceback = true
-color_output = true
-
-allow_redefinition = false
-check_untyped_defs = true
-disallow_any_generics = true
-disallow_incomplete_defs = true
-ignore_missing_imports = true
-implicit_reexport = false
-no_implicit_optional = true
-show_column_numbers = true
-show_error_codes = true
-show_error_context = true
-strict_equality = true
-strict_optional = true
-warn_no_return = true
-warn_redundant_casts = true
-warn_return_any = true
-warn_unreachable = true
-warn_unused_configs = true
-warn_unused_ignores = true
 
 [tool.pytest.ini_options]
 minversion = "8.0"
