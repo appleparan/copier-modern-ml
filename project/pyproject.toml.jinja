@@ -129,12 +129,11 @@ managed = true
 # default-groups = ["dev", "docs"]
 {% if create_examples %}conflicts = [
   [
+    { extra = "cpu" },
     { extra = "cu130" },
     { extra = "cu128" },
     { extra = "cu126" },
 #    { extra = "rocm64" },
-    { extra = "cpu" },
-    { extra = "default" },
   ],
 ]
 {% endif %}
