@@ -69,8 +69,10 @@ cu126 = [
 ]
 cpu = [
   "torch==2.9.1",
-  # Linux/Windows x86_64: +cpu wheel
-  "torchvision==0.24.1+cpu; (sys_platform == 'linux' or sys_platform == 'win32') and platform_machine == 'x86_64'",
+  # Linux x86_64
+  "torchvision==0.24.1+cpu; sys_platform == 'linux' and platform_machine == 'x86_64'",
+  # Windows x86_64 (AMD64)
+  "torchvision==0.24.1+cpu; sys_platform == 'win32' and platform_machine == 'AMD64'",
   # Linux aarch64, macOS arm64: PyPI default wheel
   "torchvision==0.24.1; (sys_platform == 'linux' and platform_machine == 'aarch64') or (sys_platform == 'darwin' and platform_machine == 'arm64')",
 ]
