@@ -1,3 +1,9 @@
+## [0.19.1] - 2026-01-09
+
+### Bug Fixes
+
+- Use platform_machine marker for torchvision CPU variant selection ([7792a55](https://github.com/appleparan/copier-modern-ml/commit/7792a55c8454a4b2b24fe457fd98c32b6b958c54))
+
 ## [0.19.0] - 2026-01-08
 
 ### Bug Fixes
@@ -9,6 +15,10 @@
 ### Features
 
 - Add huggingface_hub with hf_xet extra to dependencies ([d76a26f](https://github.com/appleparan/copier-modern-ml/commit/d76a26f97438a5767b1402487edf279dcb2cf47d))
+
+### Miscellaneous Tasks
+
+- Bump version to 0.19.0 ([61eb5ad](https://github.com/appleparan/copier-modern-ml/commit/61eb5ad2749b7ea2df3569276315fb59cf4930e5))
 
 ### Refactor
 
