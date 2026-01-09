@@ -1,8 +1,19 @@
+## [0.19.2] - 2026-01-09
+
+### Bug Fixes
+
+- Use correct platform markers for torchvision CPU extra ([00efc6c](https://github.com/appleparan/copier-modern-ml/commit/00efc6c8fa9952daa61bdcde9ba985bbd767600f))
+- Use AMD64 platform_machine for Windows x86_64 detection ([72fb66c](https://github.com/appleparan/copier-modern-ml/commit/72fb66c84338df250589f34e31f47f9572e34eb7))
+
 ## [0.19.1] - 2026-01-09
 
 ### Bug Fixes
 
 - Use platform_machine marker for torchvision CPU variant selection ([7792a55](https://github.com/appleparan/copier-modern-ml/commit/7792a55c8454a4b2b24fe457fd98c32b6b958c54))
+
+### Miscellaneous Tasks
+
+- Bump version to 0.19.1 ([d64f826](https://github.com/appleparan/copier-modern-ml/commit/d64f826ef1f69f6d36c276a9b3c4b41b2c4b7617))
 
 ## [0.19.0] - 2026-01-08
 
