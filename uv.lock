@@ -67,7 +67,7 @@ wheels = [
 
 [[package]]
 name = "copier-modern-ml"
-version = "0.19.2"
+version = "0.19.3"
 source = { virtual = "." }
 dependencies = [
     { name = "copier" },
