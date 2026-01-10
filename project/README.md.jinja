@@ -48,19 +48,19 @@ If you don't want to use this packaging feature,
 you can set `tool.uv.package = false` in the pyproject.toml file.
 This tells `uv` to handle your project as a virtual project instead of a package.
 
-### Install Python (3.13)
+### Install Python (3.14)
 ```shell
-uv python install 3.13
+uv python install 3.14
 ```
 
 ### Pin Python version
 ```shell
-uv python pin 3.13
+uv python pin 3.14
 ```
 
-### Install packages with PyTorch + CUDA 12.6 (Ubuntu)
+### Install packages with PyTorch + CUDA 12.8 (Ubuntu)
 ```shell
-uv sync --extra cu126
+uv sync --extra cu128
 ```
 
 ### Install packages without locking environments
@@ -70,7 +70,7 @@ uv sync --frozen
 
 ### Install dev packages, too
 ```shell
-uv sync --group dev --group docs --extra cu126
+uv sync --group dev --group docs --extra cu128
 ```
 
 ### Run tests

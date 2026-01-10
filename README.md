@@ -20,7 +20,7 @@ and [BestieTemplates.jl](https://github.com/JuliaBesties/BestieTemplate.jl).
 * Uses [uv](https://github.com/astral-sh/uv)
 for project and package management, which includes the following tools:
   * [ruff](https://github.com/charliermarsh/ruff) for code formatting and quality analysis
-  * [mypy](https://github.com/python/mypy) for type checking
+  * [ty](https://github.com/astral-sh/ty) for type checking
 * Testing is done with [pytest](https://github.com/pytest-dev/pytest) and its plugins
 * Documentation is built with [mkdocs-material](https://github.com/squidfunk/mkdocs-material)
   and [mkdocstrings plugin](https://github.com/mkdocstrings/mkdocstrings)
@@ -34,8 +34,8 @@ for project and package management, which includes the following tools:
 ### Install dependencies
 
 * Python 3.12+
-* copier >= 9.7.1
-* uv >= 0.7.0
+* copier >= 9.11.0
+* uv >= 0.9.0
 
 ### Install copier (global)
 
@@ -53,9 +53,9 @@ uvx --with copier_templates_extensions copier copy --trust gh:appleparan/copier-
 
 ```bash
 cd ~/src/PATH/TO/YOUR/PROJECT
-uv python install 3.13
-uv python pin 3.13
-uv sync --group dev --group docs --extra cu126
+uv python install 3.14
+uv python pin 3.14
+uv sync --group dev --group docs --extra cu128
 ```
 
 ### Initialize git
