@@ -3,78 +3,45 @@
 import logging
 from pathlib import Path
 
-{% if create_examples %}import hydra
-import typer
-from omegaconf import DictConfig, OmegaConf
+{% if create_examples %}from jsonargparse import auto_cli
 
 from {{ project_slug }}.nlp import train_boolq
 from {{ project_slug }}.tabular import train_titanic
 from {{ project_slug }}.vision import train_mnist
-{% else %}import typer{% endif %}
+{% endif %}
 ROOT_DIR = Path(__file__).resolve().parents[2]
-
-app = typer.Typer(pretty_exceptions_show_locals=False)
 
 logger = logging.getLogger(__name__)
 
 
-{% if create_examples %}def load_config() -> DictConfig:
-    """Load Hydra configuration using compose API."""
-    hydra.initialize_config_dir(version_base='1.2', config_dir=str(ROOT_DIR / 'configs'))
-    cfg = hydra.compose(config_name='config')
-    return cfg{% endif %}
-
-
-@app.command()
-def hello() -> None:
-    """Hello function for the CLI.
-
-    Prints a simple "Hello, world!" message.
-    """
-{% if create_examples %}    cfg: DictConfig = load_config()
-
-    logger.info(OmegaConf.to_yaml(cfg)){% endif %}
-
-    typer.echo('Hello, world!')
-
-
-{% if create_examples %}@app.command()
-def nlp(
-    max_epochs: int | None = 10,
-    accelerator: str | None = 'auto',
-    devices: str | None = 'auto',
-    deterministic: bool | None = True,
-    random_seed: int | None = 42,
+{% if create_examples %}def nlp(
+    max_epochs: int = 3,
+    accelerator: str = 'auto',
+    devices: str = 'auto',
+    deterministic: bool = True,
+    random_seed: int = 42,
 ) -> None:
     """NLP training CLI entrypoint.
 
     This command trains an NLP model using the specified configuration options.
 
     Args:
-        max_epochs (int, optional):
-            Maximum number of training epochs. Defaults to 10.
-        accelerator (str, optional):
+        max_epochs (int):
+            Maximum number of training epochs. Defaults to 3.
+        accelerator (str):
             Accelerator type (e.g., "cpu", "gpu", "tpu"). Defaults to "auto".
-        devices (str, optional):
+        devices (str):
             Number of devices to use for training. Can be an integer, a string
             ("auto"), or a list of device IDs. Defaults to "auto".
             However, due to limitation of typer, this should be a string.
-        deterministic (bool, optional):
+        deterministic (bool):
             Whether to use deterministic algorithms for reproducibility.
             Sets the `torch.backends.cudnn.deterministic` flag. Defaults to True.
-        random_seed (int, optional):
+        random_seed (int):
             Random seed for reproducibility. Defaults to 42.
     """
-    cfg: DictConfig = load_config()
-
-    max_epochs = max_epochs if max_epochs is not None else cfg.get('max_epochs', 10)
-    accelerator = accelerator if accelerator is not None else cfg.get('accelerator', 'auto')
-    devices = devices if devices is not None else cfg.get('devices', 'auto')
-    deterministic = deterministic if deterministic is not None else cfg.get('deterministic', True)
-    random_seed = random_seed if random_seed is not None else cfg.get('random_seed', 42)
-
-    typer.echo('Starting NLP training...')
-    typer.echo(f'Project root directory: {ROOT_DIR}')
+    print('Starting NLP training...')
+    print(f'Project root directory: {ROOT_DIR}')
 
     train_boolq(
         ROOT_DIR,
@@ -84,45 +51,36 @@ def nlp(
         deterministic=deterministic,
         random_seed=random_seed,
     )
-{% endif %}
 
-{% if create_examples %}@app.command()
+
 def tabular(
-    max_epochs: int | None = 10,
-    accelerator: str | None = 'auto',
-    devices: str | None = 'auto',
-    deterministic: bool | None = True,
-    random_seed: int | None = 42,
+    max_epochs: int = 10,
+    accelerator: str = 'auto',
+    devices: str = 'auto',
+    deterministic: bool = True,
+    random_seed: int = 42,
 ) -> None:
     """Vision training CLI entrypoint.
 
     This command trains a tabular model using the specified configuration options.
 
     Args:
-        max_epochs (int, optional):
+        max_epochs (int):
             Maximum number of training epochs. Defaults to 10.
-        accelerator (str, optional):
+        accelerator (str):
             Accelerator type (e.g., "cpu", "gpu", "tpu"). Defaults to "auto".
-        devices (str, optional):
+        devices (str):
             Number of devices to use for training. Can be an integer, a string
             ("auto"), or a list of device IDs. Defaults to "auto".
             However, due to limitation of typer, this should be a string.
-        deterministic (bool, optional):
+        deterministic (bool):
             Whether to use deterministic algorithms for reproducibility.
             Sets the `torch.backends.cudnn.deterministic` flag. Defaults to True.
-        random_seed (int, optional):
+        random_seed (int):
             Random seed for reproducibility. Defaults to 42.
     """
-    cfg: DictConfig = load_config()
-
-    max_epochs = max_epochs if max_epochs is not None else cfg.get('max_epochs', 10)
-    accelerator = accelerator if accelerator is not None else cfg.get('accelerator', 'auto')
-    devices = devices if devices is not None else cfg.get('devices', 'auto')
-    deterministic = deterministic if deterministic is not None else cfg.get('deterministic', True)
-    random_seed = random_seed if random_seed is not None else cfg.get('random_seed', 42)
-
-    typer.echo('Starting tabular training...')
-    typer.echo(f'Project root directory: {ROOT_DIR}')
+    print('Starting tabular training...')
+    print(f'Project root directory: {ROOT_DIR}')
 
     train_titanic(
         ROOT_DIR,
@@ -132,45 +90,36 @@ def tabular(
         deterministic=deterministic,
         random_seed=random_seed,
     )
-{% endif %}
 
-{% if create_examples %}@app.command()
+
 def vision(
-    max_epochs: int | None = 10,
-    accelerator: str | None = 'auto',
-    devices: str | None = 'auto',
-    deterministic: bool | None = True,
-    random_seed: int | None = 42,
+    max_epochs: int = 3,
+    accelerator: str = 'auto',
+    devices: str = 'auto',
+    deterministic: bool = True,
+    random_seed: int = 42,
 ) -> None:
     """Vision training CLI entrypoint.
 
     This command trains a vision model using the specified configuration options.
 
     Args:
-        max_epochs (int, optional):
-            Maximum number of training epochs. Defaults to 10.
-        accelerator (str, optional):
+        max_epochs (int):
+            Maximum number of training epochs. Defaults to 3.
+        accelerator (str):
             Accelerator type (e.g., "cpu", "gpu", "tpu"). Defaults to "auto".
-        devices (str, optional):
+        devices (str):
             Number of devices to use for training. Can be an integer, a string
             ("auto"), or a list of device IDs. Defaults to "auto".
             However, due to limitation of typer, this should be a string.
-        deterministic (bool, optional):
+        deterministic (bool):
             Whether to use deterministic algorithms for reproducibility.
             Sets the `torch.backends.cudnn.deterministic` flag. Defaults to True.
-        random_seed (int, optional):
+        random_seed (int):
             Random seed for reproducibility. Defaults to 42.
     """
-    cfg: DictConfig = load_config()
-
-    max_epochs = max_epochs if max_epochs is not None else cfg.get('max_epochs', 10)
-    accelerator = accelerator if accelerator is not None else cfg.get('accelerator', 'auto')
-    devices = devices if devices is not None else cfg.get('devices', 'auto')
-    deterministic = deterministic if deterministic is not None else cfg.get('deterministic', True)
-    random_seed = random_seed if random_seed is not None else cfg.get('random_seed', 42)
-
-    typer.echo('Starting vision training...')
-    typer.echo(f'Project root directory: {ROOT_DIR}')
+    print('Starting vision training...')
+    print(f'Project root directory: {ROOT_DIR}')
 
     train_mnist(
         ROOT_DIR,
@@ -179,21 +128,24 @@ def vision(
         devices=devices,
         deterministic=deterministic,
         random_seed=random_seed,
-    )
-{% endif %}
+    ){% endif %}
 
-@app.command()
+
 def hello() -> None:
     """Say hello to the user."""
-    typer.echo('Hello, user!')
+    print('Hello, user!')
 
 
 def main() -> None:
-    """Main entrypoint for the CLI application.
-
-    Runs the Typer app to handle user commands.
-    """
-    app()
+    """Main entrypoint for the CLI application."""
+    auto_cli(
+        {
+            'hello': hello,
+            'nlp': nlp,
+            'tabular': tabular,
+            'vision': vision,
+        }
+    )
 
 
 if __name__ == '__main__':
