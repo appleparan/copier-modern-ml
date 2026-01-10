@@ -81,7 +81,7 @@ class TinyBertClassifier(L.LightningModule):
         Returns:
             torch.Tensor: The computed training loss.
         """
-        inputs = batch  # type: ignore[index]
+        inputs = batch
         outputs = self(
             inputs['input_ids'],  # type: ignore[index]
             attention_mask=inputs['attention_mask'],  # type: ignore[index]
@@ -106,7 +106,7 @@ class TinyBertClassifier(L.LightningModule):
         Returns:
             torch.Tensor: The computed validation loss.
         """
-        inputs = batch  # type: ignore[index]
+        inputs = batch
         outputs = self(
             inputs['input_ids'],  # type: ignore[index]
             attention_mask=inputs['attention_mask'],  # type: ignore[index]
@@ -134,7 +134,7 @@ class TinyBertClassifier(L.LightningModule):
         Returns:
             torch.Tensor: The computed validation loss.
         """
-        inputs = batch  # type: ignore[index]
+        inputs = batch
         outputs = self(
             inputs['input_ids'],  # type: ignore[index]
             attention_mask=inputs['attention_mask'],  # type: ignore[index]
