@@ -34,10 +34,7 @@ class TestHealthEndpoints:
 
         data = response.json()
         assert data['status'] == 'ready'
-        assert (
-            data['message']
-            == 'Modern Python Machine Learning Workflow Package API is ready to serve requests'
-        )
+        assert (data['message'] == '{project_name} API is ready to serve requests')
         assert data['version'] == '{{ version }}'
 
     def test_health_endpoints_return_correct_content_type(self, client: TestClient):
