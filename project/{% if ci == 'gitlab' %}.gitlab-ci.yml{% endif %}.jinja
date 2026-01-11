@@ -1,6 +1,6 @@
 variables:
-  UV_VERSION: "0.7.12"  # uv version
-  PYTHON_VERSION: "3.13"  # basic Python version
+  UV_VERSION: "0.9.21"  # uv version
+  PYTHON_VERSION: "3.14"  # basic Python version
   BASE_LAYER: "bookworm-slim"  # uv base image
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"  # cache directory
 
@@ -16,13 +16,14 @@ lint:
     matrix:
       - PYTHON_VERSION: "3.12"
       - PYTHON_VERSION: "3.13"
+      - PYTHON_VERSION: "3.14"
   image: ghcr.io/astral-sh/uv:$UV_VERSION-python$PYTHON_VERSION-$BASE_LAYER
   tags:
     - $OS
   script:
     - echo "Using UV version $UV_VERSION with Python $PYTHON_VERSION"
     - echo "Installing project dependencies"
-    - uv sync --group dev --group docs --extra cpu
+    - uv sync --group dev --group docs --extra cpu --frozen
     - echo "Running format checks"
     - uv run ruff format
     - echo "Running lint checks"
@@ -40,13 +41,14 @@ test:
     matrix:
       - PYTHON_VERSION: "3.12"
       - PYTHON_VERSION: "3.13"
+      - PYTHON_VERSION: "3.14"
   image: ghcr.io/astral-sh/uv:$UV_VERSION-python$PYTHON_VERSION-$BASE_LAYER
   tags:
     - $OS
   script:
     - echo "Using UV version $UV_VERSION with Python $PYTHON_VERSION"
     - echo "Installing project dependencies"
-    - uv sync --group dev --group docs
+    - uv sync --group dev --group docs --extra cpu --frozen
     - echo "Running tests"
     - uv run coverage run -m pytest tests/
   cache:
