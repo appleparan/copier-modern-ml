@@ -1,3 +1,9 @@
+## [0.19.4] - 2026-01-11
+
+### Bug Fixes
+
+- Add environments constraint to resolve torchvision resolution conflicts ([b296f6c](https://github.com/appleparan/copier-modern-ml/commit/b296f6c7555bac64bf2581ca4c97064e94dd06e7))
+
 ## [0.19.3] - 2026-01-10
 
 ### Bug Fixes
@@ -8,6 +14,7 @@
 ### Miscellaneous Tasks
 
 - Update pre-commit hooks and documentation ([1548129](https://github.com/appleparan/copier-modern-ml/commit/15481295fbf5e76865b30430ecdf94703288f220))
+- Bump version to 0.19.3 ([9c12237](https://github.com/appleparan/copier-modern-ml/commit/9c1223764cb796d07ef221ce1189f4e5994a3403))
 
 ### Refactor
 
