@@ -185,7 +185,7 @@ def preprocess_titanic_data(random_seed: int = 42) -> tuple[np.ndarray, ...]:
     Args:
         random_seed (int, optional): Random seed for reproducibility. Defaults to 42.
     """
-    url = 'https://web.stanford.edu/class/archive/cs/cs109/cs109.1166/stuff/titanic.csv'
+    url = 'https://raw.githubusercontent.com/pandas-dev/pandas/master/doc/data/titanic.csv'
     data = pd.read_csv(url)
 
     # Drop unnecessary columns
