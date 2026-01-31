@@ -1,8 +1,32 @@
+## [0.20.0] - 2026-01-31
+
+### Bug Fixes
+
+- Use pandas GitHub repo for Titanic dataset URL ([33cc5d4](https://github.com/appleparan/copier-modern-ml/commit/33cc5d4737f54ee4027539ab48a5d1b2e4946923))
+- Update Titanic preprocessing for pandas dataset format ([768a314](https://github.com/appleparan/copier-modern-ml/commit/768a31418c5807d89c911af98a8c6750f36b705e))
+
+### Features
+
+- Update PyTorch to 2.10.0 and torchvision to 0.25.0 ([75cd5f7](https://github.com/appleparan/copier-modern-ml/commit/75cd5f78dc98ce9a354a6c85d4242688aad2f504))
+
+### Miscellaneous Tasks
+
+- Add --frozen flag to uv sync in CI workflows ([1f40ad2](https://github.com/appleparan/copier-modern-ml/commit/1f40ad2fc69699372e066676f6af5bd40110292a))
+- Update GitLab CI to match GitHub CI configuration ([bebd02f](https://github.com/appleparan/copier-modern-ml/commit/bebd02f2b697549d5044f229f98db0f9ddb55875))
+
+### Styling
+
+- Shorten long line in Titanic preprocessing ([d0e5998](https://github.com/appleparan/copier-modern-ml/commit/d0e599821ea7a03efdea59f348a0bf21c1026755))
+
 ## [0.19.4] - 2026-01-11
 
 ### Bug Fixes
 
 - Add environments constraint to resolve torchvision resolution conflicts ([b296f6c](https://github.com/appleparan/copier-modern-ml/commit/b296f6c7555bac64bf2581ca4c97064e94dd06e7))
+
+### Miscellaneous Tasks
+
+- Bump version to 0.19.4 ([cbd16a8](https://github.com/appleparan/copier-modern-ml/commit/cbd16a88750415b2e7f7ba504f700faaf67484bb))
 
 ## [0.19.3] - 2026-01-10
 
