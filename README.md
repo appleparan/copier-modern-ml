@@ -153,7 +153,7 @@ For dry run:
 uv run git-cliff --latest --strip header --tag $(uv run git-cliff --bumped-version) --unreleased
 ```
 
-### PyTorch Index URL (PyTorch 2.9.1)
+### PyTorch Index URL (PyTorch 2.10.0)
 
 | Compute Platform | Linux | Windows | macOS |
 |------------------|-------|---------|-------|
@@ -161,5 +161,5 @@ uv run git-cliff --latest --strip header --tag $(uv run git-cliff --bumped-versi
 | **CUDA 13.0** | ☐ `https://download.pytorch.org/whl/cu130` | ☐ `https://download.pytorch.org/whl/cu130` | ❌ Not supported |
 | **CUDA 12.8** | ☐ default | ☐ `https://download.pytorch.org/whl/cu128` | ❌ Not supported |
 | **CUDA 12.6** | ☐ `https://download.pytorch.org/whl/cu126` | ☐ `https://download.pytorch.org/whl/cu126` | ❌ Not supported |
-| **ROCm 6.3** | ☐ `https://download.pytorch.org/whl/rocm6.3` | ❌ Not supported | ❌ Not supported |
+| **ROCm 7.1** | ☐ `https://download.pytorch.org/whl/rocm7.1` | ❌ Not supported | ❌ Not supported |
 

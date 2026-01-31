@@ -54,25 +54,20 @@ Homepage = "{{ repo_url }}"
 
 {% if create_examples %}[project.optional-dependencies]
 cu130 = [
-  "torch==2.9.1",
-  "torchvision==0.24.1",
+  "torch==2.10.0",
+  "torchvision==0.25.0",
 ]
 cu128 = [
-  "torch==2.9.1",
-  "torchvision==0.24.1",
+  "torch==2.10.0",
+  "torchvision==0.25.0",
 ]
 cu126 = [
-  "torch==2.9.1",
-  "torchvision==0.24.1",
+  "torch==2.10.0",
+  "torchvision==0.25.0",
 ]
 cpu = [
-  "torch==2.9.1",
-  # Linux x86_64
-  "torchvision==0.24.1+cpu; sys_platform == 'linux' and platform_machine == 'x86_64'",
-  # Windows x86_64 (AMD64)
-  "torchvision==0.24.1+cpu; sys_platform == 'win32' and platform_machine == 'AMD64'",
-  # Linux aarch64, macOS arm64: PyPI default wheel
-  "torchvision==0.24.1; (sys_platform == 'linux' and platform_machine == 'aarch64') or (sys_platform == 'darwin' and platform_machine == 'arm64')",
+  "torch==2.10.0",
+  "torchvision==0.25.0",
 ]
 {% endif %}
 
@@ -136,16 +131,8 @@ managed = true
     { extra = "cu130" },
     { extra = "cu128" },
     { extra = "cu126" },
-#    { extra = "rocm64" },
+#    { extra = "rocm71" },
   ],
-]
-# Add environments constraint to avoid resolution conflicts between dependencies and sources markers.
-# Related to torchvision issue
-environments = [
-  "sys_platform == 'linux' and platform_machine == 'x86_64'",
-  "sys_platform == 'linux' and platform_machine == 'aarch64'",
-  "sys_platform == 'darwin' and platform_machine == 'arm64'",
-  "sys_platform == 'win32' and platform_machine == 'AMD64'",
 ]
 {% endif %}
 
@@ -214,8 +201,8 @@ url = "https://download.pytorch.org/whl/cu126"
 explicit = true
 
 # [[tool.uv.index]]
-# name = "pytorch-rocm64"
-# url = "https://download.pytorch.org/whl/rocm6.4"
+# name = "pytorch-rocm71"
+# url = "https://download.pytorch.org/whl/rocm7.1"
 # explicit = true
 {% endif %}
 
