@@ -188,8 +188,9 @@ def preprocess_titanic_data(random_seed: int = 42) -> tuple[np.ndarray, ...]:
     url = 'https://raw.githubusercontent.com/pandas-dev/pandas/refs/heads/main/doc/data/titanic.csv'
     data = pd.read_csv(url)
 
-    # Drop unnecessary columns (PassengerId, Name, Ticket, Cabin have too many unique values or missing)
-    data = data.drop(columns=['PassengerId', 'Name', 'Ticket', 'Cabin'])
+    # Drop columns with too many unique values or missing data
+    drop_cols = ['PassengerId', 'Name', 'Ticket', 'Cabin']
+    data = data.drop(columns=drop_cols)
 
     # Fill missing values
     data['Age'] = data['Age'].fillna(data['Age'].median())
