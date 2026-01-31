@@ -185,17 +185,19 @@ def preprocess_titanic_data(random_seed: int = 42) -> tuple[np.ndarray, ...]:
     Args:
         random_seed (int, optional): Random seed for reproducibility. Defaults to 42.
     """
-    url = 'https://raw.githubusercontent.com/pandas-dev/pandas/master/doc/data/titanic.csv'
+    url = 'https://raw.githubusercontent.com/pandas-dev/pandas/refs/heads/main/doc/data/titanic.csv'
     data = pd.read_csv(url)
 
-    # Drop unnecessary columns
-    data = data.drop(columns=['Name'])
+    # Drop unnecessary columns (PassengerId, Name, Ticket, Cabin have too many unique values or missing)
+    data = data.drop(columns=['PassengerId', 'Name', 'Ticket', 'Cabin'])
 
     # Fill missing values
     data['Age'] = data['Age'].fillna(data['Age'].median())
+    data['Embarked'] = data['Embarked'].fillna(data['Embarked'].mode()[0])
 
     # Encode categorical variables
     data['Sex'] = LabelEncoder().fit_transform(data['Sex'])
+    data['Embarked'] = LabelEncoder().fit_transform(data['Embarked'])
 
     # Split features and labels
     X = data.drop(columns=['Survived']).to_numpy()
