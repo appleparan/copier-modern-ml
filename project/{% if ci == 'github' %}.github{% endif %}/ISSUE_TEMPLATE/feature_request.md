@@ -14,6 +14,7 @@ A clear and concise description of what the problem is. Ex. I'm always frustrate
 A clear and concise description of what you want to happen.
 
 **Describe alternatives you've considered**
+<!-- markdownlint-disable-next-line MD013 -->
 A clear and concise description of any alternative solutions or features you've considered.
 
 **Additional context**
