@@ -11,7 +11,7 @@ dependencies = [
     "copier-templates-extensions",
     "jinja2",
     "typer",
-    "git-cliff>=2.11.0",
+    "git-cliff>=2.12.0",
 ]
 requires-python = ">=3.12, <4.0"
 classifiers = [
