@@ -1,5 +1,7 @@
 # Development Dockerfile - source-based with uv sync
 FROM ubuntu:noble
+# For GPU support, use NVIDIA CUDA base image instead:
+# FROM nvidia/cuda:13.1.1-cudnn-devel-ubuntu24.04
 
 # https://docs.astral.sh/uv/guides/integration/docker/#intermediate-layers
 ADD https://astral.sh/uv/install.sh /uv-installer.sh
