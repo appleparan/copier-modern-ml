@@ -1,3 +1,13 @@
+## [0.21.1] - 2026-02-15
+
+### Bug Fixes
+
+- Suppress git-cliff warnings for non-conventional commits ([ace8b32](https://github.com/appleparan/copier-modern-ml/commit/ace8b32ece67cf78ff27d15754ca26c1db99e915))
+
+### Miscellaneous Tasks
+
+- Bump git-cliff to >=2.12.0 ([70d9e5d](https://github.com/appleparan/copier-modern-ml/commit/70d9e5d796ee3158ef8b48c47b1deb7d68f1c762))
+
 ## [0.21.0] - 2026-02-15
 
 ### Features
@@ -9,6 +19,7 @@
 ### Miscellaneous Tasks
 
 - Bump template deps and remove jupy group ([b12f2bc](https://github.com/appleparan/copier-modern-ml/commit/b12f2bcbc5e1fe677436965d4ecb17b2f18ccf7f))
+- Bump version to 0.21.0 ([6ad570e](https://github.com/appleparan/copier-modern-ml/commit/6ad570e27480170302edd8516d4439a06f51225a))
 
 ### Styling
 
@@ -443,6 +454,7 @@
 - Remove deprecated rule on recent ruff version ([3258ba8](https://github.com/appleparan/copier-modern-ml/commit/3258ba82fa556ccd82dfc4320454a6f6f0f96121))
 - Add constraint for lightning ([b8470c5](https://github.com/appleparan/copier-modern-ml/commit/b8470c5af66e0c108ad472fce732f07602b1a346))
 - Add more ruff rules ([3b0f8bd](https://github.com/appleparan/copier-modern-ml/commit/3b0f8bd2112610e1a4972802337e803e34a0bc9f))
+- Minor update ([0a2fef0](https://github.com/appleparan/copier-modern-ml/commit/0a2fef0fc5a1766f95cbae78b7797f7266d00688))
 
 ### Documentation
 
@@ -464,6 +476,7 @@
 ### Miscellaneous Tasks
 
 - Increase heading level in README template ([729d3cc](https://github.com/appleparan/copier-modern-ml/commit/729d3cc695d0c6c74b02a51e7cf563c8a5b172dc))
+- Update BestieTemplate.jl URL to JuliaBesties ([af65a34](https://github.com/appleparan/copier-modern-ml/commit/af65a346862deedbd4898690318811200f6cc601))
 - Replace deprecated `set-output` with `$GITHUB_OUTPUT` in GitHub CI ([b2b0c57](https://github.com/appleparan/copier-modern-ml/commit/b2b0c576826e2be87e51670c92e2b60247ffc6b9))
 - Support macos-latest and windows-latest ([7a6bc6e](https://github.com/appleparan/copier-modern-ml/commit/7a6bc6e3b2f5b672f8d683cf277437719e635ea4))
 - Add more pytorch sources ([959698b](https://github.com/appleparan/copier-modern-ml/commit/959698b13aa113b029f55129dcc7c7f2e5a1c3c7))
@@ -527,6 +540,7 @@
 
 ### Miscellaneous Tasks
 
+- Update changelog ([df2919e](https://github.com/appleparan/copier-modern-ml/commit/df2919ee995e33e4ed046c752da866d1e0ba9106))
 - Bump version to 0.4.3 ([193c9e3](https://github.com/appleparan/copier-modern-ml/commit/193c9e3eff96d28a55b66ff0b98f8fad561587fb))
 - Bump version to 0.4.4 ([e4edba5](https://github.com/appleparan/copier-modern-ml/commit/e4edba596cfdd8e97dd8f2eed4602692d61dd4cb))
 - Push CHANGELOG.md origin and main branch ([d811440](https://github.com/appleparan/copier-modern-ml/commit/d811440c1efe93a21f5e31732b499b1e0d98c7e6))
@@ -577,6 +591,57 @@
 
 - Setup project-wise git cliff ([6861205](https://github.com/appleparan/copier-modern-ml/commit/6861205881afd901062ae5ccc14481e82b3576d9))
 
+### Miscellaneous Tasks
+
+- Add git cliff and setup release note ([98153de](https://github.com/appleparan/copier-modern-ml/commit/98153de991c02555b9590b175e138e78c7f77ab1))
+
+## [0.2.1] - 2024-08-15
+
+### Miscellaneous Tasks
+
+- Fix invalid Hydra package name ([00e5d59](https://github.com/appleparan/copier-modern-ml/commit/00e5d59a7b9866cb8de1e3087bae5c8af8810736))
+- Update pre-commit hooks ([e92759d](https://github.com/appleparan/copier-modern-ml/commit/e92759d2cc7a35c4f9f417401ca2f01d84ccb4df))
+- Add tensorboard and colorlog ([3c4d6c3](https://github.com/appleparan/copier-modern-ml/commit/3c4d6c39761ef83803e34be3a32c086bcae492bb))
+- Make pre-commit to be passed ([34976b5](https://github.com/appleparan/copier-modern-ml/commit/34976b50f103e8d72a3561cc68ee605fc10794e9))
+- Update README ([dc1de06](https://github.com/appleparan/copier-modern-ml/commit/dc1de061ccfeae3263d61023de6a0f6a7ad153ca))
+
+## [0.2.0] - 2024-08-05
+
+### Miscellaneous Tasks
+
+- Add more packages ([3a4f012](https://github.com/appleparan/copier-modern-ml/commit/3a4f0129fd7bdb04bf04b13ab6a05ccea9480ad7))
+- Add .gitkeep to keep directory structure ([3980c41](https://github.com/appleparan/copier-modern-ml/commit/3980c41b1d7e16695d43ba12b54cee6e19a9e831))
+- Add CODE_OF_CONDUCT.md and CONTRIBUTING.md ([90f67bf](https://github.com/appleparan/copier-modern-ml/commit/90f67bf8704a6fcd0f71e0086abc011e4a7f89bf))
+- Add LICENSE for template project ([691695e](https://github.com/appleparan/copier-modern-ml/commit/691695ea5ee035d38b62bf263b78a8282cd3aaaa))
+- Disable Python 3.13 in GitHub Actions ([5d81b81](https://github.com/appleparan/copier-modern-ml/commit/5d81b81231278a79fea0587572fc915f16bf7b11))
+- Setup git-changelog ([a48e2de](https://github.com/appleparan/copier-modern-ml/commit/a48e2dedb08979a28171da0917fb7e8593eaba7c))
+
+## [0.1.2] - 2024-08-01
+
+### Miscellaneous Tasks
+
+- Fix mistypo ([04b12e0](https://github.com/appleparan/copier-modern-ml/commit/04b12e0dd7200022dcd8e0dd798c6f712a5fd1ef))
+
+## [0.1.1] - 2024-08-01
+
+### Miscellaneous Tasks
+
+- Update README ([0c45e62](https://github.com/appleparan/copier-modern-ml/commit/0c45e6246221a8b85451e6bd09529449cd5f1e6d))
+- Fix email format ([fb05cf1](https://github.com/appleparan/copier-modern-ml/commit/fb05cf1a81c74fb4bbe0c68b915abc3b258fbb00))
+
 ## [0.1.0] - 2024-07-31
+
+### Miscellaneous Tasks
+
+- Initial commit ([451a980](https://github.com/appleparan/copier-modern-ml/commit/451a980f8438f33e821e319d31aac1e2b01e91a8))
+- Add wheel target correctly ([261eae5](https://github.com/appleparan/copier-modern-ml/commit/261eae55ff66724b5a979cade8d6192404a7af5a))
+- Update README ([47a47ca](https://github.com/appleparan/copier-modern-ml/commit/47a47cad78f21ec7cc53c6bad823c1f7af43c308))
+- Make transition from cookiecutter to copier ([09ad590](https://github.com/appleparan/copier-modern-ml/commit/09ad590d0505371ddaec30e9fa2a68d09ff4a139))
+- Remove all cookiecutter things ([7ee8555](https://github.com/appleparan/copier-modern-ml/commit/7ee8555f755f161549017ad4caa083d29a401ea3))
+- Fix misc bugs ([d7af42b](https://github.com/appleparan/copier-modern-ml/commit/d7af42b72e131c6cb35b11735f38fcdff123b67a))
+- Fix bugs ([472bf2a](https://github.com/appleparan/copier-modern-ml/commit/472bf2aa15f0c3b75dcb4d869e4ebdcf4ffe8ed3))
+- Add docs ([4ce7688](https://github.com/appleparan/copier-modern-ml/commit/4ce76888d82016051f7812987747f0f27a1cf553))
+- Add workflows to publish release ([dac247c](https://github.com/appleparan/copier-modern-ml/commit/dac247c1359eb0abec6f78a726a094151cdc90f9))
+- Update README ([6e13ef0](https://github.com/appleparan/copier-modern-ml/commit/6e13ef0d11eb004c27427b045d8da5a85ac61f04))
 
 <!-- generated by git-cliff -->
