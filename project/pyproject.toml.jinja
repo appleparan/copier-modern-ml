@@ -8,11 +8,11 @@ authors = [
 readme = "README.md"
 dependencies = [
     "colorlog~=6.10.1",
-{% if create_examples %}    "datasets~=4.4.2",
+{% if create_examples %}    "datasets>=4.5.0",
     "fastapi[standard]~=0.128.0",
     "hf-xet~=1.2.0",
     "jsonargparse[all]~=4.45.0",{% endif %}
-{% if use_torch %}    "lightning>=2.0.0",{% endif %}
+{% if use_torch %}    "lightning>=2.6.1",{% endif %}
     "matplotlib>=3.10.8",
     "numpy~=2.3.5",
     "pandas[parquet,performance]~=2.3.3",
@@ -24,7 +24,7 @@ dependencies = [
     "seaborn>=0.13.2",
 {% if use_torch %}    "tensorboard~=2.20.0",{% endif %}
     "tqdm~=4.67.1",
-{% if create_examples %}    "transformers>=4.57.3",{% endif %}
+{% if create_examples %}    "transformers>=5.1.0",{% endif %}
     "typer>=0.21.1",
 ]
 requires-python = ">=3.12, <4.0"
@@ -82,14 +82,14 @@ dev = [
     "mkdocs-gen-files~=0.6.0",
     "mkdocs-section-index>=0.3.10",
     "mkdocs-literate-nav>=0.6.2",
-    "ruff>=0.14.10",
+    "ruff>=0.15.1",
     "pytest~=9.0.2",
     "pytest-asyncio~=1.3.0",
     "pytest-cov~=7.0.0",
-    "pytest-html~=4.1.1",
+    "pytest-html~=4.2.0",
     "pytest-mock~=3.15.1",
     "pre-commit~=4.5.1",
-    "ty>=0.0.10",
+    "ty>=0.0.17",
 ]
 docs = [
     "mkdocs~=1.6.1",
@@ -98,9 +98,6 @@ docs = [
     "mkdocs-gen-files~=0.6.0",
     "mkdocs-section-index>=0.3.10",
     "mkdocs-literate-nav>=0.6.2",
-]
-jupy = [
-    "ipykernel~=7.1.0",
 ]
 
 [build-system]
