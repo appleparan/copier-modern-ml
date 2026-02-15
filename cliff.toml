@@ -55,6 +55,8 @@ split_commits = false
 # regex for preprocessing the commit messages
 commit_preprocessors = [
   { pattern = '\((\w+\s)?#([0-9]+)\)', replace = "([#${2}](<REPO>/issues/${2}))"}, # replace issue numbers
+  { pattern = '^([A-Z].*)', replace = 'chore: ${1}' }, # normalize non-conventional commits (uppercase start)
+  { pattern = '^(fix|feat|docs|chore|style|refactor|perf|test|build|ci|revert)\s*$', replace = '${1}: minor update' }, # normalize bare type commits
 ]
 # regex for parsing and grouping commits
 commit_parsers = [
@@ -69,6 +71,7 @@ commit_parsers = [
   { message = "^chore\\(deps\\)", skip = true },
   { message = "^chore\\(pr\\)", skip = true },
   { message = "^chore\\(pull\\)", skip = true },
+  { message = "^chore: Merge", skip = true },
   { message = "^chore|ci", group = "Miscellaneous Tasks" },
   { body = ".*security", group = "Security" },
   { message = "^revert", group = "Revert" },
