@@ -11,8 +11,8 @@ dependencies = [
 {% if create_examples %}    "datasets~=4.4.2",
     "fastapi[standard]~=0.128.0",
     "hf-xet~=1.2.0",
-    "jsonargparse[all]~=4.45.0",
-    "lightning>=2.0.0",{% endif %}
+    "jsonargparse[all]~=4.45.0",{% endif %}
+{% if use_torch %}    "lightning>=2.0.0",{% endif %}
     "matplotlib>=3.10.8",
     "numpy~=2.3.5",
     "pandas[parquet,performance]~=2.3.3",
@@ -22,7 +22,7 @@ dependencies = [
     "rich~=14.2.0",
     "scikit-learn~=1.8.0",
     "seaborn>=0.13.2",
-{% if create_examples %}    "tensorboard~=2.20.0",{% endif %}
+{% if use_torch %}    "tensorboard~=2.20.0",{% endif %}
     "tqdm~=4.67.1",
 {% if create_examples %}    "transformers>=4.57.3",{% endif %}
     "typer>=0.21.1",
@@ -52,7 +52,7 @@ classifiers = [
 [project.urls]
 Homepage = "{{ repo_url }}"
 
-{% if create_examples %}[project.optional-dependencies]
+{% if use_torch %}[project.optional-dependencies]
 cu130 = [
   "torch==2.10.0",
   "torchvision==0.25.0",
@@ -125,7 +125,7 @@ allow-insecure-host = ["pypi.org", "files.pythonhosted.org"]
 {% endif -%}
 managed = true
 # default-groups = ["dev", "docs"]
-{% if create_examples %}conflicts = [
+{% if use_torch %}conflicts = [
   [
     { extra = "cpu" },
     { extra = "cu130" },
@@ -136,7 +136,7 @@ managed = true
 ]
 {% endif %}
 
-{% if create_examples %}[tool.uv.sources]
+{% if use_torch %}[tool.uv.sources]
 torch = [
   # macOS: CPU only (no CUDA support)
   { index = "pytorch-cpu", marker = "sys_platform == 'darwin'" },
@@ -180,7 +180,7 @@ torchvision = [
 [tool.uv.pip]
 index-url = "https://pypi.org/simple"
 
-{% if create_examples %}[[tool.uv.index]]
+{% if use_torch %}[[tool.uv.index]]
 name = "pytorch-cpu"
 url = "https://download.pytorch.org/whl/cpu"
 explicit = true
@@ -205,6 +205,7 @@ explicit = true
 # url = "https://download.pytorch.org/whl/rocm7.1"
 # explicit = true
 {% endif %}
+
 
 [tool.ruff]
 include = ["*.py", "*.pyi", "**/pyproject.toml", "*.ipynb"]

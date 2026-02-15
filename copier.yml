@@ -154,3 +154,10 @@ create_examples:
   type: bool
   help: Do you want to create example files (FastAPI app, CLI, NLP, tabular, vision)?
   default: true
+
+# PYTORCH -------------------------
+use_torch:
+  type: bool
+  help: Do you want to add PyTorch and CUDA variant support?
+  default: true
+  when: "{{ not create_examples }}"

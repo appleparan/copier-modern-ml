@@ -8,6 +8,7 @@ from pathlib import Path
 from {{ project_slug }}.nlp import train_boolq
 from {{ project_slug }}.tabular import train_titanic
 from {{ project_slug }}.vision import train_mnist
+{% else %}import typer
 {% endif %}
 ROOT_DIR = Path(__file__).resolve().parents[2]
 
@@ -138,7 +139,7 @@ def hello() -> None:
 
 def main() -> None:
     """Main entrypoint for the CLI application."""
-    auto_cli(
+{% if create_examples %}    auto_cli(
         {
             'hello': hello,
             'nlp': nlp,
@@ -146,6 +147,10 @@ def main() -> None:
             'vision': vision,
         }
     )
+{% else %}    app = typer.Typer()
+    app.command()(hello)
+    app()
+{% endif %}
 
 
 if __name__ == '__main__':
