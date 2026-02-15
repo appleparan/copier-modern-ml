@@ -1,0 +1,19 @@
+# {{ project_name }} Docker Compose Configuration
+services:
+  {{ project_slug }}:
+    build:
+      context: .
+      dockerfile: Dockerfile.package
+    image: {{ project_slug }}:{{ version }}
+    container_name: {{ project_slug }}
+    user: "10001:10001"
+    ports:
+      - "8000:5000"   # FastAPI
+    volumes:
+      # Configuration (read-only)
+      - ./configs/prod/:/app/configs/prod/:ro
+      # Data directory
+      - ./data/:/app/data/
+    environment:
+      - {{ project_slug | upper }}_ENV=production
+    restart: unless-stopped

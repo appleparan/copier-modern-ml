@@ -1,6 +1,6 @@
 # Getting Started
 
-This guide will help you set up and start using the test_project ML template.
+This guide will help you set up and start using the {{ project_slug }} ML template.
 
 ## Prerequisites
 
@@ -46,7 +46,7 @@ Test the installation by running:
 
 ```bash
 # Test CLI
-test_project-cli hello
+{{ project_slug }}-cli hello
 
 # Run tests
 uv run pytest
@@ -93,7 +93,7 @@ All training commands support these common options:
 Example with custom parameters:
 
 ```bash
-test_project-cli nlp \
+{{ project_slug }}-cli nlp \
     --max-epochs 5 \
     --accelerator gpu \
     --devices 1 \
@@ -125,7 +125,7 @@ uvx pre-commit run --all-files
 uv run pytest
 
 # Run with coverage
-uv run pytest --cov=test_project
+uv run pytest --cov={{ project_slug }}
 
 # Run specific test file
 uv run pytest tests/test_version.py
@@ -184,7 +184,7 @@ You can set these environment variables:
 
 ## Next Steps
 
-1. **Explore the Code**: Check out the source code in `src/test_project/`
+1. **Explore the Code**: Check out the source code in `src/{{ project_slug }}/`
 2. **Customize Models**: Modify the model architectures in `nlp.py`, `vision.py`, or `tabular.py`
 3. **Add Your Data**: Place your datasets in the appropriate `data/` subdirectories
 4. **Create Notebooks**: Use `notebooks/` for exploratory data analysis
@@ -194,7 +194,7 @@ You can set these environment variables:
 
 ### Common Issues
 
-**ImportError: No module named 'test_project'**
+**ImportError: No module named '{{ project_slug }}'**
 ```bash
 # Ensure you're in the project directory and dependencies are installed
 uv sync --group dev

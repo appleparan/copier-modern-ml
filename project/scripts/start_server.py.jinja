@@ -4,26 +4,20 @@
 This script reads configuration from environment variables and .env files
 through the application's settings system and starts the uvicorn server
 with the appropriate parameters.
+
+Designed to run inside a Docker container where the venv python is on PATH.
+No uv run or sys.path manipulation needed.
 """
 
-import sys
-from pathlib import Path
+import uvicorn
 
-# Add src directory to Python path
-src_path = Path(__file__).parent.parent / 'src'
-sys.path.insert(0, str(src_path))
-
-import uvicorn  # noqa: E402
-
-from {{ project_slug }}.api.settings import get_settings  # noqa: E402
+from {{ project_slug }}.api.settings import get_settings
 
 
 def main() -> None:
     """Start the uvicorn server with settings-based configuration."""
-    # Load application settings
     settings = get_settings()
 
-    # Start uvicorn server with settings
     uvicorn.run(
         '{{ project_slug }}.app:create_app',
         factory=True,
@@ -31,7 +25,7 @@ def main() -> None:
         port=settings.api_port,
         workers=settings.max_workers,
         log_level=settings.log_level.lower(),
-        reload=False,  # Disable reload in production
+        reload=False,
         access_log=True,
     )
 

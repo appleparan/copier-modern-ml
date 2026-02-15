@@ -1,11 +1,10 @@
-# Use the official NVIDIA CUDA base image with Ubuntu
-FROM nvidia/cuda:12.6.3-cudnn-devel-ubuntu24.04
-# https://docs.astral.sh/uv/guides/integration/docker/#intermediate-layers
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+# Builder stage - install dependencies and build project
+FROM ubuntu:noble AS builder
 
-# Builder stage - Pure UV base
 # https://docs.astral.sh/uv/guides/integration/docker/#intermediate-layers
-# FROM ghcr.io/astral-sh/uv:python3.12-bookworm AS builder
+ADD https://astral.sh/uv/install.sh /uv-installer.sh
+RUN sh /uv-installer.sh && rm /uv-installer.sh
+ENV PATH="/root/.local/bin/:$PATH"
 
 # Declare environmental variables
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -15,14 +14,12 @@ ENV DEBIAN_FRONTEND=noninteractive \
     LC_ALL=en_US.UTF-8 \
     SHELL=/bin/bash \
     MPLBACKEND=Agg \
-    PIP_IGNORE_INSTALLED=1 \
     PYTHONUNBUFFERED=1 \
     UV_CACHE_DIR=/tmp/uv-cache \
     UV_COMPILE_BYTECODE=1 \
     UV_LINK_MODE=copy
 
-
-# Add CUDA development libraries for building
+# Add development libraries for building native extensions
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     wget \
@@ -30,7 +27,6 @@ RUN apt-get update && \
     ca-certificates \
     git \
     curl \
-    wget \
     build-essential \
     libssl-dev \
     zlib1g-dev \
@@ -47,73 +43,70 @@ RUN apt-get update && \
     libffi-dev \
     libgdbm-compat-dev \
     libxmlsec1-dev \
-    xz-utils
+    xz-utils \
+    cmake \
+    gcc && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install Python to /opt/python (must match production stage path)
+ENV UV_PYTHON_INSTALL_DIR=/opt/python
+RUN uv python install 3.13 --compile-bytecode
 
 WORKDIR /workspace
 
-# Copy project files
-COPY pyproject.toml uv.lock ./
+# Copy all source code
+COPY . /workspace
 
-# Install dependencies
+# Sync production deps into /app/.venv
+# uv sync resolves all dependencies together, preventing allocator/TBB clashes
+# that occur with uv pip install linking against system libraries.
+ENV UV_PROJECT_ENVIRONMENT=/app/.venv
 RUN --mount=type=cache,target=/tmp/uv-cache \
-    --mount=type=bind,source=uv.lock,target=uv.lock \
-    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-    uv sync --locked --no-install-project --no-editable
+    uv sync --locked --extra cpu --no-dev --no-editable
 
-# Copy source code
-ADD . /workspace
 
-# Sync the project
-RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --locked
+# Production stage - minimal runtime with pre-built venv
+FROM ubuntu:noble AS production
 
-# Build wheel
-RUN --mount=type=cache,target=/tmp/uv-cache \
-    uv build --wheel --out-dir /workspace/dist
-
-# Use the official NVIDIA CUDA base image with Ubuntu
-FROM nvidia/cuda:12.6.3-cudnn-devel-ubuntu24.04
-# https://docs.astral.sh/uv/guides/integration/docker/#intermediate-layers
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
-
-# Production stage - UV runtime
-# FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim AS production
-
-# Set environment variables
+# Set environment variables - use venv Python directly (no uv needed at runtime)
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    UV_SYSTEM_PYTHON=1
+    VIRTUAL_ENV=/app/.venv \
+    PATH="/app/.venv/bin:$PATH"
 
-# Install runtime dependencies including curl for health check
+# Install runtime dependencies only (no -dev headers)
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     curl \
-    ca-certificates && \
+    ca-certificates \
+    gosu \
+    libgomp1 \
+    libzstd1 && \
     rm -rf /var/lib/apt/lists/*
 
-# Copy wheel from builder and install system-wide
-COPY --from=builder /workspace/dist/*.whl /tmp/
-RUN uv pip install --system /tmp/*.whl && \
-    rm /tmp/*.whl
+# Copy Python interpreter from builder (same path ensures venv pyvenv.cfg works)
+COPY --from=builder /opt/python /opt/python
 
-# Create directories and copy startup script
-RUN mkdir -p /app/scripts
-COPY --from=builder /workspace/scripts/start_server.py /app/scripts/start_server.py
+# Copy pre-built venv from builder (all deps resolved together)
+COPY --from=builder /app/.venv /app/.venv
 
-# Create non-root user and set ownership
-RUN groupadd --gid 1000 appuser && \
-    useradd --uid 1000 --gid appuser --create-home appuser && \
-    chown -R appuser:appuser /app
-
-# Switch to non-root user
-USER appuser
-
-# Set working directory
 WORKDIR /app
 
-# Verify installation
-# RUN python -c "import sys; print(f'Python version: {sys.version}')" && \
-#     python -c "from {{ project_slug }}.app import create_app; print('FastAPI app import successful')"
+# Create directories and copy deployment files
+RUN mkdir -p /app/scripts /app/data
+COPY scripts/start_server.py /app/scripts/start_server.py
+
+# Create non-root user (UID 10001 to avoid conflicts with host users)
+RUN groupadd --gid 10001 appuser && \
+    useradd -u 10001 -g 10001 -G appuser -m -s /bin/bash appuser && \
+    chown -R appuser:appuser /app && \
+    chown -R appuser:appuser /app/data
+
+# Copy entrypoint script (runs as root, drops to appuser via gosu)
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Verify venv installation
 RUN python -c "import sys; print(f'Python version: {sys.version}')"
 
 # Expose FastAPI default port
@@ -123,6 +116,8 @@ EXPOSE 5000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:5000/health || exit 1
 
-# Run FastAPI with uvicorn using settings-based startup script
-# Configuration is loaded from environment variables and .env file
-CMD ["uv", "run", "python", "scripts/start_server.py"]
+# Entrypoint handles permission fixing and drops to appuser
+ENTRYPOINT ["docker-entrypoint.sh"]
+
+# Run FastAPI with uvicorn (venv python is on PATH, no uv needed)
+CMD ["python", "scripts/start_server.py"]
