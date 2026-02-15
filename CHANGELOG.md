@@ -1,3 +1,20 @@
+## [0.21.0] - 2026-02-15
+
+### Features
+
+- Use uv sync with non-root user for Docker deployment ([f19f2d7](https://github.com/appleparan/copier-modern-ml/commit/f19f2d7af6e8e6ce5a78ee6146b5ad2c4ebfc197))
+- Add commented NVIDIA CUDA base image options for GPU support ([43b8d45](https://github.com/appleparan/copier-modern-ml/commit/43b8d45cd52d896566c43c67897f9b2c0695467a))
+- Separate use_torch option from create_examples ([c97093b](https://github.com/appleparan/copier-modern-ml/commit/c97093bea1fde8ebf7bcdbf724f0929a319cf2aa))
+
+### Miscellaneous Tasks
+
+- Bump template deps and remove jupy group ([b12f2bc](https://github.com/appleparan/copier-modern-ml/commit/b12f2bcbc5e1fe677436965d4ecb17b2f18ccf7f))
+
+### Styling
+
+- Fix markdown linting issues ([a166834](https://github.com/appleparan/copier-modern-ml/commit/a166834642567bc9be5cb33727e5296a3ea39a7e))
+- Fix Jinja2 whitespace control in pyproject.toml template ([a955f7d](https://github.com/appleparan/copier-modern-ml/commit/a955f7d45d3efc2204beb6d026b715c762835284))
+
 ## [0.20.0] - 2026-01-31
 
 ### Bug Fixes
@@ -13,6 +30,7 @@
 
 - Add --frozen flag to uv sync in CI workflows ([1f40ad2](https://github.com/appleparan/copier-modern-ml/commit/1f40ad2fc69699372e066676f6af5bd40110292a))
 - Update GitLab CI to match GitHub CI configuration ([bebd02f](https://github.com/appleparan/copier-modern-ml/commit/bebd02f2b697549d5044f229f98db0f9ddb55875))
+- Bump version to 0.20.0 ([41e2db0](https://github.com/appleparan/copier-modern-ml/commit/41e2db0076c2e939c3b51d225251f6bbaa804959))
 
 ### Styling
 
