@@ -8,23 +8,33 @@ authors = [
 readme = "README.md"
 dependencies = [
     "colorlog~=6.10.1",
-{% if create_examples %}    "datasets>=4.5.0",
+{%- if create_examples %}
+    "datasets>=4.5.0",
     "fastapi[standard]~=0.128.0",
     "hf-xet~=1.2.0",
-    "jsonargparse[all]~=4.45.0",{% endif %}
-{% if use_torch %}    "lightning>=2.6.1",{% endif %}
+    "jsonargparse[all]~=4.45.0",
+{%- endif %}
+{%- if use_torch %}
+    "lightning>=2.6.1",
+{%- endif %}
     "matplotlib>=3.10.8",
     "numpy~=2.3.5",
     "pandas[parquet,performance]~=2.3.3",
-{% if create_examples %}    "pydantic~=2.12.5",
+{%- if create_examples %}
+    "pydantic~=2.12.5",
     "pydantic-settings~=2.12.0",
-    "pydantic-extra-types~=2.11.0",{% endif %}
+    "pydantic-extra-types~=2.11.0",
+{%- endif %}
     "rich~=14.2.0",
     "scikit-learn~=1.8.0",
     "seaborn>=0.13.2",
-{% if use_torch %}    "tensorboard~=2.20.0",{% endif %}
+{%- if use_torch %}
+    "tensorboard~=2.20.0",
+{%- endif %}
     "tqdm~=4.67.1",
-{% if create_examples %}    "transformers>=5.1.0",{% endif %}
+{%- if create_examples %}
+    "transformers>=5.1.0",
+{%- endif %}
     "typer>=0.21.1",
 ]
 requires-python = ">=3.12, <4.0"
@@ -51,8 +61,9 @@ classifiers = [
 
 [project.urls]
 Homepage = "{{ repo_url }}"
+{%- if use_torch %}
 
-{% if use_torch %}[project.optional-dependencies]
+[project.optional-dependencies]
 cu130 = [
   "torch==2.10.0",
   "torchvision==0.25.0",
@@ -69,7 +80,7 @@ cpu = [
   "torch==2.10.0",
   "torchvision==0.25.0",
 ]
-{% endif %}
+{%- endif %}
 
 [dependency-groups]
 dev = [
@@ -117,12 +128,13 @@ packages = ["src/{{ project_slug }}"]
 [tool.uv]
 package = {% if package %}true{% else %}false{% endif %}
 native-tls = {% if native_tls %}true{% else %}false{% endif %}
-{% if allow_insecure_host -%}
+{%- if allow_insecure_host %}
 allow-insecure-host = ["pypi.org", "files.pythonhosted.org"]
-{% endif -%}
+{%- endif %}
 managed = true
 # default-groups = ["dev", "docs"]
-{% if use_torch %}conflicts = [
+{%- if use_torch %}
+conflicts = [
   [
     { extra = "cpu" },
     { extra = "cu130" },
@@ -131,9 +143,8 @@ managed = true
 #    { extra = "rocm71" },
   ],
 ]
-{% endif %}
 
-{% if use_torch %}[tool.uv.sources]
+[tool.uv.sources]
 torch = [
   # macOS: CPU only (no CUDA support)
   { index = "pytorch-cpu", marker = "sys_platform == 'darwin'" },
@@ -172,12 +183,13 @@ torchvision = [
   # Other platforms: fallback to CPU
   { index = "pytorch-cpu", marker = "sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32'" },
 ]
-{% endif %}
+{%- endif %}
 
 [tool.uv.pip]
 index-url = "https://pypi.org/simple"
+{%- if use_torch %}
 
-{% if use_torch %}[[tool.uv.index]]
+[[tool.uv.index]]
 name = "pytorch-cpu"
 url = "https://download.pytorch.org/whl/cpu"
 explicit = true
@@ -201,8 +213,7 @@ explicit = true
 # name = "pytorch-rocm71"
 # url = "https://download.pytorch.org/whl/rocm7.1"
 # explicit = true
-{% endif %}
-
+{%- endif %}
 
 [tool.ruff]
 include = ["*.py", "*.pyi", "**/pyproject.toml", "*.ipynb"]
@@ -424,11 +435,11 @@ marker-line = "<!-- insertion marker -->"
 output = "output.log"
 parse-refs = false
 parse-trailers = false
-{% if ci == 'gitlab' %}
+{%- if ci == 'gitlab' %}
 provider = "gitlab"
-{% else %}
+{%- else %}
 provider = "github"
-{% endif %}
+{%- endif %}
 repository = "."
 sections = "fix,maint"
 template = "keepachangelog"
