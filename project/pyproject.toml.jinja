@@ -132,6 +132,9 @@ native-tls = {% if native_tls %}true{% else %}false{% endif %}
 allow-insecure-host = ["pypi.org", "files.pythonhosted.org"]
 {%- endif %}
 managed = true
+# Dependency cooldown: ignore packages released in the last 7 days
+# https://docs.astral.sh/uv/reference/settings/#exclude-newer
+exclude-newer = "P7D"
 # default-groups = ["dev", "docs"]
 {%- if use_torch %}
 conflicts = [
