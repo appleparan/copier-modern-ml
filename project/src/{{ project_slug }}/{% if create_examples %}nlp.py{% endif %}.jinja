@@ -8,7 +8,7 @@ from torch.utils.data import DataLoader
 from transformers import (
     AutoModelForSequenceClassification,
     AutoTokenizer,
-    PreTrainedTokenizer,
+    PreTrainedTokenizerBase,
 )
 from transformers.modeling_outputs import SequenceClassifierOutput
 
@@ -68,24 +68,23 @@ class TinyBertClassifier(L.LightningModule):
 
     def training_step(
         self,
-        batch: tuple[dict[str, torch.Tensor], torch.Tensor],
+        batch: dict[str, torch.Tensor],
         batch_idx: int,  # noqa: ARG002
     ) -> torch.Tensor:
         """Perform a training step.
 
         Args:
-            batch (tuple[dict[str, torch.Tensor], torch.Tensor]):
-                The input batch containing features and labels.
+            batch (dict[str, torch.Tensor]):
+                The input batch containing features and labels keyed by field name.
             batch_idx (int): The index of the batch.
 
         Returns:
             torch.Tensor: The computed training loss.
         """
-        inputs = batch
         outputs = self(
-            inputs['input_ids'],  # type: ignore[index]
-            attention_mask=inputs['attention_mask'],  # type: ignore[index]
-            labels=inputs['labels'],  # type: ignore[index]
+            batch['input_ids'],
+            attention_mask=batch['attention_mask'],
+            labels=batch['labels'],
         )
         loss = outputs.loss
         self.log('train_loss', loss)
@@ -93,56 +92,54 @@ class TinyBertClassifier(L.LightningModule):
 
     def validation_step(
         self,
-        batch: tuple[dict[str, torch.Tensor], torch.Tensor],
+        batch: dict[str, torch.Tensor],
         batch_idx: int,  # noqa: ARG002
     ) -> torch.Tensor:
         """Perform a validation step.
 
         Args:
-            batch (tuple[dict[str, torch.Tensor], torch.Tensor]):
-                    The input batch containing features and labels.
+            batch (dict[str, torch.Tensor]):
+                The input batch containing features and labels keyed by field name.
             batch_idx (int): The index of the batch.
 
         Returns:
             torch.Tensor: The computed validation loss.
         """
-        inputs = batch
         outputs = self(
-            inputs['input_ids'],  # type: ignore[index]
-            attention_mask=inputs['attention_mask'],  # type: ignore[index]
-            labels=inputs['labels'],  # type: ignore[index]
+            batch['input_ids'],
+            attention_mask=batch['attention_mask'],
+            labels=batch['labels'],
         )
         val_loss = outputs.loss
         preds = torch.argmax(outputs.logits, dim=1)
-        acc = (preds == inputs['labels']).float().mean()  # type: ignore[index]
+        acc = (preds == batch['labels']).float().mean()
         self.log('val_loss', val_loss, prog_bar=True)
         self.log('val_acc', acc, prog_bar=True)
         return val_loss
 
     def test_step(
         self,
-        batch: tuple[dict[str, torch.Tensor], torch.Tensor],
+        batch: dict[str, torch.Tensor],
         batch_idx: int,  # noqa: ARG002
     ) -> torch.Tensor:
-        """Perform a validation step.
+        """Perform a test step.
 
         Args:
-            batch (tuple[dict[str, torch.Tensor], torch.Tensor]):
-                    The input batch containing features and labels.
+            batch (dict[str, torch.Tensor]):
+                The input batch containing features and labels keyed by field name.
             batch_idx (int): The index of the batch.
 
         Returns:
-            torch.Tensor: The computed validation loss.
+            torch.Tensor: The computed test loss.
         """
-        inputs = batch
         outputs = self(
-            inputs['input_ids'],  # type: ignore[index]
-            attention_mask=inputs['attention_mask'],  # type: ignore[index]
-            labels=inputs['labels'],  # type: ignore[index]
+            batch['input_ids'],
+            attention_mask=batch['attention_mask'],
+            labels=batch['labels'],
         )
         test_loss = outputs.loss
         preds = torch.argmax(outputs.logits, dim=1)
-        acc = (preds == inputs['labels']).float().mean()  # type: ignore[index]
+        acc = (preds == batch['labels']).float().mean()
         self.log('test_loss', test_loss, prog_bar=True)
         self.log('test_acc', acc, prog_bar=True)
         return test_loss
@@ -157,12 +154,12 @@ class TinyBertClassifier(L.LightningModule):
 
 
 def prepare_data(
-    tokenizer: PreTrainedTokenizer, max_length: int = 512
+    tokenizer: PreTrainedTokenizerBase, max_length: int = 512
 ) -> tuple[Dataset, Dataset, Dataset]:
     """Prepares the training and validation datasets for the BoolQ task.
 
     Args:
-        tokenizer (PreTrainedTokenizer):
+        tokenizer (PreTrainedTokenizerBase):
             A tokenizer instance from the HuggingFace Transformers library.
         max_length (int, optional):
             The maximum sequence length for tokenization. Defaults to 512.
@@ -236,6 +233,7 @@ def train_boolq(
 
     model_name = 'google/bert_uncased_L-2_H-128_A-2'  # BERT Tiny model
     tokenizer = AutoTokenizer.from_pretrained(model_name)
+    assert isinstance(tokenizer, PreTrainedTokenizerBase)  # noqa: S101
 
     train_dataset, val_dataset, test_dataset = prepare_data(tokenizer)
 

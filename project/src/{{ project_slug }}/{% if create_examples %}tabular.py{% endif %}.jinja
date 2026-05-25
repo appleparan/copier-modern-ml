@@ -41,17 +41,17 @@ class TabularDataset(Dataset[tuple[torch.Tensor, torch.Tensor]]):
         """
         return len(self.data)
 
-    def __getitem__(self, idx: int) -> tuple[torch.Tensor, torch.Tensor]:  # type: ignore[override]
+    def __getitem__(self, index: int) -> tuple[torch.Tensor, torch.Tensor]:  # type: ignore[override]
         """Get a sample and its corresponding label.
 
         Args:
-            idx (int): Index of the sample to retrieve.
+            index (int): Index of the sample to retrieve.
 
         Returns:
             tuple[torch.Tensor, torch.Tensor]: A tuple containing
             the feature tensor and the corresponding label tensor.
         """
-        return self.data[idx], self.labels[idx]
+        return self.data[index], self.labels[index]
 
 
 class TabularClassifier(L.LightningModule):

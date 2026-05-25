@@ -1,6 +1,6 @@
 import pytest
 import torch
-from transformers import AutoTokenizer
+from transformers import AutoTokenizer, PreTrainedTokenizerBase
 
 from {{ project_slug }}.nlp import TinyBertClassifier, prepare_data, train_boolq
 
@@ -25,6 +25,7 @@ def test_tiny_bert_classifier_forward():
 def test_prepare_data():
     """Test data preparation function."""
     tokenizer = AutoTokenizer.from_pretrained('google/bert_uncased_L-2_H-128_A-2')
+    assert isinstance(tokenizer, PreTrainedTokenizerBase)
     train_dataset, val_dataset, test_dataset = prepare_data(tokenizer, max_length=128)
 
     assert train_dataset.num_rows == 4000
