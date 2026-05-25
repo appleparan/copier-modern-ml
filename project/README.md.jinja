@@ -58,9 +58,9 @@ uv python install 3.14
 uv python pin 3.14
 ```
 
-### Install packages with PyTorch + CUDA 12.8 (Ubuntu)
+### Install packages with PyTorch + CUDA 13.0 (Ubuntu)
 ```shell
-uv sync --extra cu128
+uv sync --extra cu130
 ```
 
 ### Install packages without locking environments
@@ -70,7 +70,7 @@ uv sync --frozen
 
 ### Install dev packages, too
 ```shell
-uv sync --group dev --group docs --extra cu128
+uv sync --group dev --group docs --extra cu130
 ```
 
 ### Run tests

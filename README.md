@@ -64,7 +64,7 @@ uvx --with copier_templates_extensions copier copy \
 cd ~/src/PATH/TO/YOUR/PROJECT
 uv python install 3.14
 uv python pin 3.14
-uv sync --group dev --group docs --extra cu128
+uv sync --group dev --group docs --extra cu130
 ```
 
 ### Initialize git
@@ -182,14 +182,14 @@ uv run git-cliff --latest --strip header \
   --tag $(uv run git-cliff --bumped-version) --unreleased
 ```
 
-### PyTorch Index URL (PyTorch 2.10.0)
+### PyTorch Index URL (PyTorch 2.12.0)
 
 <!-- markdownlint-disable MD013 -->
 | Compute Platform | Linux | Windows | macOS |
 | ---------------- | ----- | ------- | ----- |
 | **CPU Only** | ☐ `https://download.pytorch.org/whl/cpu` | ☐ default | ☐ default |
-| **CUDA 13.0** | ☐ `https://download.pytorch.org/whl/cu130` | ☐ `https://download.pytorch.org/whl/cu130` | ❌ Not supported |
-| **CUDA 12.8** | ☐ default | ☐ `https://download.pytorch.org/whl/cu128` | ❌ Not supported |
+| **CUDA 13.2** | ☐ `https://download.pytorch.org/whl/cu132` | ☐ `https://download.pytorch.org/whl/cu132` | ❌ Not supported |
+| **CUDA 13.0** | ☐ default | ☐ `https://download.pytorch.org/whl/cu130` | ❌ Not supported |
 | **CUDA 12.6** | ☐ `https://download.pytorch.org/whl/cu126` | ☐ `https://download.pytorch.org/whl/cu126` | ❌ Not supported |
-| **ROCm 7.1** | ☐ `https://download.pytorch.org/whl/rocm7.1` | ❌ Not supported | ❌ Not supported |
+| **ROCm 7.2** | ☐ `https://download.pytorch.org/whl/rocm7.2` | ❌ Not supported | ❌ Not supported |
 <!-- markdownlint-enable MD013 -->
