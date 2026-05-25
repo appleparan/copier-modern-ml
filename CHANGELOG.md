@@ -1,3 +1,13 @@
+## [1.0.0] - 2026-05-25
+
+### Features
+
+- Add uv dependency cooldown (exclude-newer = P7D) ([ac9c01f](https://github.com/appleparan/copier-modern-ml/commit/ac9c01f6a224a79e6f947f0052102e8680507aaf))
+
+### Refactor
+
+- [**breaking**] Replace deprecated native_tls with system_certs uv option ([daaa286](https://github.com/appleparan/copier-modern-ml/commit/daaa2868a8ce22fdbfe2a413cb3c4481af8cc2da))
+
 ## [0.21.2] - 2026-05-25
 
 ### Bug Fixes
@@ -11,6 +21,7 @@
 - Bump PyTorch to 2.12.0 and refresh CUDA/ROCm matrix ([fc7878a](https://github.com/appleparan/copier-modern-ml/commit/fc7878a8f4c8ba417dc11e02d260ab249421bbc5))
 - Bump numpy to 2.4.6 and fix cli.py.jinja blank lines ([0c190ca](https://github.com/appleparan/copier-modern-ml/commit/0c190cab00bf64f7e617df77a09cbab811953a09))
 - Refresh uv.lock after dependency pin updates ([6be541f](https://github.com/appleparan/copier-modern-ml/commit/6be541f454d7ac532dfcd27cb02208663006b725))
+- Bump version to 0.21.2 ([69a8986](https://github.com/appleparan/copier-modern-ml/commit/69a8986401cb5afb1f66603f28d4886c9a754e23))
 
 ## [0.21.1] - 2026-02-15
 
