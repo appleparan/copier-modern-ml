@@ -77,9 +77,12 @@ package:
     - true
     - false
 
-native_tls:
+system_certs:
   type: bool
-  help: Do you want to load TLS certificates from the platform's native certificate store?
+  help: >-
+    Use the operating system's TLS certificate store
+    (recommended on machines with enterprise/self-signed CAs
+    installed system-wide).
   default: false
   choices:
     - true

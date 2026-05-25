@@ -11,7 +11,7 @@ generate() {
     -d copyright_holder_email="username123@user.emailaddress" \
     -d copyright_license="MIT License" \
     -d package=yes \
-    -d native_tls=no \
+    -d system_certs=no \
     -d allow_insecure_host=no \
     -d ci="github" \
     -d create_directories=yes
