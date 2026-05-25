@@ -7,35 +7,35 @@ authors = [
 ]
 readme = "README.md"
 dependencies = [
-    "colorlog~=6.10.1",
+    "colorlog==6.10.1",
 {%- if create_examples %}
-    "datasets>=4.5.0",
-    "fastapi[standard]~=0.128.0",
-    "hf-xet~=1.2.0",
-    "jsonargparse[all]~=4.45.0",
+    "datasets==4.8.5",
+    "fastapi[standard]==0.136.3",
+    "hf-xet==1.5.0",
+    "jsonargparse[all]==4.49.0",
 {%- endif %}
 {%- if use_torch %}
-    "lightning>=2.6.1",
+    "lightning==2.6.4",
 {%- endif %}
-    "matplotlib>=3.10.8",
-    "numpy~=2.3.5",
-    "pandas[parquet,performance]~=2.3.3",
+    "matplotlib==3.10.9",
+    "numpy==2.3.5",
+    "pandas[parquet,performance]==3.0.3",
 {%- if create_examples %}
-    "pydantic~=2.12.5",
-    "pydantic-settings~=2.12.0",
-    "pydantic-extra-types~=2.11.0",
+    "pydantic==2.13.4",
+    "pydantic-settings==2.14.1",
+    "pydantic-extra-types==2.11.1",
 {%- endif %}
-    "rich~=14.2.0",
-    "scikit-learn~=1.8.0",
-    "seaborn>=0.13.2",
+    "rich==15.0.0",
+    "scikit-learn==1.8.0",
+    "seaborn==0.13.2",
 {%- if use_torch %}
-    "tensorboard~=2.20.0",
+    "tensorboard==2.20.0",
 {%- endif %}
-    "tqdm~=4.67.1",
+    "tqdm==4.67.3",
 {%- if create_examples %}
-    "transformers>=5.1.0",
+    "transformers==5.9.0",
 {%- endif %}
-    "typer>=0.21.1",
+    "typer==0.25.1",
 ]
 requires-python = ">=3.12, <4.0"
 keywords = [
@@ -84,31 +84,31 @@ cpu = [
 
 [dependency-groups]
 dev = [
-    "coverage>=7.13.1",
-    "coverage-badge>=1.1.2",
-    "git-cliff>=2.12.0",
-    "mkdocs~=1.6.1",
-    "mkdocs-material>=9.7.1",
-    "mkdocstrings[python]>=1.0.0",
-    "mkdocs-gen-files~=0.6.0",
-    "mkdocs-section-index>=0.3.10",
-    "mkdocs-literate-nav>=0.6.2",
-    "ruff>=0.15.1",
-    "pytest~=9.0.2",
-    "pytest-asyncio~=1.3.0",
-    "pytest-cov~=7.0.0",
-    "pytest-html~=4.2.0",
-    "pytest-mock~=3.15.1",
-    "pre-commit~=4.5.1",
-    "ty>=0.0.17",
+    "coverage==7.14.0",
+    "coverage-badge==1.1.2",
+    "git-cliff==2.13.1",
+    "mkdocs==1.6.1",
+    "mkdocs-material==9.7.6",
+    "mkdocstrings[python]==1.0.4",
+    "mkdocs-gen-files==0.6.1",
+    "mkdocs-section-index==0.3.12",
+    "mkdocs-literate-nav==0.6.3",
+    "ruff==0.15.14",
+    "pytest==9.0.3",
+    "pytest-asyncio==1.3.0",
+    "pytest-cov==7.1.0",
+    "pytest-html==4.2.0",
+    "pytest-mock==3.15.1",
+    "pre-commit==4.6.0",
+    "ty>=0.0.39",
 ]
 docs = [
-    "mkdocs~=1.6.1",
-    "mkdocs-material>=9.7.1",
-    "mkdocstrings[python]>=1.0.0",
-    "mkdocs-gen-files~=0.6.0",
-    "mkdocs-section-index>=0.3.10",
-    "mkdocs-literate-nav>=0.6.2",
+    "mkdocs==1.6.1",
+    "mkdocs-material==9.7.6",
+    "mkdocstrings[python]==1.0.4",
+    "mkdocs-gen-files==0.6.1",
+    "mkdocs-section-index==0.3.12",
+    "mkdocs-literate-nav==0.6.3",
 ]
 
 [build-system]
