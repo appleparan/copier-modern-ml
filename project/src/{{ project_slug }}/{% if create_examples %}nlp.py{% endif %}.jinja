@@ -170,9 +170,9 @@ def prepare_data(
         Dataset: testing dataset
     """
     # Load a subset of the BoolQ dataset
-    _train_ds = load_dataset('boolq', split='train[:4000]')
-    _val_ds = load_dataset('boolq', split='validation[:1000]')
-    _test_ds = load_dataset('boolq', split='validation[1000:2000]')
+    _train_ds = load_dataset('google/boolq', split='train[:4000]')
+    _val_ds = load_dataset('google/boolq', split='validation[:1000]')
+    _test_ds = load_dataset('google/boolq', split='validation[1000:2000]')
 
     # Tokenize the data
     def preprocess(examples):  # noqa: ANN001, ANN202
