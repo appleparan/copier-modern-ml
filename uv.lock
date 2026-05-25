@@ -2,6 +2,10 @@ version = 1
 revision = 3
 requires-python = ">=3.12, <4.0"
 
+[options]
+exclude-newer = "0001-01-01T00:00:00Z" # This has no effect and is included for backwards compatibility when using relative exclude-newer values.
+exclude-newer-span = "P7D"
+
 [[package]]
 name = "annotated-doc"
 version = "0.0.4"
@@ -76,7 +80,7 @@ wheels = [
 
 [[package]]
 name = "copier-modern-ml"
-version = "0.21.1"
+version = "0.21.2"
 source = { virtual = "." }
 dependencies = [
     { name = "copier" },

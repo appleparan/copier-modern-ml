@@ -1,3 +1,17 @@
+## [0.21.2] - 2026-05-25
+
+### Bug Fixes
+
+- Resolve ty type errors after torch 2.12 / transformers 5 bump ([35630af](https://github.com/appleparan/copier-modern-ml/commit/35630af1ef53f705d8f624b94abb3993568f6148))
+- Use canonical 'google/boolq' dataset id ([ed0cd53](https://github.com/appleparan/copier-modern-ml/commit/ed0cd53b3a4b98c20db923c4d9434fb8a9979205))
+
+### Miscellaneous Tasks
+
+- Pin dependency versions in template and root pyproject ([5ad60a7](https://github.com/appleparan/copier-modern-ml/commit/5ad60a74cab540b29aa4513c6663b4d3f9ba43a4))
+- Bump PyTorch to 2.12.0 and refresh CUDA/ROCm matrix ([fc7878a](https://github.com/appleparan/copier-modern-ml/commit/fc7878a8f4c8ba417dc11e02d260ab249421bbc5))
+- Bump numpy to 2.4.6 and fix cli.py.jinja blank lines ([0c190ca](https://github.com/appleparan/copier-modern-ml/commit/0c190cab00bf64f7e617df77a09cbab811953a09))
+- Refresh uv.lock after dependency pin updates ([6be541f](https://github.com/appleparan/copier-modern-ml/commit/6be541f454d7ac532dfcd27cb02208663006b725))
+
 ## [0.21.1] - 2026-02-15
 
 ### Bug Fixes
@@ -7,6 +21,7 @@
 ### Miscellaneous Tasks
 
 - Bump git-cliff to >=2.12.0 ([70d9e5d](https://github.com/appleparan/copier-modern-ml/commit/70d9e5d796ee3158ef8b48c47b1deb7d68f1c762))
+- Bump version to 0.21.1 ([76156e0](https://github.com/appleparan/copier-modern-ml/commit/76156e0784a7480e4398fb25d65d9f8b23ecda9c))
 
 ## [0.21.0] - 2026-02-15
 
