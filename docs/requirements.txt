@@ -1,5 +1,5 @@
 properdocs
-mkdocs-material
+mkdocs-materialx
 mkdocstrings[python]
 mkdocs-gen-files
 mkdocs-section-index

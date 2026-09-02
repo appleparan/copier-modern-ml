@@ -57,7 +57,7 @@ pytest, ProperDocs, git-cliff). `copier.yml` defines the prompts;
 - **Docs build with ProperDocs, not MkDocs.** `properdocs` is a drop-in
   MkDocs fork; the config lives in `properdocs.yml`
   (`project/properdocs.yml.jinja`) and existing MkDocs plugins/themes
-  (mkdocs-material, mkdocstrings, gen-files, literate-nav, section-index)
+  (MaterialX, mkdocstrings, gen-files, literate-nav, section-index)
   work unchanged. Read the Docs has no `properdocs:` key, so
   `.readthedocs.yml` builds via `build.jobs.build.html`.
 - **`allow_insecure_host` is a string prompt** (comma-separated hosts,

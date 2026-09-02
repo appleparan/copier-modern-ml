@@ -29,7 +29,7 @@ and [BestieTemplates.jl](https://github.com/JuliaBesties/BestieTemplate.jl).
   and its plugins
 * Documentation is built with [ProperDocs](https://properdocs.org)
   (a MkDocs fork) using the
-  [mkdocs-material](https://github.com/squidfunk/mkdocs-material) theme
+  [MaterialX](https://github.com/jaywhj/mkdocs-materialx) theme
   and the [mkdocstrings plugin](https://github.com/mkdocstrings/mkdocstrings)
 * Supports GitHub workflows, including:
   * Automatic release with semantic versioning
@@ -109,7 +109,7 @@ The directory structure of your new project will look something like this
 ```plaintext
 ├── LICENSE            <- Open-source license if one is chosen
 ├── README.md          <- The top-level README for developers using this project.
-├── properdocs.yml     <- ProperDocs (mkdocs-material theme) configuration file.
+├── properdocs.yml     <- ProperDocs (MaterialX theme) configuration file.
 ├── pyproject.toml     <- Project configuration file with package metadata for
 │                         {{ project_slug }} and configuration for tools like ruff
 ├── uv.lock            <- The lock file for reproducing the production environment,
