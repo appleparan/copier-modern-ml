@@ -1,5 +1,6 @@
 """Prediction endpoints."""
 
+import time
 from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -8,7 +9,6 @@ from pydantic import BaseModel, Field
 from {{ project_slug }}.api.settings import Settings, get_settings
 
 router = APIRouter()
-settings = get_settings()
 
 
 class PredictionRequest(BaseModel):
@@ -43,8 +43,6 @@ async def predict(
     Raises:
         HTTPException: If prediction fails or input is invalid.
     """
-    import time
-
     start_time = time.time()
 
     # Validate batch size

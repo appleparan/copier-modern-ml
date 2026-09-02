@@ -13,9 +13,9 @@ from {{ project_slug }}.vision import train_mnist
 ROOT_DIR = Path(__file__).resolve().parents[2]
 
 logger = logging.getLogger(__name__)
+{% if create_examples %}
 
-
-{% if create_examples %}def nlp(
+def nlp(
     max_epochs: int = 3,
     accelerator: str = 'auto',
     devices: str = 'auto',
@@ -34,7 +34,6 @@ logger = logging.getLogger(__name__)
         devices (str):
             Number of devices to use for training. Can be an integer, a string
             ("auto"), or a list of device IDs. Defaults to "auto".
-            However, due to limitation of typer, this should be a string.
         deterministic (bool):
             Whether to use deterministic algorithms for reproducibility.
             Sets the `torch.backends.cudnn.deterministic` flag. Defaults to True.
@@ -61,7 +60,7 @@ def tabular(
     deterministic: bool = True,
     random_seed: int = 42,
 ) -> None:
-    """Vision training CLI entrypoint.
+    """Tabular training CLI entrypoint.
 
     This command trains a tabular model using the specified configuration options.
 
@@ -73,7 +72,6 @@ def tabular(
         devices (str):
             Number of devices to use for training. Can be an integer, a string
             ("auto"), or a list of device IDs. Defaults to "auto".
-            However, due to limitation of typer, this should be a string.
         deterministic (bool):
             Whether to use deterministic algorithms for reproducibility.
             Sets the `torch.backends.cudnn.deterministic` flag. Defaults to True.
@@ -112,7 +110,6 @@ def vision(
         devices (str):
             Number of devices to use for training. Can be an integer, a string
             ("auto"), or a list of device IDs. Defaults to "auto".
-            However, due to limitation of typer, this should be a string.
         deterministic (bool):
             Whether to use deterministic algorithms for reproducibility.
             Sets the `torch.backends.cudnn.deterministic` flag. Defaults to True.
@@ -129,8 +126,8 @@ def vision(
         devices=devices,
         deterministic=deterministic,
         random_seed=random_seed,
-    ){% endif %}
-
+    )
+{% endif %}
 
 def hello() -> None:
     """Say hello to the user."""
