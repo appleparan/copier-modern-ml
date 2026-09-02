@@ -1,8 +1,55 @@
+## [2.0.0] - 2026-09-02
+
+### Bug Fixes
+
+- Derive app and health version from package metadata ([8b43d06](https://github.com/appleparan/copier-modern-ml/commit/8b43d06a286c9ac4258336e33957c20eb4c77542))
+- Only generate Docker and server files with the FastAPI example ([08acb09](https://github.com/appleparan/copier-modern-ml/commit/08acb09753199150d39f847fd2464f7dca662510))
+- Make generated CI fail on formatting and run ty and mkdocs ([d1614f8](https://github.com/appleparan/copier-modern-ml/commit/d1614f83d13bfd6d2bc71117e864e76addde0969))
+- Make the pre-commit ruff hooks actually run ([d024643](https://github.com/appleparan/copier-modern-ml/commit/d024643c7501f1656c004c391613f014c84c0076))
+
+### Documentation
+
+- Replace CLAUDE.md with AGENTS.md ([6a5334c](https://github.com/appleparan/copier-modern-ml/commit/6a5334c162a66a3c9cccf8f5d512b57ec9cef119))
+- Include README via snippets and drop stale generated docs ([3681c6c](https://github.com/appleparan/copier-modern-ml/commit/3681c6c5be757b913451157a1a063c60e6e18ff0))
+
+### Features
+
+- [**breaking**] Make allow_insecure_host a host list and document corporate networks ([9423f4a](https://github.com/appleparan/copier-modern-ml/commit/9423f4a815656bc336857812f57c83807eeb24db))
+- Install corporate CA certificates in generated Docker images ([98d89d1](https://github.com/appleparan/copier-modern-ml/commit/98d89d1dfc08a884f65fe75da66ec6933d5f196f))
+- Default author prompts to the local git identity ([3433755](https://github.com/appleparan/copier-modern-ml/commit/3433755e674e73cf37773564ff364b2293fffcad))
+- Replace BoolQ fine-tuning with bge-small semantic-search NLP example ([c3610c3](https://github.com/appleparan/copier-modern-ml/commit/c3610c30cfca48016bc3e4f3b36827f72cd930b2))
+
+### Miscellaneous Tasks
+
+- Use ruff-check hook id and fix pre-commit findings ([bd9e1f4](https://github.com/appleparan/copier-modern-ml/commit/bd9e1f4e9a654d396b7528ae942f99ace0175bfc))
+- Port root Makefile to uv and let setup-uv pick a checksummed uv ([875820a](https://github.com/appleparan/copier-modern-ml/commit/875820af41bd32d040f93754580d2fb1e74f77e9))
+- Drop dead packaging config and trim Docker build deps ([d502b5d](https://github.com/appleparan/copier-modern-ml/commit/d502b5dab071328c9b338128d5a48e5e3665eb25))
+- Install Python 3.13 before running pre-commit in the lint job ([a7e96b6](https://github.com/appleparan/copier-modern-ml/commit/a7e96b68e517b34e2c68364375fdd7cf062e9c04))
+
+### Refactor
+
+- Replace scripts/make with a plain uv Makefile ([7d64c83](https://github.com/appleparan/copier-modern-ml/commit/7d64c8315860ba65aa8159b9a9c900a3fe21c9f9))
+
+### Testing
+
+- Generate and lint create_examples=no variants ([d77e6c2](https://github.com/appleparan/copier-modern-ml/commit/d77e6c271470d96c469e7e528f4e543348a6c004))
+- Assert mirrored root/project files stay identical ([f33572b](https://github.com/appleparan/copier-modern-ml/commit/f33572b78316c13caab2b67038265e2418c0852f))
+
+### Build
+
+- [**breaking**] Switch generated projects and this repo to uv_build ([5699be3](https://github.com/appleparan/copier-modern-ml/commit/5699be3a1be1a582aeaa33094a8ab97c2a69a533))
+- [**breaking**] Replace mkdocs with ProperDocs ([5237c30](https://github.com/appleparan/copier-modern-ml/commit/5237c30d28d3a38fbcebb0b44c7638e2654ca8ca))
+- Switch the docs theme from mkdocs-material to MaterialX ([90ac4b0](https://github.com/appleparan/copier-modern-ml/commit/90ac4b0ddf3827d6a707f368b1687f1bd200f455))
+
 ## [1.0.0] - 2026-05-25
 
 ### Features
 
 - Add uv dependency cooldown (exclude-newer = P7D) ([ac9c01f](https://github.com/appleparan/copier-modern-ml/commit/ac9c01f6a224a79e6f947f0052102e8680507aaf))
+
+### Miscellaneous Tasks
+
+- Bump version to 1.0.0 ([7ee5d66](https://github.com/appleparan/copier-modern-ml/commit/7ee5d66d1019346068a3563f7d86aca942ee2cb2))
 
 ### Refactor
 
