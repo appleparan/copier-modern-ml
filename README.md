@@ -27,9 +27,10 @@ and [BestieTemplates.jl](https://github.com/JuliaBesties/BestieTemplate.jl).
   * [ty](https://github.com/astral-sh/ty) for type checking
 * Testing is done with [pytest](https://github.com/pytest-dev/pytest)
   and its plugins
-* Documentation is built with
-  [mkdocs-material](https://github.com/squidfunk/mkdocs-material)
-  and [mkdocstrings plugin](https://github.com/mkdocstrings/mkdocstrings)
+* Documentation is built with [ProperDocs](https://properdocs.org)
+  (a MkDocs fork) using the
+  [mkdocs-material](https://github.com/squidfunk/mkdocs-material) theme
+  and the [mkdocstrings plugin](https://github.com/mkdocstrings/mkdocstrings)
 * Supports GitHub workflows, including:
   * Automatic release with semantic versioning
   * Auto-generated `CHANGELOG.md` and release notes using
@@ -108,7 +109,7 @@ The directory structure of your new project will look something like this
 ```plaintext
 ├── LICENSE            <- Open-source license if one is chosen
 ├── README.md          <- The top-level README for developers using this project.
-├── mkdocs.yml         <- mkdocs-material configuration file.
+├── properdocs.yml     <- ProperDocs (mkdocs-material theme) configuration file.
 ├── pyproject.toml     <- Project configuration file with package metadata for
 │                         {{ project_slug }} and configuration for tools like ruff
 ├── uv.lock            <- The lock file for reproducing the production environment,
@@ -118,7 +119,7 @@ The directory structure of your new project will look something like this
 │   ├── interim        <- Intermediate data that has been transformed.
 │   ├── processed      <- The final, canonical data sets for modeling.
 │   └── raw            <- The original, immutable data dump.
-├── docs               <- A default mkdocs project; see www.mkdocs.org for details
+├── docs               <- A default ProperDocs project; see properdocs.org for details
 ├── models             <- Trained and serialized models, model predictions,
 │                         or model summaries
 ├── notebooks          <- Jupyter notebooks. Naming convention is a number

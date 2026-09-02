@@ -1,7 +1,7 @@
 # AGENTS.md
 
 Copier template that generates modern Python ML projects (uv, ruff, ty,
-pytest, mkdocs-material, git-cliff). `copier.yml` defines the prompts;
+pytest, ProperDocs, git-cliff). `copier.yml` defines the prompts;
 `project/` is the template source; `extensions.py` adds the Jinja filters
 `slugify`, `git_user_name`, `git_user_email` and the `current_year` global.
 
@@ -14,7 +14,7 @@ pytest, mkdocs-material, git-cliff). `copier.yml` defines the prompts;
   generated project lands in `tests/tmp/` and is deleted on the next run.
 - **`make test` is the full quality gate.** It generates the project into
   `tests/tmp/`, then runs `uv sync --extra cpu`, `ruff format --check`,
-  `ruff check`, `ty check`, `mkdocs build --strict` and `pytest` inside it
+  `ruff check`, `ty check`, `properdocs build --strict` and `pytest` inside it
   (about 3 minutes; downloads CPU torch on first run). It also generates two
   `create_examples=no` variants into `tests/tmp-variants/` (one `ci=gitlab`,
   one `package=no create_directories=no`) and runs `ruff`, `ty` and `pytest`
@@ -54,6 +54,12 @@ pytest, mkdocs-material, git-cliff). `copier.yml` defines the prompts;
 - **Type checker is `ty`, not mypy**, in both this repo and generated
   projects. `ruff` config in `project/pyproject.toml.jinja` uses an explicit
   `select` list, so ruff's expanded default rule set (0.16+) does not apply.
+- **Docs build with ProperDocs, not MkDocs.** `properdocs` is a drop-in
+  MkDocs fork; the config lives in `properdocs.yml`
+  (`project/properdocs.yml.jinja`) and existing MkDocs plugins/themes
+  (mkdocs-material, mkdocstrings, gen-files, literate-nav, section-index)
+  work unchanged. Read the Docs has no `properdocs:` key, so
+  `.readthedocs.yml` builds via `build.jobs.build.html`.
 - **`allow_insecure_host` is a string prompt** (comma-separated hosts,
   default empty). Projects generated before this change have a bool in
   `.copier-answers.yml`; `pyproject.toml.jinja` tolerates that.

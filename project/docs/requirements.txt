@@ -1,4 +1,4 @@
-mkdocs
+properdocs
 mkdocs-material
 mkdocstrings[python]
 mkdocs-gen-files
