@@ -60,7 +60,7 @@ Check-Directory "notebooks"
 Check-Directory "reports"
 Check-Directory "src"
 Check-File ".pre-commit-config.yaml"
-Check-File "mkdocs.yml"
+Check-File "properdocs.yml"
 Check-File "README.md"
 Check-File "pyproject.toml"
 
@@ -120,8 +120,8 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "✓ Type checking passed" -ForegroundColor Green
 
 Write-Host ""
-Write-Host ">>> Building documentation with mkdocs"
-uv run mkdocs build --strict
+Write-Host ">>> Building documentation with properdocs"
+uv run properdocs build --strict
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: Documentation build failed" -ForegroundColor Red
     exit 1
@@ -165,7 +165,7 @@ Write-Host "Summary:"
 Write-Host "  ✓ Code formatting (ruff format)" -ForegroundColor Green
 Write-Host "  ✓ Linting (ruff check)" -ForegroundColor Green
 Write-Host "  ✓ Type checking (ty)" -ForegroundColor Green
-Write-Host "  ✓ Documentation build (mkdocs)" -ForegroundColor Green
+Write-Host "  ✓ Documentation build (properdocs)" -ForegroundColor Green
 Write-Host "  ✓ Tests (pytest)" -ForegroundColor Green
 Write-Host "  ✓ Package build (uv build)" -ForegroundColor Green
 Write-Host ""

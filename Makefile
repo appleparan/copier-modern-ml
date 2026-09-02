@@ -16,7 +16,7 @@ cleantests:
 	@rm -rf tests/tmp-variants
 
 docs:
-	@uvx --with-requirements docs/requirements.txt mkdocs build --strict
+	@uvx --with-requirements docs/requirements.txt properdocs build --strict
 
 # Root-level Python only; template sources under project/ are checked by the
 # generated project's own ruff config in `make test`.

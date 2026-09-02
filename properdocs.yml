@@ -120,7 +120,7 @@ validation:
 # | Material uses this section for different custom settings that wouldn't fit in the theme section.       |
 # |                                                                                                        |
 # | Read More:                                                                                             |
-# | - https://www.mkdocs.org/user-guide/configuration/#extra                                               |
+# | - https://properdocs.org/user-guide/configuration/#extra                                               |
 # |                                                                                                        |
 # +--------------------------------------------------------------------------------------------------------+
 # extra:
