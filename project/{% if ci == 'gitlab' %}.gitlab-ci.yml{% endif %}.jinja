@@ -2,7 +2,7 @@ variables:
   UV_VERSION: "0.12.4"  # uv version
   PYTHON_VERSION: "3.14"  # basic Python version
   BASE_LAYER: "trixie-slim"  # uv base image
-  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"  # cache directory
+  UV_CACHE_DIR: "$CI_PROJECT_DIR/.uv-cache"  # cache directory
 
 stages:
   - lint
@@ -18,19 +18,21 @@ lint:
       - PYTHON_VERSION: "3.13"
       - PYTHON_VERSION: "3.14"
   image: ghcr.io/astral-sh/uv:$UV_VERSION-python$PYTHON_VERSION-$BASE_LAYER
-  tags:
-    - $OS
   script:
     - echo "Using UV version $UV_VERSION with Python $PYTHON_VERSION"
     - echo "Installing project dependencies"
-    - uv sync --group dev --group docs --extra cpu --frozen
+    - uv sync --group dev --group docs{% if use_torch %} --extra cpu{% endif %} --frozen
     - echo "Running format checks"
-    - uv run ruff format
+    - uv run ruff format --check .
     - echo "Running lint checks"
-    - uv run ruff check --fix --exit-non-zero-on-fix .
+    - uv run ruff check .
+    - echo "Running type checks"
+    - uv run ty check
+    - echo "Building documentation"
+    - uv run mkdocs build --strict
   cache:
     paths:
-      - .cache/pip/
+      - .uv-cache/
 
 # Test job
 test:
@@ -43,24 +45,23 @@ test:
       - PYTHON_VERSION: "3.13"
       - PYTHON_VERSION: "3.14"
   image: ghcr.io/astral-sh/uv:$UV_VERSION-python$PYTHON_VERSION-$BASE_LAYER
-  tags:
-    - $OS
   script:
     - echo "Using UV version $UV_VERSION with Python $PYTHON_VERSION"
     - echo "Installing project dependencies"
-    - uv sync --group dev --group docs --extra cpu --frozen
+    - uv sync --group dev --group docs{% if use_torch %} --extra cpu{% endif %} --frozen
     - echo "Running tests"
     - uv run coverage run -m pytest tests/
   cache:
     paths:
-      - .cache/pip/
+      - .uv-cache/
 
 release:
   stage: release
+  image: ghcr.io/astral-sh/uv:$UV_VERSION-python$PYTHON_VERSION-$BASE_LAYER
   # Run when specific tag was pushed
   rules:
     - if: '$CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/'  # Run tags matched with 'v*.*.*'
-    - when: manual  # 수동 실행도 허용
+    - when: manual  # also allow manual runs
   script:
     - echo "Checking permissions for release..."
     # Like GitHub's actions-check-permissions
@@ -76,7 +77,7 @@ release:
     - echo "Creating release for tag $CI_COMMIT_TAG..."
     # Create GitLab Release
     - >
-      curl --header "PRIVATE-TOKEN: $CI_JOB_TOKEN"
+      curl --header "JOB-TOKEN: $CI_JOB_TOKEN"
       --data "name=Release $CI_COMMIT_TAG&tag_name=$CI_COMMIT_TAG&description=$(cat RELEASE.md)"
       "$CI_API_V4_URL/projects/$CI_PROJECT_ID/releases"
 
