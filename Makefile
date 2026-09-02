@@ -1,7 +1,9 @@
 .PHONY: $(MAKECMDGOALS)
 
+PYTHON_VERSION ?= 3.14
+
 changelog:
-	@.venv/bin/git-changelog -Tio CHANGELOG.md -Bauto -c angular -n pep440
+	@uv run git-cliff --strip header -o CHANGELOG.md
 
 clean:
 	@rm -rf tests/tmp
@@ -12,46 +14,30 @@ cleantests:
 	@rm -rf tests/tmp/CHANGELOG.md
 
 docs:
-	@rye run mkdocs build
+	@uvx --with-requirements docs/requirements.txt mkdocs build --strict
 
+# Root-level Python only; template sources under project/ are checked by the
+# generated project's own ruff config in `make test`.
 format:
-	@rye fmt
+	@uvx ruff format extensions.py scripts
 
 gen generate:
 	@bash -c 'source tests/helpers.sh && generate ${PWD} tests/tmp'
 
-reset-history: gen
-	@bash tests/reset_history.sh
+lint:
+	@uvx pre-commit run -a
+
+release:
+	@sh scripts/release.sh
 
 setup:
-	@rye pin 3.12
-	@rye sync
+	@uv python pin $(PYTHON_VERSION)
+	@uv sync --group dev
 
+# Renders the template from the committed HEAD (see tests/helpers.sh),
+# so commit template changes before running this.
 test: cleantests
-	@bash tests/test_filenames.sh
-	@bash tests/test_project.sh
-	@.venv/bin/python tests/test_licenses.py
+	@PYTHON_VERSION=$(PYTHON_VERSION) bash tests/test_project.sh
 
-wait-ci:
-	@bash tests/wait_ci.sh
-
-# DUTIES = \
-# 	test-changelog \
-# 	test-check \
-# 	test-check-api \
-# 	test-check-docs \
-# 	test-check-quality \
-# 	test-check-types \
-# 	test-clean \
-# 	test-coverage \
-# 	test-docs \
-# 	test-docs-deploy \
-# 	test-format \
-# 	test-help \
-# 	test-lock \
-# 	test-release \
-# 	test-setup \
-# 	test-test
-
-# $(DUTIES):
-# 	@cd tests/tmp && make $(subst test-,,$@)
+version:
+	@uv run git-cliff --bumped-version

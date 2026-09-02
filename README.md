@@ -79,7 +79,7 @@ git add .
 uvx pre-commit run -a # Try to fix possible pre-commit issues (failures are expected)
 git add .
 git commit -m "First commit"
-uvx pre-commit install # Future commits can't be directly to main unless you use -n
+uvx pre-commit install # Future commits can't go to main unless you use -n
 ```
 
 ### The resulting directory structure
@@ -182,7 +182,7 @@ uv run git-cliff --latest --strip header \
   --tag $(uv run git-cliff --bumped-version) --unreleased
 ```
 
-### PyTorch Index URL (PyTorch 2.12.0)
+### PyTorch Index URL (PyTorch 2.13.0)
 
 <!-- markdownlint-disable MD013 -->
 | Compute Platform | Linux | Windows | macOS |
