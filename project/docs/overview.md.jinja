@@ -11,7 +11,7 @@
 
 {% if create_examples %}
 ### 🧠 Multi-Domain ML Support
-- **NLP**: Text classification using HuggingFace Transformers (BoolQ dataset)
+- **NLP**: Semantic search with a frozen `BAAI/bge-small-en-v1.5` embedding model (inference only)
 - **Computer Vision**: CNN-based image classification (MNIST dataset)
 - **Tabular Data**: Neural network-based tabular data classification (Titanic dataset)
 
@@ -39,7 +39,7 @@
 ### CLI Commands
 - `{{ project_slug }}-cli hello`: Smoke test command
 {% if create_examples %}
-- `{{ project_slug }}-cli nlp`: Train BERT-based NLP model
+- `{{ project_slug }}-cli nlp`: Semantic search over a small built-in corpus
 - `{{ project_slug }}-cli tabular`: Train tabular data classification model
 - `{{ project_slug }}-cli vision`: Train MNIST image classification model
 {% endif %}

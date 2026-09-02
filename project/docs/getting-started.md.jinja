@@ -64,12 +64,14 @@ uv run pytest
 
 ### Running Your First Model
 
-#### 1. NLP Example (BoolQ Dataset)
+#### 1. NLP Example (Semantic Search)
 
-Train a BERT model for question answering:
+Rank a small built-in corpus by similarity to a query using the frozen
+`BAAI/bge-small-en-v1.5` embedding model. This runs inference only — no
+training involved.
 
 ```bash
-{{ project_slug }}-cli nlp --max-epochs 3 --accelerator auto
+{{ project_slug }}-cli nlp --query "How do I keep my houseplants alive?" --top-k 3
 ```
 
 #### 2. Vision Example (MNIST Dataset)
@@ -90,7 +92,7 @@ Train a neural network for survival prediction:
 
 ### Command Line Options
 
-All training commands support these common options:
+The `vision` and `tabular` training commands support these common options:
 
 - `--max-epochs`: Number of training epochs (default: 10)
 - `--accelerator`: Training accelerator ('auto', 'cpu', 'gpu', 'tpu')
@@ -101,7 +103,7 @@ All training commands support these common options:
 Example with custom parameters:
 
 ```bash
-{{ project_slug }}-cli nlp \
+{{ project_slug }}-cli vision \
     --max-epochs 5 \
     --accelerator gpu \
     --devices 1 \
@@ -204,7 +206,7 @@ uv sync --group dev
 **CUDA out of memory**
 ```bash
 # Reduce batch size or use CPU
-{{ project_slug }}-cli nlp --accelerator cpu
+{{ project_slug }}-cli vision --accelerator cpu
 ```
 
 {% endif %}

@@ -1,41 +1,57 @@
+import dataclasses
+
 import pytest
 import torch
-from transformers import AutoTokenizer, PreTrainedTokenizerBase
 
-from {{ project_slug }}.nlp import TinyBertClassifier, prepare_data, train_boolq
-
-
-def test_tiny_bert_classifier_init():
-    """Test TinyBertClassifier initialization."""
-    model = TinyBertClassifier('google/bert_uncased_L-2_H-128_A-2')
-    assert model.lr == 2e-5
-    assert model.model is not None
+from {{ project_slug }}.nlp import DEFAULT_CORPUS, SearchResult, TextEncoder, semantic_search
 
 
-def test_tiny_bert_classifier_forward():
-    """Test TinyBertClassifier forward pass."""
-    model = TinyBertClassifier('google/bert_uncased_L-2_H-128_A-2')
-    input_ids = torch.randint(0, 1000, (2, 10))
-    attention_mask = torch.ones(2, 10)
-
-    output = model(input_ids, attention_mask)
-    assert output.logits.shape == (2, 2)
+@pytest.fixture(scope='module')
+def encoder() -> TextEncoder:
+    """Load the frozen embedding model once for all tests in this module."""
+    return TextEncoder.from_pretrained()
 
 
-def test_prepare_data():
-    """Test data preparation function."""
-    tokenizer = AutoTokenizer.from_pretrained('google/bert_uncased_L-2_H-128_A-2')
-    assert isinstance(tokenizer, PreTrainedTokenizerBase)
-    train_dataset, val_dataset, test_dataset = prepare_data(tokenizer, max_length=128)
+def test_encode_returns_normalized_embeddings(encoder: TextEncoder) -> None:
+    """Encoding produces L2-normalized embeddings of the expected shape."""
+    texts = [
+        'Water your houseplants once the top inch of soil feels dry.',
+        'Python list comprehensions are a concise way to build lists.',
+        'Boil the pasta in salted water until al dente.',
+    ]
+    embeddings = encoder.encode(texts)
 
-    assert train_dataset.num_rows == 4000
-    assert val_dataset.num_rows == 1000
-    assert test_dataset.num_rows == 1000
+    assert embeddings.shape == (3, 384)
+    norms = torch.linalg.vector_norm(embeddings, ord=2, dim=1)
+    assert torch.allclose(norms, torch.ones(3), atol=1e-4)
 
 
-@pytest.mark.slow
-def test_train_boolq(tmp_path):
-    """Test BoolQ training function."""
-    train_boolq(root_dir=tmp_path, max_epochs=1, accelerator='cpu', devices=1, random_seed=42)
-    # Check that model artifacts are created
-    assert any(tmp_path.glob('**/*.ckpt'))
+def test_semantic_search_ranks_related_sentence_first(encoder: TextEncoder) -> None:
+    """The corpus sentence closest in topic to the query ranks first."""
+    results = semantic_search(encoder, 'How do I keep my houseplants alive?')
+
+    assert 'plant' in results[0].text.lower()
+    scores = [result.score for result in results]
+    assert scores == sorted(scores, reverse=True)
+
+
+def test_semantic_search_respects_top_k(encoder: TextEncoder) -> None:
+    """`top_k` bounds the number of results, clamped to the corpus size."""
+    results = semantic_search(encoder, 'a query about anything', top_k=2)
+    assert len(results) == 2
+
+    results = semantic_search(encoder, 'a query about anything', top_k=len(DEFAULT_CORPUS) + 10)
+    assert len(results) == len(DEFAULT_CORPUS)
+
+
+def test_semantic_search_rejects_invalid_top_k(encoder: TextEncoder) -> None:
+    """A non-positive `top_k` is rejected."""
+    with pytest.raises(ValueError, match='top_k'):
+        semantic_search(encoder, 'a query about anything', top_k=0)
+
+
+def test_search_result_is_immutable() -> None:
+    """`SearchResult` is a frozen dataclass and rejects attribute assignment."""
+    result = SearchResult(text='hello', score=0.5)
+    with pytest.raises(dataclasses.FrozenInstanceError):
+        result.score = 0.9  # ty: ignore[invalid-assignment]

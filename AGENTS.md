@@ -32,8 +32,10 @@ pytest, mkdocs-material, git-cliff). `copier.yml` defines the prompts;
   or `.py` file is a bug, not a feature. Conditional files and directories
   are expressed in the file name, e.g. `{% if create_examples %}nlp.py{% endif %}.jinja`.
 - **`create_examples: true` implies PyTorch.** The `use_torch` prompt is only
-  asked when examples are off; the example modules import torch,
-  transformers and datasets unconditionally.
+  asked when examples are off; the example modules import torch and
+  transformers unconditionally. The NLP example is inference-only (frozen
+  `BAAI/bge-small-en-v1.5` semantic search); vision and tabular are the
+  Lightning training examples.
 - **Dependency cooldown.** Generated projects set
   `exclude-newer = "P7D"`, and `uv lock` in this repo honors the same
   cooldown. Pin only versions published at least 7 days ago or the lock
