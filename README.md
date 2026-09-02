@@ -182,7 +182,7 @@ uv run git-cliff --latest --strip header \
   --tag $(uv run git-cliff --bumped-version) --unreleased
 ```
 
-### PyTorch Index URL (PyTorch 2.12.0)
+### PyTorch Index URL (PyTorch 2.13.0)
 
 <!-- markdownlint-disable MD013 -->
 | Compute Platform | Linux | Windows | macOS |
