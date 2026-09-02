@@ -3,15 +3,9 @@
 {{ project_description }}
 """
 
-from importlib.metadata import PackageNotFoundError, version
-
-{% if create_examples %}from {{ project_slug }}.app import create_app{% endif %}
-
-try:
-    __version__ = version('{{ project_slug }}')
-except PackageNotFoundError:
-    __version__ = 'unknown'
-
+from {{ project_slug }}._version import __version__
+{% if create_examples %}from {{ project_slug }}.app import create_app
+{% endif %}
 __author__ = """{{ author_fullname }}"""
 __email__ = '{{ author_email }}'
 

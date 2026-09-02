@@ -1,5 +1,8 @@
 generate() {
-  uvx --with copier_templates_extensions copier copy -f --trust -r HEAD "$1" "$2" \
+  local src="$1"
+  local dst="$2"
+  shift 2
+  uvx --with copier_templates_extensions copier copy -f --trust -r HEAD "$src" "$dst" \
     -d project_name="Modern Python Machine Learning Workflow Package" \
     -d project_slug="modern_template" \
     -d project_description='Testing template' \
@@ -14,5 +17,6 @@ generate() {
     -d system_certs=no \
     -d allow_insecure_host=no \
     -d ci="github" \
-    -d create_directories=yes
+    -d create_directories=yes \
+    "$@"
 }

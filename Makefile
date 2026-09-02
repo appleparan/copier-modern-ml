@@ -7,11 +7,13 @@ changelog:
 
 clean:
 	@rm -rf tests/tmp
+	@rm -rf tests/tmp-variants
 
 cleantests:
 	@rm -rf tests/tmp/.git
 	@rm -rf tests/tmp/empty
 	@rm -rf tests/tmp/CHANGELOG.md
+	@rm -rf tests/tmp-variants
 
 docs:
 	@uvx --with-requirements docs/requirements.txt mkdocs build --strict
@@ -34,8 +36,7 @@ setup:
 	@uv python pin $(PYTHON_VERSION)
 	@uv sync --group dev
 
-# Renders the template from the committed HEAD (see tests/helpers.sh),
-# so commit template changes before running this.
+# Renders the working tree, uncommitted changes included (see AGENTS.md).
 test: cleantests
 	@PYTHON_VERSION=$(PYTHON_VERSION) bash tests/test_project.sh
 

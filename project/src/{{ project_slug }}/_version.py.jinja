@@ -1,0 +1,32 @@
+"""Single source of truth for the installed package version."""
+
+import tomllib
+from importlib.metadata import PackageNotFoundError, version
+from pathlib import Path
+
+
+def _read_pyproject_version() -> str:
+    """Read the project version from ``pyproject.toml``.
+
+    Used as a fallback when the package metadata is unavailable, e.g. when
+    the project is not installed (``package: false`` projects run from a
+    virtual environment without building the package).
+
+    Returns:
+        The version string from ``[project.version]``, or ``'unknown'`` when
+        ``pyproject.toml`` is missing or does not declare a version.
+    """
+    pyproject_path = Path(__file__).resolve().parents[2] / 'pyproject.toml'
+    if not pyproject_path.is_file():
+        return 'unknown'
+
+    with pyproject_path.open('rb') as pyproject_file:
+        data = tomllib.load(pyproject_file)
+
+    return data.get('project', {}).get('version', 'unknown')
+
+
+try:
+    __version__ = version('{{ project_slug }}')
+except PackageNotFoundError:
+    __version__ = _read_pyproject_version()

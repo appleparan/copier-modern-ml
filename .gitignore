@@ -148,3 +148,4 @@ outputs/
 
 # test directory
 tests/tmp
+tests/tmp-variants

@@ -64,7 +64,7 @@ COPY . /workspace
 # that occur with uv pip install linking against system libraries.
 ENV UV_PROJECT_ENVIRONMENT=/app/.venv
 RUN --mount=type=cache,target=/tmp/uv-cache \
-    uv sync --locked --extra cpu --no-dev --no-editable
+    uv sync --locked{% if use_torch %} --extra cpu{% endif %} --no-dev --no-editable
 
 
 # Production stage - minimal runtime with pre-built venv
@@ -118,7 +118,7 @@ EXPOSE 5000
 
 # Health check for FastAPI
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:5000/health || exit 1
+    CMD curl -f http://localhost:5000/api/v1/health || exit 1
 
 # Entrypoint handles permission fixing and drops to appuser
 ENTRYPOINT ["docker-entrypoint.sh"]

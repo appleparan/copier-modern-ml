@@ -5,6 +5,55 @@ PYTHON_VERSION="${PYTHON_VERSION-3.14}"
 PYTHON_VERSIONS="${PYTHON_VERSIONS-3.12 3.13 3.14}"
 . tests/helpers.sh
 output=tests/tmp
+repo_root="${PWD}"
+
+# Generate a template variant with extra `-d` answers, commit it, guard
+# against unrendered Jinja, and (unless SKIP_SETUP is set) run the same
+# quality gate as the default run against it. Runs in a subshell so the
+# working directory is restored to the repo root once it returns.
+generate_variant() {
+    local name="$1"
+    shift
+    local variant_dir="tests/tmp-variants/${name}"
+
+    (
+        cd "${repo_root}"
+        rm -rf "${variant_dir}"
+
+        echo
+        echo "///////////////////////////////////////////"
+        echo "     GENERATING VARIANT: ${name}"
+        echo "///////////////////////////////////////////"
+        echo
+        generate "${repo_root}" "${variant_dir}" "$@"
+        cd "${variant_dir}"
+
+        git init -q .
+        git add -A
+        git commit -qm "feat: initial"
+
+        echo ">>> Checking for unrendered Jinja (variant: ${name})"
+        if grep -rn --exclude-dir=.git --exclude-dir=.github --exclude=cliff.toml --exclude=.gitlab-ci.yml -e '{{ ' -e '{% ' .; then
+            echo "ERROR: unrendered Jinja found in variant '${name}'"
+            exit 1
+        fi
+        echo "✓ No unrendered Jinja (variant: ${name})"
+
+        if [ -z "${SKIP_SETUP:-}" ]; then
+            echo ">>> Setting up Python environment (variant: ${name})"
+            uv python pin "${PYTHON_VERSION}"
+            uv sync --group dev
+            echo
+            echo ">>> Running code quality checks (variant: ${name})"
+            uv run ruff format --check .
+            uv run ruff check .
+            uv run ty check
+            uv run pytest -q
+        fi
+
+        echo "✓ Variant '${name}' passed"
+    )
+}
 
 # Function to check if a file exists
 check_file() {
@@ -163,3 +212,19 @@ git commit -m "fix: Fix all bugs"
 # echo
 # echo ">>> Cleaning directory"
 # uv cache clean || true
+
+cd "${repo_root}"
+
+echo
+echo "///////////////////////////////////////////"
+echo "          GENERATING VARIANTS"
+echo "///////////////////////////////////////////"
+
+generate_variant noexamples-gitlab -d create_examples=no -d use_torch=no -d ci=gitlab
+generate_variant noexamples-virtual -d create_examples=no -d use_torch=no -d package=no -d create_directories=no
+
+echo
+echo "///////////////////////////////////////////"
+echo "          ALL VARIANTS PASSED ✓"
+echo "///////////////////////////////////////////"
+echo

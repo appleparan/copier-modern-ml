@@ -1,4 +1,4 @@
-name: CI
+{% raw %}name: CI
 
 on:
   push:
@@ -39,15 +39,23 @@ jobs:
         run: uv python install ${{ matrix.python-version }}
 
       - name: Install the project
-        run: uv sync --group dev --group docs --extra cpu --frozen
+        run: uv sync --group dev --group docs{% endraw %}{% if use_torch %} --extra cpu{% endif %}{% raw %} --frozen
 
       - name: Format
         run: |
-          uv run ruff format
+          uv run ruff format --check .
 
       - name: Lint
         run: |
-          uv run ruff check --fix --exit-non-zero-on-fix .
+          uv run ruff check .
+
+      - name: Type check
+        run: |
+          uv run ty check
+
+      - name: Build docs
+        run: |
+          uv run mkdocs build --strict
 
       - name: Lint GitHub Actions
         uses: eifinger/actionlint-action@v1
@@ -80,8 +88,8 @@ jobs:
         run: uv python install ${{ matrix.python-version }}
 
       - name: Install the project
-        run: uv sync --group dev --group docs --extra cpu --frozen
+        run: uv sync --group dev --group docs{% endraw %}{% if use_torch %} --extra cpu{% endif %}{% raw %} --frozen
 
       - name: Run tests
         run: |
-          uv run coverage run -m pytest tests/
+          uv run coverage run -m pytest tests/{% endraw %}
