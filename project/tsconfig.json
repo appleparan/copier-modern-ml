@@ -1,0 +1,5 @@
+{
+  "extends": "astro/tsconfigs/base",
+  "include": ["docs/**/*", ".astro/types.d.ts"],
+  "exclude": ["site", "node_modules"]
+}

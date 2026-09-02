@@ -1,107 +1,135 @@
-"""Generate the code reference pages and navigation.
+"""Generate the API reference pages for the Starlight documentation site.
 
-This script creates API documentation pages for Python modules and builds navigation.
+This script walks the ``src/`` tree and renders one Markdown page per public
+module with `griffe2md` into ``docs/content/docs/reference/``. It must be run
+before `bun run build` (`make docs` runs both steps together). The generated
+pages are committed to the repository because Read the Docs builds the
+documentation site with Bun only, without a Python toolchain available to
+regenerate them at build time.
 """
 
+from __future__ import annotations
+
+import logging
+import shutil
+import sys
 from pathlib import Path
 
-import mkdocs_gen_files
+from griffe2md import ConfigDict, render_package_docs
 
-REF_DOCS_DIR_NAME = 'reference'
+logger = logging.getLogger(__name__)
+
+ROOT_DIR = Path(__file__).resolve().parent.parent
+SRC_DIR = ROOT_DIR / 'src'
+REFERENCE_DIR = ROOT_DIR / 'docs' / 'content' / 'docs' / 'reference'
+
+RENDER_CONFIG: ConfigDict = {
+    'search_paths': [str(SRC_DIR)],
+    'show_root_heading': False,
+    'show_submodules': False,
+    'heading_level': 2,
+}
 
 
 def should_skip_module(module_path: Path) -> bool:
-    """Check if a module should be skipped in documentation.
+    """Check whether a module should be excluded from the API reference.
 
     Args:
-        module_path: The relative module path
+        module_path: Path to the module, relative to `SRC_DIR`, without suffix.
 
     Returns:
-        bool: True if the module should be skipped
+        True if the module lives under `tests/` or any of its path parts
+        (other than a final `__init__`) is private (starts with an underscore).
+
     """
-    # Skip tests directory and private modules (starting with underscore)
-    first_dir = str(module_path).split('/')[0] if '/' in str(module_path) else ''
-    return first_dir == 'tests' or module_path.name.startswith('_')
+    parts = module_path.parts
+    if parts and parts[0] == 'tests':
+        return True
+    return any(part.startswith('_') for part in parts[:-1]) or (
+        parts[-1].startswith('_') and parts[-1] != '__init__'
+    )
 
 
-def process_module(path: Path, src_dir: Path) -> tuple[tuple[str, ...], Path, Path] | None:
-    """Process a single Python module for documentation.
+def module_identifier(path: Path) -> str:
+    """Build the dotted module identifier griffe2md expects.
 
     Args:
-        path: The path to the Python file
-        src_dir: The source directory containing Python modules
-        nav: The navigation object
+        path: Path to a `.py` file under `SRC_DIR`.
 
     Returns:
-        tuple: (parts, doc_path, full_doc_path) for the processed module
-        or None if the module should be skipped
+        The dotted module path relative to `SRC_DIR`, with a trailing
+        `__init__` dropped.
+
     """
-    module_path = path.relative_to(src_dir).with_suffix('')
-
-    # Skip modules that should not be included
-    if should_skip_module(module_path):
-        return None
-
-    doc_path = path.relative_to(src_dir).with_suffix('.md')
-    full_doc_path = Path(REF_DOCS_DIR_NAME, doc_path)
-
-    parts = tuple(module_path.parts)
-
-    # Handle __init__.py files
+    module_path = path.relative_to(SRC_DIR).with_suffix('')
+    parts = module_path.parts
     if parts[-1] == '__init__':
         parts = parts[:-1]
-        doc_path = doc_path.with_name('index.md')
-        full_doc_path = full_doc_path.with_name('index.md')
-
-    return parts, doc_path, full_doc_path
+    return '.'.join(parts)
 
 
-def generate_doc_file(
-    full_doc_path: Path, parts: tuple[str, ...], path: Path, root_dir: Path
-) -> None:
-    """Generate a documentation file for a module.
+def page_path(path: Path) -> Path:
+    """Compute the output Markdown page path for a module.
 
     Args:
-        full_doc_path: The full path for the documentation file
-        parts: The parts of the module path
-        path: The original path to the Python file
-        root_dir: The root directory of the project
+        path: Path to a `.py` file under `SRC_DIR`.
+
+    Returns:
+        Destination path under `REFERENCE_DIR`, with `__init__.py` mapped to
+        `index.md`.
+
     """
-    with mkdocs_gen_files.open(full_doc_path, 'w') as fd:
-        ident = '.'.join(parts)
-        # Add YAML frontmatter with title
-        fd.write(f'---\ntitle: {ident}\n---\n\n::: {ident}')
-
-    # Set edit path for "edit this page" links
-    mkdocs_gen_files.set_edit_path(full_doc_path, path.relative_to(root_dir))
+    relative_md = path.relative_to(SRC_DIR).with_suffix('.md')
+    if relative_md.name == '__init__.md':
+        relative_md = relative_md.with_name('index.md')
+    return REFERENCE_DIR / relative_md
 
 
-def main() -> None:
-    """Main function to generate API documentation."""
-    nav = mkdocs_gen_files.Nav()
+def render_page(identifier: str) -> str:
+    """Render a single API reference page.
 
-    # Find project root and source directories
-    root_dir = Path(__file__).parent.parent
-    src_dir = root_dir / 'src'
+    Args:
+        identifier: Dotted module identifier to render docs for.
 
-    # Process each Python file
-    for path in sorted(src_dir.rglob('*.py')):
-        result = process_module(path, src_dir)
-        if result is None:
+    Returns:
+        Markdown content with a Starlight frontmatter title, followed by the
+        griffe2md-rendered API documentation.
+
+    """
+    return f'---\ntitle: {identifier}\n---\n\n' + render_package_docs(identifier, RENDER_CONFIG)
+
+
+def main() -> int:
+    """Regenerate the API reference pages.
+
+    Returns:
+        0 on success, 1 if `SRC_DIR` does not exist.
+
+    """
+    if not SRC_DIR.is_dir():
+        logger.error('Source directory not found: %s', SRC_DIR)
+        return 1
+
+    if REFERENCE_DIR.exists():
+        shutil.rmtree(REFERENCE_DIR)
+    REFERENCE_DIR.mkdir(parents=True, exist_ok=True)
+
+    page_count = 0
+    for path in sorted(SRC_DIR.rglob('*.py')):
+        module_path = path.relative_to(SRC_DIR).with_suffix('')
+        if should_skip_module(module_path):
             continue
 
-        parts, doc_path, full_doc_path = result
+        identifier = module_identifier(path)
+        destination = page_path(path)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_text(render_page(identifier), encoding='utf-8')
+        page_count += 1
 
-        # Add to navigation
-        nav[parts] = doc_path.as_posix()
-
-        # Generate the documentation file
-        generate_doc_file(full_doc_path, parts, path, root_dir)
-
-    # Write the navigation summary
-    summary_path = f'{REF_DOCS_DIR_NAME}/SUMMARY.md'
-    with mkdocs_gen_files.open(summary_path, 'w') as nav_file:
-        nav_file.writelines(nav.build_literate_nav())
+    logger.info('Wrote %d API reference page(s) to %s', page_count, REFERENCE_DIR)
+    return 0
 
 
-main()
+if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
+    sys.exit(main())

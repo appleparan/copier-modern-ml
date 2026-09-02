@@ -104,9 +104,23 @@ def allrun(cmd: str, *args: str, **kwargs: Any) -> None:
         multirun(cmd, *args, **kwargs)
 
 
+def docs() -> None:
+    """Generate the API reference and build the documentation site."""
+    shell('uv run --group docs python scripts/gen_ref_pages.py')
+    shell('bun install')
+    shell('bun run build')
+
+
+def docs_serve() -> None:
+    """Generate the API reference and serve the documentation site."""
+    shell('uv run --group docs python scripts/gen_ref_pages.py')
+    shell('bun install')
+    shell('bun run dev')
+
+
 def clean() -> None:
     """Delete build artifacts and cache files."""
-    paths_to_clean = ['build', 'dist', 'htmlcov', 'site', '.coverage*', '.pdm-build']
+    paths_to_clean = ['build', 'dist', 'htmlcov', 'site', '.astro', '.coverage*', '.pdm-build']
     for path in paths_to_clean:
         shell(f'rm -rf {path}')
 
@@ -141,6 +155,12 @@ def main() -> int:
         )  # noqa: T201
         print('  allrun                Run a command in all virtual environments.')  # noqa: T201
         print('  clean                 Delete build artifacts and cache files.')  # noqa: T201
+        print(
+            '  docs                  Generate the API reference and build the documentation site.'
+        )  # noqa: T201
+        print(
+            '  docs-serve            Generate the API reference and serve the documentation site.'
+        )  # noqa: T201
         try:
             run(PYTHON_VERSION, 'python3', '-V', capture_output=True)
         except (subprocess.CalledProcessError, ValueError):
@@ -171,6 +191,10 @@ def main() -> int:
             clean()
         elif cmd == 'setup':
             setup()
+        elif cmd == 'docs':
+            docs()
+        elif cmd == 'docs-serve':
+            docs_serve()
 
     return 0
 

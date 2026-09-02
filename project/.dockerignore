@@ -22,6 +22,11 @@ __pycache__/
 .pytest_cache/
 ..mypy_cache/
 
+# Starlight (Astro) documentation
+node_modules
+.astro
+site
+
 # poetry
 .venv
 

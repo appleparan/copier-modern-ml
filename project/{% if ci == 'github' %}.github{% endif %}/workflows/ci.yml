@@ -85,3 +85,33 @@ jobs:
       - name: Run tests
         run: |
           uv run coverage run -m pytest tests/
+
+  docs:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10.0.1
+        with:
+          enable-cache: true
+          version: "latest-known"
+
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2.2.0
+        with:
+          bun-version: latest
+
+      - name: Generate API reference
+        run: uv run --frozen --only-group docs python scripts/gen_ref_pages.py
+
+      - name: Check generated API reference is committed
+        run: |
+          git add -N docs/content/docs/reference
+          git diff --exit-code -- docs/content/docs/reference
+
+      - name: Build documentation
+        run: |
+          bun install
+          bun run build

@@ -59,7 +59,8 @@ check_directory "notebooks"
 check_directory "reports"
 check_directory "src"
 check_file ".pre-commit-config.yaml"
-check_file "mkdocs.yml"
+check_file "astro.config.mjs"
+check_file "package.json"
 check_file "README.md"
 check_file "pyproject.toml"
 
@@ -124,8 +125,16 @@ fi
 echo "✓ Type checking passed"
 
 echo
-echo ">>> Building documentation with mkdocs"
-if ! uv run mkdocs build --strict; then
+echo ">>> Building documentation with Starlight"
+if ! uv run python scripts/gen_ref_pages.py; then
+    echo "ERROR: API reference generation failed"
+    exit 1
+fi
+if ! bun install; then
+    echo "ERROR: Bun install failed"
+    exit 1
+fi
+if ! bun run build; then
     echo "ERROR: Documentation build failed"
     exit 1
 fi
@@ -152,7 +161,7 @@ echo "Summary:"
 echo "  ✓ Code formatting (ruff format)"
 echo "  ✓ Linting (ruff check)"
 echo "  ✓ Type checking (ty)"
-echo "  ✓ Documentation build (mkdocs)"
+echo "  ✓ Documentation build (starlight)"
 echo "  ✓ Tests (pytest)"
 echo
 

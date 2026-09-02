@@ -1,4 +1,6 @@
-# Getting Started
+---
+title: Getting Started
+---
 
 This guide will help you set up and start using the {{ project_slug }} ML template.
 
@@ -134,11 +136,11 @@ uv run pytest tests/test_version.py
 ### 3. Documentation
 
 ```bash
-# Serve documentation locally
-uv run mkdocs serve
+# Generate the API reference, then run the Starlight dev server
+make docs-serve
 
-# Build documentation
-uv run mkdocs build
+# Generate the API reference, then build the documentation site
+make docs
 ```
 
 ## Project Structure

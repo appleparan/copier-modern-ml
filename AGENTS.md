@@ -1,7 +1,7 @@
 # AGENTS.md
 
 Copier template that generates modern Python ML projects (uv, ruff, ty,
-pytest, mkdocs-material, git-cliff). `copier.yml` defines the prompts;
+pytest, Starlight/Bun docs, git-cliff). `copier.yml` defines the prompts;
 `project/` is the template source; `extensions.py` adds the Jinja filters
 `slugify`, `git_user_name`, `git_user_email` and the `current_year` global.
 
@@ -13,12 +13,15 @@ pytest, mkdocs-material, git-cliff). `copier.yml` defines the prompts;
   `tests/tmp/` and is deleted on the next run.
 - **`make test` is the full quality gate.** It generates the project into
   `tests/tmp/`, then runs `uv sync --extra cpu`, `ruff format --check`,
-  `ruff check`, `ty check`, `mkdocs build --strict` and `pytest` inside it
-  (about 3 minutes; downloads CPU torch on first run). `make lint` runs the
-  pre-commit hooks that CI expects to be clean.
-- **Two copies of every workflow and hook config.** `.github/workflows/*` and
-  `.pre-commit-config.yaml` at the root are mirrored under `project/` for
-  generated projects. Change both, or they drift.
+  `ruff check`, `ty check`, `scripts/gen_ref_pages.py`, `bun install`,
+  `bun run build` and `pytest` inside it (about 3 minutes; downloads CPU
+  torch on first run). `make lint` runs the pre-commit hooks that CI
+  expects to be clean.
+- **Two copies of every workflow and hook config.** `.github/workflows/*`,
+  `.pre-commit-config.yaml`, `package.json`, `astro.config.mjs`,
+  `docs/content.config.ts`, `tsconfig.json` and `.readthedocs.yaml` at the
+  root are mirrored under `project/` for generated projects. Change both,
+  or they drift.
 - **Only `*.jinja` files are templated** (`_templates_suffix`). Anything else
   under `project/` is copied byte-for-byte, so Jinja syntax in a plain `.yml`
   or `.py` file is a bug, not a feature. Conditional files and directories
@@ -30,6 +33,17 @@ pytest, mkdocs-material, git-cliff). `copier.yml` defines the prompts;
   `exclude-newer = "P7D"`, and `uv lock` in this repo honors the same
   cooldown. Pin only versions published at least 7 days ago or the lock
   fails. Check PyPI for yanked releases before bumping a pin.
+- **Bun has the same 7-day cooldown as uv**, enforced by `~/.bunfig.toml`
+  `minimumReleaseAge`. Pin `package.json` versions at least 7 days old or
+  `bun install` fails. The generated project has no lockfile, so a
+  transitive release (e.g. rolldown platform bindings) crossing the 7-day
+  line can make `make test` fail locally; CI and Read the Docs carry no
+  cooldown, so retry rather than pin around it.
+- **The generated project's API reference under
+  `docs/content/docs/reference/` is committed**, produced by
+  `scripts/gen_ref_pages.py` (griffe2md), because Read the Docs only
+  installs Node/Bun, not Python. `make docs` regenerates it, and CI fails
+  if it is stale.
 - **Bumping torch means checking four indexes.** The template resolves torch
   and torchvision from `download.pytorch.org/whl/{cpu,cu126,cu130,cu132}`
   via explicit `[[tool.uv.index]]` entries plus PyPI (which ships the CUDA 13

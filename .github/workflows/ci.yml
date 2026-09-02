@@ -46,6 +46,11 @@ jobs:
         enable-cache: true
         version: "latest-known"
 
+    - name: Install Bun
+      uses: oven-sh/setup-bun@v2.2.0
+      with:
+        bun-version: latest
+
     - name: Set up Python ${{ matrix.python-version }}
       run: uv python install ${{ matrix.python-version }}
 
@@ -66,3 +71,19 @@ jobs:
       if: runner.os == 'Windows'
       run: |
         pwsh -Command tests/test_project.ps1 -CI -PythonVersion '${{ matrix.python-version }}'
+
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v7
+
+    - name: Install Bun
+      uses: oven-sh/setup-bun@v2.2.0
+      with:
+        bun-version: latest
+
+    - name: Build the template's own documentation site
+      run: |
+        bun install --frozen-lockfile
+        bun run build

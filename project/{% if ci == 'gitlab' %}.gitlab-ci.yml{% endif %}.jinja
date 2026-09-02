@@ -7,6 +7,7 @@ variables:
 stages:
   - lint
   - test
+  - docs
   - release
 
 # Lint job
@@ -54,6 +55,25 @@ test:
   cache:
     paths:
       - .cache/pip/
+
+docs:
+  stage: docs
+  needs:
+    - lint
+  image: oven/bun:1
+  script:
+    # oven/bun ships neither git nor curl; both are needed below.
+    - apt-get update -qq && apt-get install -y -qq --no-install-recommends git curl ca-certificates
+    - echo "Installing uv $UV_VERSION"
+    - curl -LsSf "https://astral.sh/uv/$UV_VERSION/install.sh" | sh
+    - export PATH="$HOME/.local/bin:$PATH"
+    - echo "Generating API reference"
+    - uv run --frozen --only-group docs python scripts/gen_ref_pages.py
+    - git add -N docs/content/docs/reference
+    - git diff --exit-code -- docs/content/docs/reference
+    - echo "Building documentation"
+    - bun install
+    - bun run build
 
 release:
   stage: release
