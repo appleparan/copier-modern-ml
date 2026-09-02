@@ -49,6 +49,12 @@ generate_variant() {
             uv run ruff check .
             uv run ty check
             uv run pytest -q
+            echo ">>> Building package (variant: ${name})"
+            uv build
+            if ! ls dist/*.whl >/dev/null 2>&1; then
+                echo "ERROR: no wheel produced for variant '${name}'"
+                exit 1
+            fi
         fi
 
         echo "✓ Variant '${name}' passed"
@@ -194,6 +200,51 @@ echo "✓ All tests passed"
 
 echo
 echo "///////////////////////////////////////////"
+echo "          BUILDING PACKAGE"
+echo "///////////////////////////////////////////"
+echo
+echo ">>> Building sdist and wheel with uv build"
+if ! uv build; then
+    echo "ERROR: uv build failed"
+    exit 1
+fi
+echo "✓ Build passed"
+
+echo ">>> Inspecting wheel contents"
+python3 - << 'EOF'
+import sys
+import zipfile
+from pathlib import Path
+
+wheels = sorted(Path("dist").glob("*.whl"), key=lambda p: p.stat().st_mtime)
+if not wheels:
+    print("ERROR: no wheel found in dist/")
+    sys.exit(1)
+wheel = wheels[-1]
+print(f"Inspecting {wheel}")
+
+with zipfile.ZipFile(wheel) as zf:
+    names = zf.namelist()
+
+for name in names:
+    print(f"  {name}")
+
+required = {"modern_template/__init__.py", "modern_template/_version.py"}
+missing = required - set(names)
+if missing:
+    print(f"ERROR: wheel is missing required entries: {sorted(missing)}")
+    sys.exit(1)
+
+leaked = [n for n in names if n.startswith("tests/") or n.startswith("data/")]
+if leaked:
+    print(f"ERROR: wheel contains entries that should not ship: {leaked}")
+    sys.exit(1)
+
+print("✓ Wheel contents look correct")
+EOF
+
+echo
+echo "///////////////////////////////////////////"
 echo "          ALL CHECKS PASSED ✓"
 echo "///////////////////////////////////////////"
 echo
@@ -203,6 +254,7 @@ echo "  ✓ Linting (ruff check)"
 echo "  ✓ Type checking (ty)"
 echo "  ✓ Documentation build (mkdocs)"
 echo "  ✓ Tests (pytest)"
+echo "  ✓ Package build (uv build)"
 echo
 
 echo ">>> Creating second commit (fix)"

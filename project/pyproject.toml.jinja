@@ -112,24 +112,22 @@ docs = [
 ]
 
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["uv_build>=0.12.4,<0.13"]
+build-backend = "uv_build"
 
 [project.scripts]
 {{ project_slug }}-cli = "{{ project_slug }}.cli:main"
 
-[tool.hatch.metadata]
-allow-direct-references = true
-
-# Only needed when `tool.uv.package = true`
-[tool.hatch.build.targets.wheel]
-packages = ["src/{{ project_slug }}"]
-
+{%- set insecure_hosts = (allow_insecure_host if allow_insecure_host is string else '') | trim %}
+{%- set insecure_host_list = insecure_hosts.split(',') | map('trim') | select | list if insecure_hosts else [] %}
 [tool.uv]
 package = {% if package %}true{% else %}false{% endif %}
-system-certs = {% if system_certs %}true{% else %}false{% endif %}
-{%- if allow_insecure_host %}
-allow-insecure-host = ["pypi.org", "files.pythonhosted.org"]
+{%- if system_certs %}
+system-certs = true
+{%- endif %}
+{%- if insecure_host_list %}
+# WARNING: TLS verification is disabled for these hosts.
+allow-insecure-host = [{% for host in insecure_host_list %}"{{ host }}"{% if not loop.last %}, {% endif %}{% endfor %}]
 {%- endif %}
 managed = true
 # Dependency cooldown: ignore packages released in the last 7 days
