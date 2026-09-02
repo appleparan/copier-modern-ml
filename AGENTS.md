@@ -9,13 +9,13 @@ pytest, mkdocs-material, git-cliff). `copier.yml` defines the prompts;
 
 - **Tests render from `HEAD`, not the working tree.** `tests/helpers.sh`
   runs `copier copy -r HEAD`, so commit template changes before running
-  `bash tests/test_project.sh` or `make gen`. The generated project lands in
+  `make test` or `make gen`. The generated project lands in
   `tests/tmp/` and is deleted on the next run.
-- **`bash tests/test_project.sh` is the real test entry point.** It generates
-  the project, then runs `uv sync --extra cpu`, `ruff format --check`,
-  `ruff check`, `ty check`, `mkdocs build --strict` and `pytest` inside it.
-  The root `Makefile` still references `rye` and test scripts that no longer
-  exist, so `make test`, `make setup` and `make format` do not work.
+- **`make test` is the full quality gate.** It generates the project into
+  `tests/tmp/`, then runs `uv sync --extra cpu`, `ruff format --check`,
+  `ruff check`, `ty check`, `mkdocs build --strict` and `pytest` inside it
+  (about 3 minutes; downloads CPU torch on first run). `make lint` runs the
+  pre-commit hooks that CI expects to be clean.
 - **Two copies of every workflow and hook config.** `.github/workflows/*` and
   `.pre-commit-config.yaml` at the root are mirrored under `project/` for
   generated projects. Change both, or they drift.
@@ -36,11 +36,11 @@ pytest, mkdocs-material, git-cliff). `copier.yml` defines the prompts;
   build). Confirm matching `cp313` wheels exist on every index before
   changing the pinned versions.
 - **`astral-sh/setup-uv` publishes no floating major tags since v8.** Pin the
-  full tag (`@v10.0.1`) and keep `version:` at a uv release the action has a
-  known checksum for (see `src/download/checksum/known-checksums.ts` at that
-  tag). The GitLab CI image tag
-  `ghcr.io/astral-sh/uv:<uv>-python<py>-<base>` follows uv's Debian base
-  (`trixie-slim` for uv 0.12.x); an unpublished combination fails at pull.
+  full tag (`@v10.0.1`). `version: latest-known` installs the newest uv whose
+  checksum that tag ships, so bumping the action tag is what upgrades uv in
+  GitHub CI. GitLab CI pins `UV_VERSION` explicitly because it is an image
+  tag: `ghcr.io/astral-sh/uv:<uv>-python<py>-<base>` must exist, and the base
+  follows uv's Debian release (`trixie-slim` for uv 0.12.x).
 - **Type checker is `ty`, not mypy**, in both this repo and generated
   projects. `ruff` config in `project/pyproject.toml.jinja` uses an explicit
   `select` list, so ruff's expanded default rule set (0.16+) does not apply.
