@@ -3,11 +3,6 @@ FROM ubuntu:noble
 # For GPU support, use NVIDIA CUDA base image instead:
 # FROM nvidia/cuda:13.1.1-cudnn-devel-ubuntu24.04
 
-# https://docs.astral.sh/uv/guides/integration/docker/#intermediate-layers
-ADD https://astral.sh/uv/install.sh /uv-installer.sh
-RUN sh /uv-installer.sh && rm /uv-installer.sh
-ENV PATH="/root/.local/bin/:$PATH"
-
 # Declare environmental variables
 ENV DEBIAN_FRONTEND=noninteractive \
     DEBCONF_NONINTERACTIVE_SEEN=true \
@@ -21,33 +16,30 @@ ENV DEBIAN_FRONTEND=noninteractive \
     UV_COMPILE_BYTECODE=1 \
     UV_LINK_MODE=copy
 
-# Install development libraries for building native extensions
+# Build tools for the few wheels that compile native extensions
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    wget \
-    gnupg2 \
     ca-certificates \
-    git \
     curl \
+    git \
     build-essential \
-    libssl-dev \
-    zlib1g-dev \
-    libncurses5-dev \
-    libncursesw5-dev \
-    libreadline-dev \
-    libsqlite3-dev \
-    libgdbm-dev \
-    libdb5.3-dev \
-    libbz2-dev \
-    libexpat1-dev \
-    liblzma-dev \
-    tk-dev \
-    libffi-dev \
-    libgdbm-compat-dev \
-    libxmlsec1-dev \
-    xz-utils \
     gosu && \
     rm -rf /var/lib/apt/lists/*
+
+# Corporate CA certificates: drop *.crt files into certs/ before building.
+# update-ca-certificates picks up every .crt below /usr/local/share/ca-certificates.
+COPY certs/ /usr/local/share/ca-certificates/extra/
+RUN update-ca-certificates
+ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt \
+    REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+
+# Only set when passed via --build-arg; visible to RUN as env vars in this stage.
+ARG UV_DEFAULT_INDEX
+ARG UV_INDEX
+ARG UV_PYTHON_INSTALL_MIRROR
+
+# https://docs.astral.sh/uv/guides/integration/docker/#installing-uv
+COPY --from=ghcr.io/astral-sh/uv:0.12.4 /uv /uvx /bin/
 
 # Install Python
 ENV UV_PYTHON_INSTALL_DIR=/opt/python

@@ -84,15 +84,10 @@ cpu = [
 
 [dependency-groups]
 dev = [
+    { include-group = "docs" },
     "coverage==7.15.4",
     "coverage-badge==1.1.2",
     "git-cliff==2.13.1",
-    "mkdocs==1.6.1",
-    "mkdocs-material==9.7.7",
-    "mkdocstrings[python]==1.0.6",
-    "mkdocs-gen-files==0.6.1",
-    "mkdocs-section-index==0.3.12",
-    "mkdocs-literate-nav==0.6.3",
     "ruff==0.16.4",
     "pytest==9.1.1",
     "pytest-asyncio==1.4.0",
@@ -112,24 +107,22 @@ docs = [
 ]
 
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["uv_build>=0.12.4,<0.13"]
+build-backend = "uv_build"
 
 [project.scripts]
 {{ project_slug }}-cli = "{{ project_slug }}.cli:main"
 
-[tool.hatch.metadata]
-allow-direct-references = true
-
-# Only needed when `tool.uv.package = true`
-[tool.hatch.build.targets.wheel]
-packages = ["src/{{ project_slug }}"]
-
+{%- set insecure_hosts = (allow_insecure_host if allow_insecure_host is string else '') | trim %}
+{%- set insecure_host_list = insecure_hosts.split(',') | map('trim') | select | list if insecure_hosts else [] %}
 [tool.uv]
 package = {% if package %}true{% else %}false{% endif %}
-system-certs = {% if system_certs %}true{% else %}false{% endif %}
-{%- if allow_insecure_host %}
-allow-insecure-host = ["pypi.org", "files.pythonhosted.org"]
+{%- if system_certs %}
+system-certs = true
+{%- endif %}
+{%- if insecure_host_list %}
+# WARNING: TLS verification is disabled for these hosts.
+allow-insecure-host = [{% for host in insecure_host_list %}"{{ host }}"{% if not loop.last %}, {% endif %}{% endfor %}]
 {%- endif %}
 managed = true
 # Dependency cooldown: ignore packages released in the last 7 days
@@ -221,7 +214,6 @@ explicit = true
 [tool.ruff]
 include = ["*.py", "*.pyi", "**/pyproject.toml", "*.ipynb"]
 exclude = [
-    "git",
     "__pycache__",
     "data/*",
     "notebooks/*",
@@ -367,14 +359,6 @@ max-complexity = 18
     "D104",
     "S101",
 ]
-"configs/**.py" = [
-    "F401",
-    "E402",
-]
-"tests/config/**.py" = [
-    "F401",
-    "E402",
-]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
@@ -428,24 +412,3 @@ branch = true
 [tool.coverage.report]
 fail_under = 50
 show_missing = true
-
-[tool.git-changelog]
-bump = "minor"
-convention = "conventional"
-in-place = false
-filter-commits = "0.1.0.."
-marker-line = "<!-- insertion marker -->"
-output = "output.log"
-parse-refs = false
-parse-trailers = false
-{%- if ci == 'gitlab' %}
-provider = "gitlab"
-{%- else %}
-provider = "github"
-{%- endif %}
-repository = "."
-sections = "fix,maint"
-template = "keepachangelog"
-version-regex = "^## \\\\[(?P<version>v?[^\\\\]]+)"
-versioning = "semver"
-zerover = true

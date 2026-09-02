@@ -23,7 +23,10 @@ pytest, mkdocs-material, git-cliff). `copier.yml` defines the prompts;
   be clean.
 - **Two copies of every workflow and hook config.** `.github/workflows/*` and
   `.pre-commit-config.yaml` at the root are mirrored under `project/` for
-  generated projects. Change both, or they drift.
+  generated projects. Change both, or they drift — `tests/test_mirrored_files.py`
+  (run by `make lint` and CI) fails when the pairs stop matching byte-for-byte.
+  `docs/index.md` (root and `project/`) is a `pymdownx.snippets` include of
+  `README.md` at both levels, so the same dedupe rule applies there too.
 - **Only `*.jinja` files are templated** (`_templates_suffix`). Anything else
   under `project/` is copied byte-for-byte, so Jinja syntax in a plain `.yml`
   or `.py` file is a bug, not a feature. Conditional files and directories
@@ -49,6 +52,17 @@ pytest, mkdocs-material, git-cliff). `copier.yml` defines the prompts;
 - **Type checker is `ty`, not mypy**, in both this repo and generated
   projects. `ruff` config in `project/pyproject.toml.jinja` uses an explicit
   `select` list, so ruff's expanded default rule set (0.16+) does not apply.
+- **`allow_insecure_host` is a string prompt** (comma-separated hosts,
+  default empty). Projects generated before this change have a bool in
+  `.copier-answers.yml`; `pyproject.toml.jinja` tolerates that.
+- **Build backend is `uv_build`** (pure-Python only). `make test` runs
+  `uv build` and inspects the wheel; the module dir must equal
+  `project_slug`.
+- **`author_fullname`/`author_email` default to the local git identity.**
+  `copier.yml` defaults them via the `git_user_name`/`git_user_email`
+  Jinja filters (from `extensions.py`), so `--defaults` picks up
+  `git config user.name`/`user.email` when the prompts aren't answered
+  explicitly.
 
 ## Workflow
 

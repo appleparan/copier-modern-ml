@@ -182,6 +182,10 @@ markdown_extensions:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
+  ## Add support for including content from other files (README <-> docs dedupe)
+  - pymdownx.snippets:
+      check_paths: true
+      base_path: ['.']
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.tasklist:
@@ -194,6 +198,7 @@ nav:
   - Home: index.md
   - Overview: overview.md
   - Getting Started: getting-started.md
+  - Corporate network: enterprise-network.md
   - API Reference: reference/
 
 plugins:

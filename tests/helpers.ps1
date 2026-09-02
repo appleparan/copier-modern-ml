@@ -17,7 +17,7 @@ function Generate {
         -d copyright_license="MIT License" `
         -d package="yes" `
         -d system_certs="no" `
-        -d allow_insecure_host="no" `
+        -d allow_insecure_host="" `
         -d ci="github" `
         -d create_directories="yes"
 }

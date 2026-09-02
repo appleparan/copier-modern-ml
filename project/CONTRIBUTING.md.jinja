@@ -16,7 +16,7 @@ Every little bit helps, and credit will always be given.
 1. Fork the repository and clone it to your local machine:
 
     ```bash
-    git clone https://REPO_URL/REPO_USERNAME/{{ project_name }}.git
+    git clone {{ repo_url }}
     ```
 
 2. Create a new branch for your changes:
@@ -38,7 +38,7 @@ Every little bit helps, and credit will always be given.
     git push origin feature/new-feature
     ```
 
-5. Create a Pull Request (PR) on GitHub.
+5. Create a Pull Request (PR) on {% if ci == 'gitlab' %}GitLab{% else %}GitHub{% endif %}.
 
 ## Reporting Issues
 

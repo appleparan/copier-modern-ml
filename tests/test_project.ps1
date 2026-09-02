@@ -144,6 +144,20 @@ Write-Host "✓ All tests passed" -ForegroundColor Green
 
 Write-Host ""
 Write-Host "///////////////////////////////////////////"
+Write-Host "          BUILDING PACKAGE"
+Write-Host "///////////////////////////////////////////"
+Write-Host ""
+
+Write-Host ">>> Building sdist and wheel with uv build"
+uv build
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "ERROR: uv build failed" -ForegroundColor Red
+    exit 1
+}
+Write-Host "✓ Build passed" -ForegroundColor Green
+
+Write-Host ""
+Write-Host "///////////////////////////////////////////"
 Write-Host "          ALL CHECKS PASSED ✓"
 Write-Host "///////////////////////////////////////////"
 Write-Host ""
@@ -153,6 +167,7 @@ Write-Host "  ✓ Linting (ruff check)" -ForegroundColor Green
 Write-Host "  ✓ Type checking (ty)" -ForegroundColor Green
 Write-Host "  ✓ Documentation build (mkdocs)" -ForegroundColor Green
 Write-Host "  ✓ Tests (pytest)" -ForegroundColor Green
+Write-Host "  ✓ Package build (uv build)" -ForegroundColor Green
 Write-Host ""
 
 Write-Host ">>> Creating second commit (fix)"
