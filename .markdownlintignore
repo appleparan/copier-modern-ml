@@ -1,2 +1,5 @@
 CHANGELOG.md
 RELEASE.md
+# pymdownx.snippets includes of README.md; the real H1 lives there.
+docs/index.md
+project/docs/index.md

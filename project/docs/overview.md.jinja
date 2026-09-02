@@ -1,25 +1,26 @@
 # Overview
 
-{{ project_slug }} is a modern Python template for machine learning projects. Built on PyTorch Lightning, Hydra, and uv, it provides ML workflows for NLP, Computer Vision, and Tabular data.
+{{ project_slug }} is a modern Python template for machine learning projects. Built on PyTorch Lightning and uv{% if create_examples %}, it provides ML workflows for text, image, and tabular-data classification{% endif %}.
 
 ## Key Features
 
 ### 🚀 Modern Tool Stack
 - **uv**: Fast Python package management and dependency resolution
 - **PyTorch Lightning**: Scalable deep learning training workflows
-- **Hydra**: Flexible configuration management
-- **Typer**: Intuitive CLI interface
+- **{% if create_examples %}jsonargparse{% else %}Typer{% endif %}**: Intuitive CLI interface
 
+{% if create_examples %}
 ### 🧠 Multi-Domain ML Support
 - **NLP**: Text classification using HuggingFace Transformers (BoolQ dataset)
 - **Computer Vision**: CNN-based image classification (MNIST dataset)
 - **Tabular Data**: Neural network-based tabular data classification (Titanic dataset)
 
+{% endif %}
 ### 📁 Organized Project Structure
 ```
 {{ project_slug }}/
 ├── src/{{ project_slug }}/     # Main source code
-├── configs/                    # Hydra configuration files
+├── configs/                    # Configuration files (TOML)
 ├── data/                       # Data directories
 │   ├── raw/                    # Original data
 │   ├── processed/              # Processed data
@@ -36,14 +37,16 @@
 ## Supported Features
 
 ### CLI Commands
-- `{{ project_slug }}-cli hello`: Configuration loading test
+- `{{ project_slug }}-cli hello`: Smoke test command
+{% if create_examples %}
 - `{{ project_slug }}-cli nlp`: Train BERT-based NLP model
 - `{{ project_slug }}-cli tabular`: Train tabular data classification model
 - `{{ project_slug }}-cli vision`: Train MNIST image classification model
+{% endif %}
 
 ### Development Tools
 - **Ruff**: Linting and formatting
-- **MyPy**: Type checking
+- **ty**: Type checking
 - **Pytest**: Unit testing
 - **Pre-commit**: Code quality management
 - **MkDocs**: Documentation generation
@@ -55,22 +58,17 @@
 
 ## Architecture
 
-### Configuration Management
-- Hierarchical configuration management through Hydra
-- Model and training parameters configured in `configs/` directory
-- Dynamic configuration override support via CLI
-
 ### Model Training
 - Modularized training pipeline based on PyTorch Lightning
 - Automatic GPU/CPU detection and distributed training support
 - TensorBoard logging and checkpoint management
 
 ### Code Quality
-- Mandatory use of type hints (enforced by MyPy)
+- Mandatory use of type hints (enforced by ty)
 - Google-style docstrings
-- Single quotes, 88-character line length coding conventions
+- Single quotes, 100-character line length coding conventions
 
-### MathJax Suppot
+### MathJax Support
 
 $$\begin{align}
 \nabla \cdot u &= 0 \\
