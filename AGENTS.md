@@ -7,15 +7,20 @@ pytest, mkdocs-material, git-cliff). `copier.yml` defines the prompts;
 
 ## Gotchas
 
-- **Tests render from `HEAD`, not the working tree.** `tests/helpers.sh`
-  runs `copier copy -r HEAD`, so commit template changes before running
-  `make test` or `make gen`. The generated project lands in
-  `tests/tmp/` and is deleted on the next run.
+- **Tests render the working tree, dirty changes included.** `tests/helpers.sh`
+  runs `copier copy -r HEAD` on the local checkout; copier folds uncommitted
+  changes in (it prints `DirtyLocalWarning`), so `make test` and `make gen`
+  see your edits without a commit. Untracked files are included too. The
+  generated project lands in `tests/tmp/` and is deleted on the next run.
 - **`make test` is the full quality gate.** It generates the project into
   `tests/tmp/`, then runs `uv sync --extra cpu`, `ruff format --check`,
   `ruff check`, `ty check`, `mkdocs build --strict` and `pytest` inside it
-  (about 3 minutes; downloads CPU torch on first run). `make lint` runs the
-  pre-commit hooks that CI expects to be clean.
+  (about 3 minutes; downloads CPU torch on first run). It also generates two
+  `create_examples=no` variants into `tests/tmp-variants/` (one `ci=gitlab`,
+  one `package=no create_directories=no`) and runs `ruff`, `ty` and `pytest`
+  on each. `tests/test_project.ps1` only runs the default-answers generation,
+  not the variants. `make lint` runs the pre-commit hooks that CI expects to
+  be clean.
 - **Two copies of every workflow and hook config.** `.github/workflows/*` and
   `.pre-commit-config.yaml` at the root are mirrored under `project/` for
   generated projects. Change both, or they drift.
