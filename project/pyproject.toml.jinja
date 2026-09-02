@@ -84,15 +84,10 @@ cpu = [
 
 [dependency-groups]
 dev = [
+    { include-group = "docs" },
     "coverage==7.15.4",
     "coverage-badge==1.1.2",
     "git-cliff==2.13.1",
-    "mkdocs==1.6.1",
-    "mkdocs-material==9.7.7",
-    "mkdocstrings[python]==1.0.6",
-    "mkdocs-gen-files==0.6.1",
-    "mkdocs-section-index==0.3.12",
-    "mkdocs-literate-nav==0.6.3",
     "ruff==0.16.4",
     "pytest==9.1.1",
     "pytest-asyncio==1.4.0",
@@ -219,7 +214,6 @@ explicit = true
 [tool.ruff]
 include = ["*.py", "*.pyi", "**/pyproject.toml", "*.ipynb"]
 exclude = [
-    "git",
     "__pycache__",
     "data/*",
     "notebooks/*",
@@ -365,14 +359,6 @@ max-complexity = 18
     "D104",
     "S101",
 ]
-"configs/**.py" = [
-    "F401",
-    "E402",
-]
-"tests/config/**.py" = [
-    "F401",
-    "E402",
-]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
@@ -426,24 +412,3 @@ branch = true
 [tool.coverage.report]
 fail_under = 50
 show_missing = true
-
-[tool.git-changelog]
-bump = "minor"
-convention = "conventional"
-in-place = false
-filter-commits = "0.1.0.."
-marker-line = "<!-- insertion marker -->"
-output = "output.log"
-parse-refs = false
-parse-trailers = false
-{%- if ci == 'gitlab' %}
-provider = "gitlab"
-{%- else %}
-provider = "github"
-{%- endif %}
-repository = "."
-sections = "fix,maint"
-template = "keepachangelog"
-version-regex = "^## \\\\[(?P<version>v?[^\\\\]]+)"
-versioning = "semver"
-zerover = true

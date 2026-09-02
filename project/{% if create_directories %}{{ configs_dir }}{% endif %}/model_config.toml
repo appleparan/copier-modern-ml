@@ -1,0 +1,3 @@
+# Placeholder for model and training configuration.
+# Add keys here and load them at startup, e.g.:
+#   import tomllib; config = tomllib.load(open("configs/model_config.toml", "rb"))

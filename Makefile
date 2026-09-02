@@ -21,13 +21,14 @@ docs:
 # Root-level Python only; template sources under project/ are checked by the
 # generated project's own ruff config in `make test`.
 format:
-	@uvx ruff format extensions.py scripts
+	@uvx ruff format extensions.py tests
 
 gen generate:
 	@bash -c 'source tests/helpers.sh && generate ${PWD} tests/tmp'
 
 lint:
 	@uvx pre-commit run -a
+	@uv run --group dev pytest
 
 release:
 	@sh scripts/release.sh

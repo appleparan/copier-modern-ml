@@ -40,10 +40,12 @@ version:
 author_fullname:
   type: str
   help: Your full name
+  default: "{{ '' | git_user_name }}"
 
 author_email:
   type: str
   help: Your email
+  default: "{{ '' | git_user_email }}"
 
 copyright_holder:
   type: str
