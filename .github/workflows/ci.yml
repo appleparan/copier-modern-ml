@@ -13,6 +13,25 @@ concurrency:
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v7
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v10.0.1
+      with:
+        enable-cache: true
+        version: "latest-known"
+
+    - name: Run pre-commit
+      run: uvx pre-commit run -a
+
+    - name: Run tests
+      run: uv run --group dev pytest
+
   test-project:
     strategy:
       matrix:
@@ -49,16 +68,8 @@ jobs:
     - name: Set up Python ${{ matrix.python-version }}
       run: uv python install ${{ matrix.python-version }}
 
-    - name: Install the project
-      run: uv tool install copier
-
-    - name: Test project generation and workflow (Run on Linux)
-      if: runner.os == 'Linux'
-      run: |
-        CI=1 PYTHON_VERSION=${{ matrix.python-version }} bash tests/test_project.sh
-
-    - name: Test project generation and workflow (Run on macOS)
-      if: runner.os == 'macOS'
+    - name: Test project generation and workflow (Run on Linux/macOS)
+      if: runner.os != 'Windows'
       run: |
         CI=1 PYTHON_VERSION=${{ matrix.python-version }} bash tests/test_project.sh
 
