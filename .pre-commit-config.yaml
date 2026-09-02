@@ -43,11 +43,14 @@ repos:
     hooks:
       - id: ruff-check
         args: [ --fix, --exit-non-zero-on-fix ]
-        types: [python, pyi, jupyter]
+        types_or: [python, pyi, jupyter]
+        # Template sources under project/ are linted with the generated
+        # project's own ruff config in `make test`, not this repo's.
+        exclude: ^project/
 
       - id: ruff-format
-        types: [python, pyi, jupyter]
-        language: system
+        types_or: [python, pyi, jupyter]
+        exclude: ^project/
 
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.49.1
