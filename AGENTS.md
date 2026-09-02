@@ -49,6 +49,12 @@ pytest, mkdocs-material, git-cliff). `copier.yml` defines the prompts;
 - **Type checker is `ty`, not mypy**, in both this repo and generated
   projects. `ruff` config in `project/pyproject.toml.jinja` uses an explicit
   `select` list, so ruff's expanded default rule set (0.16+) does not apply.
+- **`allow_insecure_host` is a string prompt** (comma-separated hosts,
+  default empty). Projects generated before this change have a bool in
+  `.copier-answers.yml`; `pyproject.toml.jinja` tolerates that.
+- **Build backend is `uv_build`** (pure-Python only). `make test` runs
+  `uv build` and inspects the wheel; the module dir must equal
+  `project_slug`.
 
 ## Workflow
 

@@ -73,28 +73,27 @@ package:
   type: bool
   help: Do you want to create a package?
   default: true
-  choices:
-    - true
-    - false
 
 system_certs:
   type: bool
   help: >-
-    Use the operating system's TLS certificate store
-    (recommended on machines with enterprise/self-signed CAs
-    installed system-wide).
+    Trust the operating system's certificate store instead of uv's bundled
+    Mozilla roots (writes system-certs = true to [tool.uv]). Say yes when
+    every developer sits behind a corporate TLS-inspecting proxy whose root
+    CA is installed system-wide. Certificate verification stays on.
+    Individual developers can instead set this per machine; see
+    docs/enterprise-network.md in the generated project.
   default: false
-  choices:
-    - true
-    - false
 
 allow_insecure_host:
-  type: bool
-  help: Do you want to allow insecure hosts?
-  default: false
-  choices:
-    - true
-    - false
+  type: str
+  help: >-
+    Comma-separated hosts (host or host:port) whose TLS certificates uv must
+    NOT verify, e.g. an internal mirror with a self-signed cert you cannot
+    obtain. Leave empty in almost all cases: this disables
+    man-in-the-middle protection for the listed hosts. Never list public
+    indexes such as pypi.org.
+  default: ""
 
 ci:
   type: str

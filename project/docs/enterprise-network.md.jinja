@@ -1,0 +1,175 @@
+# Working behind a corporate proxy or CA
+
+## Symptoms
+
+You are behind a corporate network with a TLS-inspecting proxy, and one or
+more of the following fail with a certificate verification error:
+
+- `uv sync`, `uv lock`, `uv add`
+- `uv python install`
+- Downloads that do not go through uv/pip, such as `huggingface_hub`
+  fetching a model or dataset
+
+The error usually mentions `certificate verify failed` or
+`unable to get local issuer certificate`.
+
+## Why this happens
+
+The proxy terminates TLS and re-signs traffic with a corporate root CA. That
+CA is trusted by your OS (IT installed it there), but uv does not read the
+OS trust store by default — it verifies against its own bundled Mozilla
+root certificates, which do not include your corporate CA.
+
+The fix is either to make uv trust the OS store, or to point it at a
+certificate bundle that includes the corporate CA. Certificate verification
+stays on either way — this is not about disabling security checks.
+
+!!! warning
+    Do not "fix" this by disabling verification (`allow-insecure-host` /
+    `UV_INSECURE_HOST`). See [What not to do](#what-not-to-do) below.
+
+## Per-developer, per-machine fix (recommended)
+
+Set this on your own machine, not in the repository. Create or edit the
+user-level uv config:
+
+- Linux/macOS: `~/.config/uv/uv.toml`
+- Windows: `%APPDATA%\uv\uv.toml`
+
+```toml
+system-certs = true
+```
+
+Or, equivalently, without editing a file:
+
+```bash
+export UV_SYSTEM_CERTS=true
+```
+
+### Why per-machine, not committed to the project
+
+- CI runners (GitHub-hosted, GitLab shared) and Docker builds run outside
+  the corporate network and have no corporate CA installed — a project-wide
+  setting that assumes one is present would only be a no-op there, but a
+  self-hosted runner or an image that *does* need it should get the setting
+  at the runner/image level instead (see [CI](#ci) and [Docker](#docker)).
+- Other developers on the same project may work outside the proxy (remote,
+  a different office, a personal machine) and don't need or want the
+  corporate CA trusted by default.
+
+## Explicit bundle alternative
+
+If you would rather not trust the entire OS store, point uv at a specific
+PEM bundle:
+
+```bash
+export SSL_CERT_FILE=/path/to/bundle.pem
+```
+
+!!! warning
+    `SSL_CERT_FILE` **replaces** uv's bundled roots entirely — only the
+    certificates in that file are trusted. The bundle must contain the
+    public CA roots *and* your corporate root, or public package downloads
+    will start failing verification.
+
+Build such a bundle on Debian/Ubuntu by concatenating the system roots with
+your corporate root:
+
+```bash
+cat /etc/ssl/certs/ca-certificates.crt corp-root.pem > ~/certs/bundle.pem
+export SSL_CERT_FILE=~/certs/bundle.pem
+```
+
+Other tools have their own equivalent variables and need the same bundle:
+
+- Python `requests`-based tools (including `huggingface_hub`):
+  `REQUESTS_CA_BUNDLE` (and `CURL_CA_BUNDLE` for `curl`-backed HTTP clients)
+- git and pre-commit: `git config --global http.sslCAInfo /path/to/bundle.pem`
+
+## Project-wide setting
+
+The `system_certs` copier answer, when set to yes, writes
+`system-certs = true` into this project's `pyproject.toml` under
+`[tool.uv]`. That makes every clone of this project trust the OS
+certificate store, with no per-developer setup required.
+
+This is appropriate when **every** developer on the project sits behind the
+same corporate proxy — for example, a project that only ever runs on
+company-managed laptops. It is a poor fit when contributors work from a mix
+of networks (some behind the proxy, some not), since it forces the
+assumption onto everyone; use the per-machine fix above instead in that
+case.
+
+## What not to do
+
+`allow-insecure-host` (and its environment variable, `UV_INSECURE_HOST`)
+disables certificate verification entirely for the listed hosts. The uv
+docs are explicit about the risk:
+
+> WARNING: Hosts included in this list will not be verified against the
+> system's certificate store and can expose you to security risks due to
+> the lack of certificate verification.
+
+The only defensible use is a **host-scoped, temporary** exception for an
+internal mirror with a self-signed certificate while you are in the
+process of obtaining its CA certificate properly — never as a permanent
+fix, and never for a public index such as `pypi.org`. The
+`allow_insecure_host` copier answer exists only for that narrow case.
+
+## Private index / mirrors
+
+If your organization mirrors package indexes or model hosting internally,
+point the relevant tool at it instead of (or in addition to) fixing
+certificates:
+
+- `UV_DEFAULT_INDEX`: replaces the default index (PyPI) for `uv`
+- `UV_INDEX`: space-separated list of extra indexes for `uv`
+- `UV_PYTHON_INSTALL_MIRROR`: replaces the GitHub download path uv uses to
+  fetch managed Python interpreters
+- `HF_ENDPOINT`: replaces the Hugging Face Hub endpoint used by
+  `huggingface_hub` / `datasets` / `transformers`
+
+Note that `[[tool.uv.index]]` in `pyproject.toml` points the torch/
+torchvision extras at `download.pytorch.org`. If that host is blocked by
+your proxy, change those index URLs to your internal proxy repository.
+
+Standard proxy variables are also honored by uv and most Python HTTP
+clients: `HTTP_PROXY`, `HTTPS_PROXY`, `NO_PROXY`.
+{% if create_examples %}
+## Docker
+
+Drop corporate root CA files (`*.crt`, PEM format) into the `certs/`
+directory before running `docker build`. Both build stages install every
+`.crt` file found there with `update-ca-certificates` and set
+`SSL_CERT_FILE` / `REQUESTS_CA_BUNDLE` accordingly — see `certs/README.md`.
+
+To point the build itself at an internal index or Python mirror, pass
+build args:
+
+```bash
+docker build \
+  --build-arg UV_DEFAULT_INDEX=https://pypi.internal.example.com/simple \
+  --build-arg UV_PYTHON_INSTALL_MIRROR=https://python-mirror.internal.example.com \
+  -f Dockerfile.package -t {{ project_slug }} .
+```
+{% endif %}
+## CI
+
+GitHub-hosted and GitLab shared runners are not behind your corporate
+proxy and need no changes.
+
+Self-hosted runners that *are* behind the proxy should get the trust
+setting at the runner/system level rather than in the workflow file:
+
+- `/etc/uv/uv.toml` with `system-certs = true` (applies to every job on
+  that runner), or
+- `UV_SYSTEM_CERTS=true` set in the runner's own environment
+
+This keeps the workflow file identical for everyone and avoids baking
+network assumptions into version-controlled CI config.
+
+## Reference
+
+- [uv: Certificates](https://docs.astral.sh/uv/concepts/authentication/certificates/)
+- [uv: Environment variables](https://docs.astral.sh/uv/reference/environment/)
+- [uv: Configuration files](https://docs.astral.sh/uv/concepts/configuration-files/)

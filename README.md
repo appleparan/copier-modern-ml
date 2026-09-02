@@ -58,6 +58,23 @@ uvx --with copier_templates_extensions copier copy \
   --trust gh:appleparan/copier-modern-ml ~/src/PATH/TO/YOUR/PROJECT
 ```
 
+### Template answers worth knowing
+
+* `system_certs`: say yes only if every developer on the project sits
+  behind a corporate TLS-inspecting proxy whose root CA is installed
+  system-wide. It writes `system-certs = true` to `[tool.uv]`, making the
+  generated project trust the OS certificate store instead of uv's bundled
+  Mozilla roots. Certificate verification stays on either way; individual
+  developers can set this per machine instead, without a template answer.
+
+* `allow_insecure_host`: leave empty in almost all cases. It is a
+  comma-separated list of hosts whose TLS certificates uv will *not*
+  verify, for a self-signed internal mirror you cannot get a CA for yet.
+  Never list a public index such as `pypi.org` here.
+
+See the generated project's `docs/enterprise-network.md` for the full
+guidance on both, plus proxy and mirror configuration.
+
 ### Install Python and packages
 
 ```bash
