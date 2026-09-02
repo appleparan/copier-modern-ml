@@ -5,7 +5,7 @@ from pathlib import Path
 
 {% if create_examples %}from jsonargparse import auto_cli
 
-from {{ project_slug }}.nlp import train_boolq
+from {{ project_slug }}.nlp import DEFAULT_MODEL_NAME, TextEncoder, semantic_search
 from {{ project_slug }}.tabular import train_titanic
 from {{ project_slug }}.vision import train_mnist
 {% else %}import typer
@@ -16,41 +16,32 @@ logger = logging.getLogger(__name__)
 {% if create_examples %}
 
 def nlp(
-    max_epochs: int = 3,
-    accelerator: str = 'auto',
-    devices: str = 'auto',
-    deterministic: bool = True,
-    random_seed: int = 42,
+    query: str = 'How do I keep my houseplants alive?',
+    top_k: int = 3,
+    model_name: str = DEFAULT_MODEL_NAME,
 ) -> None:
-    """NLP training CLI entrypoint.
+    """Semantic search CLI entrypoint.
 
-    This command trains an NLP model using the specified configuration options.
+    This command embeds `query` and a small built-in corpus with a frozen
+    sentence-embedding model, then prints the corpus entries most similar to
+    the query. It runs inference only; no model training happens.
 
     Args:
-        max_epochs (int):
-            Maximum number of training epochs. Defaults to 3.
-        accelerator (str):
-            Accelerator type (e.g., "cpu", "gpu", "tpu"). Defaults to "auto".
-        devices (str):
-            Number of devices to use for training. Can be an integer, a string
-            ("auto"), or a list of device IDs. Defaults to "auto".
-        deterministic (bool):
-            Whether to use deterministic algorithms for reproducibility.
-            Sets the `torch.backends.cudnn.deterministic` flag. Defaults to True.
-        random_seed (int):
-            Random seed for reproducibility. Defaults to 42.
+        query (str):
+            The search query. Defaults to a houseplant-care question.
+        top_k (int):
+            Maximum number of results to print. Defaults to 3.
+        model_name (str):
+            HuggingFace model identifier for the frozen encoder.
+            Defaults to "BAAI/bge-small-en-v1.5".
     """
-    print('Starting NLP training...')
-    print(f'Project root directory: {ROOT_DIR}')
+    print(f'Searching for: {query!r}')
 
-    train_boolq(
-        ROOT_DIR,
-        max_epochs=max_epochs,
-        accelerator=accelerator,
-        devices=devices,
-        deterministic=deterministic,
-        random_seed=random_seed,
-    )
+    encoder = TextEncoder.from_pretrained(model_name)
+    results = semantic_search(encoder, query, top_k=top_k)
+
+    for rank, result in enumerate(results, start=1):
+        print(f'{rank}. ({result.score:.3f}) {result.text}')
 
 
 def tabular(

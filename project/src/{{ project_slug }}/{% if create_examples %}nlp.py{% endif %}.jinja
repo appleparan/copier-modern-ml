@@ -1,267 +1,143 @@
-from pathlib import Path
+"""Semantic search example using a frozen sentence-embedding model.
 
-import lightning as L  # noqa: N812
+This module embeds text with the frozen `BAAI/bge-small-en-v1.5` encoder and
+ranks a small built-in corpus by cosine similarity to a query. It performs
+inference only: there is no training loop and no dataset download beyond the
+pretrained model weights.
+
+Run it via the CLI::
+
+    {{ project_slug }}-cli nlp --query "How do I keep my houseplants alive?" --top-k 3
+"""
+
+from collections.abc import Sequence
+from dataclasses import dataclass
+
 import torch
-from datasets import Dataset, load_dataset
-from torch.optim import AdamW
-from torch.utils.data import DataLoader
-from transformers import (
-    AutoModelForSequenceClassification,
-    AutoTokenizer,
-    PreTrainedTokenizerBase,
+import torch.nn.functional as functional
+from transformers import AutoModel, AutoTokenizer, PreTrainedModel, PreTrainedTokenizerBase
+
+DEFAULT_MODEL_NAME = 'BAAI/bge-small-en-v1.5'
+
+DEFAULT_CORPUS: tuple[str, ...] = (
+    'Water your houseplants once the top inch of soil feels dry.',
+    'Python list comprehensions are a concise way to build lists.',
+    'Boil the pasta in salted water until it is al dente.',
+    'The James Webb telescope captures infrared light from distant galaxies.',
+    'Shift your weight back and cover the front brake when cycling downhill.',
+    'An emergency fund should cover three to six months of living expenses.',
+    'Repot a houseplant when its roots start growing through the drainage holes.',
+    'Type hints let static analyzers catch bugs before Python code runs.',
+    'A pinch of salt in the pasta water seasons the noodles as they cook.',
+    'Neutron stars are the collapsed cores left behind by supernova explosions.',
 )
-from transformers.modeling_outputs import SequenceClassifierOutput
 
 
-class TinyBertClassifier(L.LightningModule):
-    """A PyTorch Lightning Module for text classification using a Tiny BERT model.
+@dataclass(frozen=True)
+class SearchResult:
+    """A single scored corpus entry returned by `semantic_search`.
 
     Attributes:
-        model_name (str): HuggingFace model name.
-        num_labels (int): Number of labels in the dataset.
-        lr (float): Learning rate for the optimizer.
-        model: HuggingFace AutoModelForSequenceClassification instance.
+        text: The corpus sentence.
+        score: Cosine similarity between the query and this sentence, in [-1, 1].
     """
 
-    def __init__(self, model_name: str, num_labels: int = 2, lr: float = 2e-5):
-        """Initialize the TinyBertClassifier.
+    text: str
+    score: float
+
+
+@dataclass(frozen=True)
+class TextEncoder:
+    """A frozen transformer encoder that turns text into normalized embeddings.
+
+    Attributes:
+        tokenizer: The tokenizer matching `model`.
+        model: A HuggingFace encoder model in eval mode.
+    """
+
+    tokenizer: PreTrainedTokenizerBase
+    model: PreTrainedModel
+
+    @classmethod
+    def from_pretrained(cls, model_name: str = DEFAULT_MODEL_NAME) -> 'TextEncoder':
+        """Load the tokenizer and model for `model_name`.
 
         Args:
-            model_name (str): The name of the pre-trained model from HuggingFace.
-            num_labels (int, optional): Number of classification labels. Defaults to 2.
-            lr (float, optional): Learning rate for the optimizer. Defaults to 2e-5.
-        """
-        super().__init__()
-        self.save_hyperparameters()
-        self.model = AutoModelForSequenceClassification.from_pretrained(
-            model_name, num_labels=num_labels
-        )
-        self.lr = lr
-
-    def forward(
-        self,
-        input_ids: torch.Tensor,
-        attention_mask: torch.Tensor,
-        labels: torch.Tensor | None = None,
-        token_type_ids: torch.Tensor | None = None,
-    ) -> SequenceClassifierOutput:
-        """Perform a forward pass through the model.
-
-        Args:
-            input_ids (torch.Tensor): Tensor of token IDs.
-            attention_mask (torch.Tensor): Tensor of attention masks.
-            labels (torch.Tensor, optional):
-                Tensor of labels. Defaults to None.
-            token_type_ids (torch.Tensor, optional):
-                Tensor of token type IDs. Defaults to None.
+            model_name: HuggingFace model identifier. Defaults to
+                `DEFAULT_MODEL_NAME`.
 
         Returns:
-            SequenceClassifierOutput:
-                The model output from HuggingFace's AutoModelForSequenceClassification.
+            A `TextEncoder` ready for inference.
         """
-        return self.model(
-            input_ids=input_ids,
-            attention_mask=attention_mask,
-            labels=labels,
-            token_type_ids=token_type_ids,
-        )
+        tokenizer = AutoTokenizer.from_pretrained(model_name)
+        assert isinstance(tokenizer, PreTrainedTokenizerBase)  # noqa: S101
+        model = AutoModel.from_pretrained(model_name)
+        model.eval()
+        return cls(tokenizer=tokenizer, model=model)
 
-    def training_step(
-        self,
-        batch: dict[str, torch.Tensor],
-        batch_idx: int,  # noqa: ARG002
+    def encode(
+        self, texts: Sequence[str], *, batch_size: int = 32, max_length: int = 512
     ) -> torch.Tensor:
-        """Perform a training step.
+        """Embed `texts` into L2-normalized vectors.
 
         Args:
-            batch (dict[str, torch.Tensor]):
-                The input batch containing features and labels keyed by field name.
-            batch_idx (int): The index of the batch.
+            texts: Sentences to embed.
+            batch_size: Number of texts encoded per forward pass.
+            max_length: Maximum token length; longer inputs are truncated.
 
         Returns:
-            torch.Tensor: The computed training loss.
+            A `(len(texts), hidden_size)` tensor of L2-normalized embeddings.
         """
-        outputs = self(
-            batch['input_ids'],
-            attention_mask=batch['attention_mask'],
-            labels=batch['labels'],
-        )
-        loss = outputs.loss
-        self.log('train_loss', loss)
-        return loss
-
-    def validation_step(
-        self,
-        batch: dict[str, torch.Tensor],
-        batch_idx: int,  # noqa: ARG002
-    ) -> torch.Tensor:
-        """Perform a validation step.
-
-        Args:
-            batch (dict[str, torch.Tensor]):
-                The input batch containing features and labels keyed by field name.
-            batch_idx (int): The index of the batch.
-
-        Returns:
-            torch.Tensor: The computed validation loss.
-        """
-        outputs = self(
-            batch['input_ids'],
-            attention_mask=batch['attention_mask'],
-            labels=batch['labels'],
-        )
-        val_loss = outputs.loss
-        preds = torch.argmax(outputs.logits, dim=1)
-        acc = (preds == batch['labels']).float().mean()
-        self.log('val_loss', val_loss, prog_bar=True)
-        self.log('val_acc', acc, prog_bar=True)
-        return val_loss
-
-    def test_step(
-        self,
-        batch: dict[str, torch.Tensor],
-        batch_idx: int,  # noqa: ARG002
-    ) -> torch.Tensor:
-        """Perform a test step.
-
-        Args:
-            batch (dict[str, torch.Tensor]):
-                The input batch containing features and labels keyed by field name.
-            batch_idx (int): The index of the batch.
-
-        Returns:
-            torch.Tensor: The computed test loss.
-        """
-        outputs = self(
-            batch['input_ids'],
-            attention_mask=batch['attention_mask'],
-            labels=batch['labels'],
-        )
-        test_loss = outputs.loss
-        preds = torch.argmax(outputs.logits, dim=1)
-        acc = (preds == batch['labels']).float().mean()
-        self.log('test_loss', test_loss, prog_bar=True)
-        self.log('test_acc', acc, prog_bar=True)
-        return test_loss
-
-    def configure_optimizers(self) -> AdamW:
-        """Configure the optimizer for the model.
-
-        Returns:
-            AdamW: The AdamW optimizer.
-        """
-        return AdamW(self.parameters(), lr=self.lr)
+        batches = []
+        with torch.inference_mode():
+            for start in range(0, len(texts), batch_size):
+                batch = list(texts[start : start + batch_size])
+                inputs = self.tokenizer(
+                    batch,
+                    padding=True,
+                    truncation=True,
+                    max_length=max_length,
+                    return_tensors='pt',
+                )
+                outputs = self.model(**inputs)
+                cls_embeddings = outputs.last_hidden_state[:, 0]
+                batches.append(functional.normalize(cls_embeddings, p=2, dim=1))
+        return torch.cat(batches, dim=0)
 
 
-def prepare_data(
-    tokenizer: PreTrainedTokenizerBase, max_length: int = 512
-) -> tuple[Dataset, Dataset, Dataset]:
-    """Prepares the training and validation datasets for the BoolQ task.
+def semantic_search(
+    encoder: TextEncoder,
+    query: str,
+    corpus: Sequence[str] = DEFAULT_CORPUS,
+    *,
+    top_k: int = 3,
+) -> list[SearchResult]:
+    """Rank `corpus` by cosine similarity to `query`.
 
     Args:
-        tokenizer (PreTrainedTokenizerBase):
-            A tokenizer instance from the HuggingFace Transformers library.
-        max_length (int, optional):
-            The maximum sequence length for tokenization. Defaults to 512.
+        encoder: A loaded `TextEncoder`.
+        query: The search query.
+        corpus: Candidate sentences to rank. Defaults to `DEFAULT_CORPUS`.
+        top_k: Maximum number of results to return, clamped to `len(corpus)`.
 
     Returns:
-        Dataset: training dataset
-        Dataset: validation dataset
-        Dataset: testing dataset
+        The `top_k` highest-scoring `SearchResult`s, sorted by descending score.
+
+    Raises:
+        ValueError: If `top_k` is not a positive integer or `corpus` is empty.
     """
-    # Load a subset of the BoolQ dataset
-    _train_ds = load_dataset('google/boolq', split='train[:4000]')
-    _val_ds = load_dataset('google/boolq', split='validation[:1000]')
-    _test_ds = load_dataset('google/boolq', split='validation[1000:2000]')
+    if top_k < 1:
+        error_message = f'top_k must be >= 1, got {top_k}'
+        raise ValueError(error_message)
+    if not corpus:
+        error_message = 'corpus must not be empty'
+        raise ValueError(error_message)
 
-    # Tokenize the data
-    def preprocess(examples):  # noqa: ANN001, ANN202
-        tokenized_inputs = tokenizer(
-            examples['question'],
-            examples['passage'],
-            max_length=max_length,
-            truncation=True,
-            padding='max_length',
-            return_tensors='pt',
-        )
+    query_embedding = encoder.encode([query])
+    corpus_embeddings = encoder.encode(list(corpus))
+    scores = (corpus_embeddings @ query_embedding.T).squeeze(1)
 
-        labels = [1 if ans else 0 for ans in examples['answer']]
-
-        tokenized_inputs['labels'] = labels
-
-        return tokenized_inputs
-
-    tokenized_train = _train_ds.map(preprocess, batched=True)
-    tokenized_val = _val_ds.map(preprocess, batched=True)
-    tokenized_test = _test_ds.map(preprocess, batched=True)
-
-    # Convert to PyTorch-compatible datasets
-    train_dataset = tokenized_train
-    val_dataset = tokenized_val
-    test_dataset = tokenized_test
-
-    return train_dataset, val_dataset, test_dataset
-
-
-def train_boolq(
-    root_dir: Path,
-    max_epochs: int = 10,
-    accelerator: str = 'auto',
-    devices: int | str | list[int] = 'auto',
-    deterministic: bool = True,
-    random_seed: int = 42,
-) -> None:
-    """Train boolq datasets with BERT tiny model.
-
-    Args:
-        root_dir (Path): Default path for logs and weights.
-        max_epochs (int, optional):
-            Stop training once this number of epochs is reached.
-            Defaults to 10.
-        accelerator (str, optional):
-            Supports passing different accelerator types.
-            Defaults to "auto".
-        devices (int, optional):
-            Number of devices to train on. Defaults to "auto".
-        deterministic (bool, optional):
-            Sets the `torch.backends.cudnn.deterministic` flag.
-            Defaults to True.
-        random_seed (int, optional):
-            Random seed for reproducibility. Defaults to 42.
-    """
-    L.seed_everything(random_seed, workers=True)
-
-    model_name = 'google/bert_uncased_L-2_H-128_A-2'  # BERT Tiny model
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    assert isinstance(tokenizer, PreTrainedTokenizerBase)  # noqa: S101
-
-    train_dataset, val_dataset, test_dataset = prepare_data(tokenizer)
-
-    # Convert to torch Dataset
-    train_dataset_torch = train_dataset.with_format(
-        type='torch', columns=['input_ids', 'attention_mask', 'labels']
-    )
-    val_dataset_torch = val_dataset.with_format(
-        type='torch', columns=['input_ids', 'attention_mask', 'labels']
-    )
-    test_dataset_torch = test_dataset.with_format(
-        type='torch', columns=['input_ids', 'attention_mask', 'labels']
-    )
-
-    # Set DataLoader
-    train_loader = DataLoader(train_dataset_torch, batch_size=16, shuffle=True)
-    val_loader = DataLoader(val_dataset_torch, batch_size=16)
-    test_loader = DataLoader(test_dataset_torch, batch_size=16)
-
-    # Setup model and trainer
-    model = TinyBertClassifier(model_name=model_name)
-    trainer = L.Trainer(
-        default_root_dir=root_dir,
-        max_epochs=max_epochs,
-        accelerator=accelerator,
-        devices=devices,
-        deterministic=deterministic,
-        log_every_n_steps=10,
-    )
-    trainer.fit(model, train_loader, val_loader)
-    trainer.test(model, test_loader)
+    ranked = sorted(zip(corpus, scores.tolist(), strict=True), key=lambda pair: -pair[1])
+    return [
+        SearchResult(text=text, score=score) for text, score in ranked[: min(top_k, len(corpus))]
+    ]
