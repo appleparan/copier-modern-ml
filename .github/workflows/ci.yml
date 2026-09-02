@@ -20,6 +20,14 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v7
 
+    # pre-commit builds hook environments with python3.13
+    # (default_language_version in .pre-commit-config.yaml); setup-uv
+    # does not put an interpreter on PATH.
+    - name: Set up Python 3.13
+      uses: actions/setup-python@v7
+      with:
+        python-version: "3.13"
+
     - name: Install uv
       uses: astral-sh/setup-uv@v10.0.1
       with:
