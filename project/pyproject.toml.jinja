@@ -9,32 +9,32 @@ readme = "README.md"
 dependencies = [
     "colorlog==6.12.0",
 {%- if create_examples %}
-    "fastapi[standard]==0.141.1",
-    "hf-xet==1.6.0",
-    "jsonargparse[all]==4.51.0",
+    "fastapi[standard]==0.143.2",
+    "hf-xet==1.7.0",
+    "jsonargparse[all]==4.52.0",
 {%- endif %}
 {%- if use_torch %}
-    "lightning==2.6.5",
+    "lightning==2.6.6",
 {%- endif %}
-    "matplotlib==3.11.1",
-    "numpy==2.5.2",
-    "pandas[parquet,performance]==3.0.5",
+    "matplotlib==3.11.2",
+    "numpy==2.5.4",
+    "pandas[parquet,performance]==3.0.6",
 {%- if create_examples %}
-    "pydantic==2.13.4",
-    "pydantic-settings==2.15.0",
+    "pydantic==2.14.1",
+    "pydantic-settings==2.16.0",
     "pydantic-extra-types==2.11.1",
 {%- endif %}
     "rich==15.0.0",
-    "scikit-learn==1.9.0",
+    "scikit-learn==1.9.1",
     "seaborn==0.13.2",
 {%- if use_torch %}
     "tensorboard==2.21.0",
 {%- endif %}
-    "tqdm==4.70.0",
+    "tqdm==4.70.1",
 {%- if create_examples %}
-    "transformers==5.15.1",
+    "transformers==5.19.0",
 {%- endif %}
-    "typer==0.27.1",
+    "typer==0.27.3",
 ]
 requires-python = ">=3.12, <4.0"
 keywords = [
@@ -64,49 +64,49 @@ Homepage = "{{ repo_url }}"
 
 [project.optional-dependencies]
 cu132 = [
-  "torch==2.13.0",
-  "torchvision==0.28.0",
+  "torch==2.14.1",
+  "torchvision==0.29.1",
 ]
 cu130 = [
-  "torch==2.13.0",
-  "torchvision==0.28.0",
+  "torch==2.14.1",
+  "torchvision==0.29.1",
 ]
 cu126 = [
-  "torch==2.13.0",
-  "torchvision==0.28.0",
+  "torch==2.14.1",
+  "torchvision==0.29.1",
 ]
 cpu = [
-  "torch==2.13.0",
-  "torchvision==0.28.0",
+  "torch==2.14.1",
+  "torchvision==0.29.1",
 ]
 {%- endif %}
 
 [dependency-groups]
 dev = [
     { include-group = "docs" },
-    "coverage==7.15.4",
+    "coverage==7.16.2",
     "coverage-badge==1.1.2",
-    "git-cliff==2.13.1",
-    "ruff==0.16.4",
+    "git-cliff==2.14.2",
+    "ruff==0.17.0",
     "pytest==9.1.1",
     "pytest-asyncio==1.4.0",
     "pytest-cov==7.1.0",
     "pytest-html==4.2.0",
-    "pytest-mock==3.15.1",
-    "pre-commit==4.6.2",
-    "ty>=0.0.74",
+    "pytest-mock==3.16.0",
+    "pre-commit==4.7.0",
+    "ty>=0.0.88",
 ]
 docs = [
     "properdocs==1.6.7",
     "mkdocs-materialx==10.2.0",
-    "mkdocstrings[python]==1.0.6",
+    "mkdocstrings[python]==1.0.7",
     "mkdocs-gen-files==0.6.1",
     "mkdocs-section-index==0.3.12",
     "mkdocs-literate-nav==0.6.3",
 ]
 
 [build-system]
-requires = ["uv_build>=0.12.4,<0.13"]
+requires = ["uv_build>=0.13.4,<0.14"]
 build-backend = "uv_build"
 
 [project.scripts]
@@ -116,6 +116,8 @@ build-backend = "uv_build"
 {%- set insecure_host_list = insecure_hosts.split(',') | map('trim') | select | list if insecure_hosts else [] %}
 [tool.uv]
 package = {% if package %}true{% else %}false{% endif %}
+# uv 0.13.4 drops the compromised emSign root CA (GHSA-hq85-5cpj-mr62)
+required-version = ">=0.13.4"
 {%- if system_certs %}
 system-certs = true
 {%- endif %}

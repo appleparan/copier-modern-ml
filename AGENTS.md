@@ -46,11 +46,11 @@ pytest, ProperDocs, git-cliff). `copier.yml` defines the prompts;
   build). Confirm matching `cp313` wheels exist on every index before
   changing the pinned versions.
 - **`astral-sh/setup-uv` publishes no floating major tags since v8.** Pin the
-  full tag (`@v10.0.1`). `version: latest-known` installs the newest uv whose
+  full tag (`@v10.3.2`). `version: latest-known` installs the newest uv whose
   checksum that tag ships, so bumping the action tag is what upgrades uv in
   GitHub CI. GitLab CI pins `UV_VERSION` explicitly because it is an image
   tag: `ghcr.io/astral-sh/uv:<uv>-python<py>-<base>` must exist, and the base
-  follows uv's Debian release (`trixie-slim` for uv 0.12.x).
+  follows uv's Debian release (`trixie-slim` for uv 0.13.x).
 - **Type checker is `ty`, not mypy**, in both this repo and generated
   projects. `ruff` config in `project/pyproject.toml.jinja` uses an explicit
   `select` list, so ruff's expanded default rule set (0.16+) does not apply.
