@@ -87,6 +87,10 @@ dev = [
     "coverage==7.16.2",
     "coverage-badge==1.1.2",
     "git-cliff==2.14.2",
+{%- if create_examples %}
+    # starlette.testclient prefers httpx2 and deprecates httpx
+    "httpx2==2.13.1",
+{%- endif %}
     "ruff==0.17.0",
     "pytest==9.1.1",
     "pytest-asyncio==1.4.0",
