@@ -1,3 +1,13 @@
+## [2.1.0] - 2026-10-22
+
+### Bug Fixes
+
+- Require uv 0.13.4+ for the emSign root CA removal and bump dependencies ([f2b44c0](https://github.com/appleparan/copier-modern-ml/commit/f2b44c00ced56989443e7284ade4e5b78c060a63))
+
+### Features
+
+- Use httpx2 for the FastAPI test client ([5f91fe6](https://github.com/appleparan/copier-modern-ml/commit/5f91fe6734789b4bdc54dd8e9fa1787aaa39f7c3))
+
 ## [2.0.0] - 2026-09-02
 
 ### Bug Fixes
@@ -25,6 +35,7 @@
 - Port root Makefile to uv and let setup-uv pick a checksummed uv ([875820a](https://github.com/appleparan/copier-modern-ml/commit/875820af41bd32d040f93754580d2fb1e74f77e9))
 - Drop dead packaging config and trim Docker build deps ([d502b5d](https://github.com/appleparan/copier-modern-ml/commit/d502b5dab071328c9b338128d5a48e5e3665eb25))
 - Install Python 3.13 before running pre-commit in the lint job ([a7e96b6](https://github.com/appleparan/copier-modern-ml/commit/a7e96b68e517b34e2c68364375fdd7cf062e9c04))
+- Bump version to 2.0.0 ([001a13e](https://github.com/appleparan/copier-modern-ml/commit/001a13ec63fe5538c7bf70bceeb0bb5e6d5ae86c))
 
 ### Refactor
 
@@ -582,6 +593,10 @@
 
 ### Miscellaneous Tasks
 
+- Fix GitHub release not generated ([5a02b7e](https://github.com/appleparan/copier-modern-ml/commit/5a02b7e73b00e6ef6dffe7b3178f72d23df3c2f6))
+- Bump version to 0.5.1 ([ea4c0a2](https://github.com/appleparan/copier-modern-ml/commit/ea4c0a21a5fa2984fbf5b1047d45797e65b8ff5d))
+- Pull before bump version ([8d7c2fc](https://github.com/appleparan/copier-modern-ml/commit/8d7c2fcd83a1a94ba95fe232ba3faf62353728c1))
+- Trigger release by branch in template GitHub Action ([d580ec2](https://github.com/appleparan/copier-modern-ml/commit/d580ec20d6b0d399e0446c77e323520235f711de))
 - Fix failed push error ([0588bda](https://github.com/appleparan/copier-modern-ml/commit/0588bda808674f2cc105fe9ffad6776daa6d19ba))
 
 ## [0.5.0] - 2024-09-19
@@ -599,10 +614,6 @@
 - Bump version to 0.4.6 ([a75ed96](https://github.com/appleparan/copier-modern-ml/commit/a75ed963937621c6ce1fa010f3d5476f54796b75))
 - Include "Bump to vX.X.X" into vX.X.X ([d87fa33](https://github.com/appleparan/copier-modern-ml/commit/d87fa33e0f96519bc5fedfe2e57c04fb5964bf8c))
 - Trigger release by branches ([44f2def](https://github.com/appleparan/copier-modern-ml/commit/44f2def1fc678522d2a49f9a09fbf9a973e2310b))
-- Fix GitHub release not generated ([5a02b7e](https://github.com/appleparan/copier-modern-ml/commit/5a02b7e73b00e6ef6dffe7b3178f72d23df3c2f6))
-- Bump version to 0.5.1 ([ea4c0a2](https://github.com/appleparan/copier-modern-ml/commit/ea4c0a21a5fa2984fbf5b1047d45797e65b8ff5d))
-- Pull before bump version ([8d7c2fc](https://github.com/appleparan/copier-modern-ml/commit/8d7c2fcd83a1a94ba95fe232ba3faf62353728c1))
-- Trigger release by branch in template GitHub Action ([d580ec2](https://github.com/appleparan/copier-modern-ml/commit/d580ec20d6b0d399e0446c77e323520235f711de))
 - Bump version to 0.5.0 ([6c73068](https://github.com/appleparan/copier-modern-ml/commit/6c73068141262285933e0fd8a0a9d6c56aee5755))
 
 ## [0.4.6] - 2024-09-16
